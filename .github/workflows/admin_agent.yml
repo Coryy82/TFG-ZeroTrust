@@ -1,0 +1,25 @@
+name: Agente Administrador Semanal
+
+on:
+  schedule:
+    # Se ejecuta todos los domingos a las 20:00 UTC
+    - cron: '0 20 * * 0'
+  workflow_dispatch: 
+    # Este 'workflow_dispatch' te permite ejecutar el script manualmente 
+    # pulsando un botón en GitHub sin tener que esperar al domingo.
+
+jobs:
+  run-cursor-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lanzar Cursor Cloud Agent
+        # Según la documentación de Cursor, la autenticación básica se hace pasando la key como usuario y dejando la contraseña vacía (:)
+        run: |
+          curl --request POST \
+            --url https://api.cursor.com/v1/agents \
+            -u "${{ secrets.CURSOR_API_KEY }}:" \
+            --header 'Content-Type: application/json' \
+            --data '{
+              "repository": "${{ github.repository }}",
+              "instruction": "Eres el Project Manager de mi TFG sobre ciberseguridad. REGLA ESTRICTA: Solo puedes modificar o crear archivos dentro de la carpeta /admin/. NO toques el código Docker ni Markdown de la memoria. \n\nTAREAS A REALIZAR AHORA MISMO:\n1. Analiza los últimos commits para ver qué he hecho esta semana.\n2. Lee el archivo admin/STATE.md y compáralo con la semana pasada.\n3. Lee admin/DECISIONS_LOG.md para entender el contexto.\n4. Modifica admin/STATE.md añadiendo nuevas tareas si ves bloqueos.\n5. Genera un nuevo archivo en /admin/reportes/ con un resumen ejecutivo de mi progreso.\n\nAbre una Pull Request con estos cambios."
+            }'
