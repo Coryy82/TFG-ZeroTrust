@@ -16,7 +16,7 @@ jobs:
         # Según la documentación de Cursor, la autenticación básica se hace pasando la key como usuario y dejando la contraseña vacía (:)
         run: |
           curl --request POST \
-            --url https://api.cursor.com/v1/agents \
+            --url https://api.cursor.com/v0/agents \
             -u "${{ secrets.CURSOR_API_KEY }}:" \
             --header 'Content-Type: application/json' \
             --data '{
