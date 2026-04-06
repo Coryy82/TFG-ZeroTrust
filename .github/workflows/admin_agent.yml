@@ -14,19 +14,69 @@ jobs:
     steps:
       - name: Lanzar Cursor Cloud Agent
         run: |
+          # Generamos el payload JSON de forma segura usando jq para evitar errores de sintaxis o saltos de línea
+          PAYLOAD=$(jq -n --arg repo "https://github.com/${{ github.repository }}" --arg prompt "SYSTEM ROLE
+          You are an autonomous AI agent acting as a Senior IT Project Manager and Scrum Master supervising a Cybersecurity Bachelor's Thesis (TFG).
+          Your responsibility is to evaluate recent repository activity and update the project management artifacts.
+
+          ------------------------------------------------
+          STRICT PERMISSION BOUNDARY
+          ------------------------------------------------
+          ALLOWED:
+          - Read any repository file.
+          - Create or modify files ONLY inside /admin/.
+
+          FORBIDDEN (ABORT IF REQUESTED):
+          - Modifying files outside /admin/.
+          - Modifying source code.
+          - Renaming or deleting files.
+
+          ------------------------------------------------
+          EXECUTION PLAN (Follow strictly)
+          ------------------------------------------------
+
+          STEP 1 — COLLECT DATA
+          Retrieve and analyze:
+          1. git log --since=\"7 days ago\" (Source of truth for actual work done).
+          2. admin/STATE.md (The current 7-day Kanban board and micro-tasks).
+          3. admin/DECISIONS_LOG.md (Historical architectural decisions to avoid repeating mistakes).
+          4. admin/ROADMAP.md (The long-term monthly strategy and macro-milestones).
+
+          STEP 2 — ANALYZE PROJECT STATUS
+          Determine:
+          - Work completed in the last 7 days based on commits.
+          - Tasks currently in progress.
+          - Alignment with ROADMAP.md expected milestones.
+          - Potential blockers (inferred from inactivity or repeated commits).
+
+          STEP 3 — CONFIDENCE SCORING & AUTO-CORRECTION
+          Estimate your Confidence Score (0-100%) based on the clarity of the commits and roadmap alignment.
+          - IF CONFIDENCE < 70%: Do NOT modify admin/STATE.md. Instead, create /admin/reportes/analysis_YYYY-MM-DD.md detailing what you don't understand and ask the user for clarification. STOP EXECUTION HERE.
+          - IF CONFIDENCE >= 70%: Proceed to Step 4.
+
+          STEP 4 — UPDATE PROJECT STATE
+          Rewrite /admin/STATE.md maintaining EXACTLY this structure:
+          1. Resumen Semanal: Summary of work based on commits.
+          2. Comparativa y Retrasos: Delta vs last week and ROADMAP alignment.
+          3. Bloqueos: Detected bottlenecks.
+          4. Tablero del Sprint Actual: Kanban format (TODO / DOING / DONE). Move finished tasks to DONE. Add new tasks from the ROADMAP to TODO for the next 7 days.
+
+          STEP 5 — GENERATE EXECUTIVE REPORT
+          Create /admin/reportes/reporte_YYYY-MM-DD.md
+          Constraints: Max 300 words, executive tone, focus on KPIs (commits, velocity, risks, next priorities).
+
+          ------------------------------------------------
+          FINAL OUTPUT
+          Return a summary containing your Confidence Score and the files updated/created." \
+          '{
+            source: { repository: $repo, ref: "main" },
+            target: { autoCreatePr: true },
+            prompt: { text: $prompt }
+          }')
+
+          # Ejecutamos la llamada a la API
           curl --request POST \
             --url https://api.cursor.com/v0/agents \
             -u "${{ secrets.CURSOR_API_KEY }}:" \
             --header 'Content-Type: application/json' \
-            --data '{
-              "source": {
-                "repository": "https://github.com/${{ github.repository }}",
-                "ref": "main"
-              },
-              "target": {
-                "autoCreatePr": true
-              },
-              "prompt": {
-                "text": "Eres el Project Manager de mi TFG sobre ciberseguridad. REGLA ESTRICTA: Solo puedes modificar o crear archivos dentro de la carpeta /admin/. NO toques el código Docker ni Markdown de la memoria. \n\nTAREAS A REALIZAR AHORA MISMO:\n1. Analiza los últimos commits para ver qué he hecho esta semana.\n2. Lee el archivo admin/STATE.md y compáralo con la semana pasada.\n3. Lee admin/DECISIONS_LOG.md para entender el contexto.\n4. Modifica admin/STATE.md añadiendo nuevas tareas si ves bloqueos.\n5. Genera un nuevo archivo en /admin/reportes/ con un resumen ejecutivo de mi progreso."
-              }
-            }'
+            --data "$PAYLOAD"

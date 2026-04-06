@@ -44,3 +44,33 @@ En la siguiente revisión se validará:
 - si el log de decisiones ya contiene entradas accionables;
 - si los nuevos commits muestran avance funcional del TFG, no solo cambios de infraestructura del repo;
 - y si existe trazabilidad entre decisiones, tareas y resultados.
+
+# STATE - Seguimiento TFG Ciberseguridad DUPLICADO GENERADO A PARTIR DE REFINAMIENTO DE ARCHIVO, ELIMINAR REDUNDANCIAS, SACAR INFORMACIÓN CLAVE DEL ANTERIOR Y UNIR A ESTE
+
+Fecha de actualización: 2026-04-06 - Entrada manual
+
+## 1) Resumen de actividad de esta semana
+El proyecto ha transicionado a un modelo de Sprints (Kanban) gestionado por IA y se ha consolidado la estructura de directorios (`docs/`, `infra/`, `tests/`).
+
+## 2) Comparativa y Retrasos
+- **Progreso Técnico:** Cero.
+- **Estado vs Roadmap:** 🚨 RETRASO CRÍTICO. El Roadmap exigía tener la infraestructura básica y la burocracia cerrada en marzo. Estamos en abril y no hay Dockers operativos. Se activa Plan de Choque.
+
+## 3) Bloqueos
+- Riesgo de "Parálisis por análisis" con la configuración de la IA y el repositorio, descuidando el trabajo de ciberseguridad real.
+
+## 4) Tablero del Sprint Actual (Semana del 6 al 12 de Abril)
+
+### 🔴 TODO (Por Hacer - Plan de Choque)
+- [ ] T1. Crear `infra/perimetral/docker-compose.yml` con 2 contenedores básicos (Ubuntu/Alpine).
+- [ ] T2. Lograr que el contenedor A haga `ping` al contenedor B.
+- [ ] T3. Aislar: Añadir una regla de iptables/red para bloquear ese ping.
+- [ ] T4. Crear el archivo `docs/03_memoria_tfg/cap2_estado_arte.md` y escribir solo el índice.
+
+### 🟡 DOING (En Progreso o Esperando)
+- [ ] Burocracia: Confirmar que el TFG está subido/aprobado en la plataforma de la ETSINF.
+
+### 🟢 DONE (Completado esta semana)
+- [x] Configuración del Cursor Cloud Agent en GitHub Actions completada.
+- [x] Transición del proyecto a arquitectura Hub & Spoke con Kanban.
+- [x] Renombrar archivo log a `DECISIONS_LOG.md` para unificar nomenclatura.
