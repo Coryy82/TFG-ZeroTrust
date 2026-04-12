@@ -1,37 +1,37 @@
 # STATE - Seguimiento TFG Ciberseguridad
 
-Fecha de actualización: 2026-04-06
+Fecha de actualización: 2026-04-12
 
 ## 1. Resumen Semanal
-- Commits últimos 7 días: **6** (`e1527b3`, `e123e97`, `29ddeab`, `6394dd0`, `1d360b9`, `7b48170`).
-- Trabajo completado: refactor y estabilización del workflow administrativo (`.github/workflows/admin_agent.yml`), actualización de artefactos de gestión en `/admin/` y creación de estructura base de carpetas (`docs/`, `infra/`, `tests/`).
-- Evidencia de retrabajo: commit experimental (`e123e97`) seguido de revert (`29ddeab`).
-- Avance funcional de ciberseguridad (escenarios perimetral/zero-trust, pruebas, métricas): **no evidenciado en commits**.
+- Commits últimos 7 días: **10** (`e1527b3`, `e123e97`, `29ddeab`, `6394dd0`, `1d360b9`, `7b48170`, `ff4d052`, `01a067f`, `b529d71`, `c0b8523`).
+- Trabajo completado: consolidación de la capa de gestión del proyecto (workflow administrativo, roadmap, estado y reportes), normalización documental (`DECISIONS_LOG.md`) y primer material técnico de investigación (`docs/01_investigacion/Apuntes Docker101.md`).
+- Evidencia de retrabajo/control: secuencia commit experimental + revert en workflow (`e123e97` -> `29ddeab`), seguida de refactor estable (`6394dd0`, `7b48170`).
+- Avance técnico del laboratorio: **sin entregables ejecutables** del escenario perimetral (no hay `docker-compose.yml` funcional ni pruebas de conectividad/bloqueo en commits).
 
 ## 2. Comparativa y Retrasos
-- Comparado con el ciclo previo, mejora la gobernanza del proyecto (estado, roadmap y reporte), pero la **velocidad técnica del TFG sigue en 0 entregables funcionales**.
-- Alineación con `admin/ROADMAP.md` (Marzo-Abril): **retraso** en los hitos esperados (Docker Compose operativo, conectividad entre contenedores, bloqueo simple de tráfico y avance de Capítulo 2).
-- Delta semanal principal: progreso administrativo alto, progreso experimental/técnico bajo.
+- Frente al estado anterior, aumenta la disciplina de gestión (más trazabilidad y limpieza documental), pero la velocidad de implementación técnica sigue baja.
+- Alineación con `admin/ROADMAP.md` (Marzo-Abril): **desalineación parcial**. Se avanzó en preparación y documentación, pero siguen pendientes los hitos críticos: Compose operativo, red plana validada, bloqueo simple y borrador consolidado del Estado del Arte.
+- Delta semanal: mejora administrativa sostenida; retraso acumulado en hitos experimentales que condicionan los objetivos de mayo (Zero Trust + Wazuh).
 
 ## 3. Bloqueos
-- Foco excesivo en infraestructura de gestión del repositorio frente a construcción del laboratorio técnico.
-- Falta de evidencia verificable (capturas, logs o scripts) de los hitos del escenario perimetral.
-- Inconsistencia de nomenclatura documental (`DECISION_LOG.md` vs referencia solicitada `DECISIONS_LOG.md`) con riesgo de confusión operativa.
-- Posible dependencia externa no cerrada: confirmación burocrática de alta del TFG en plataforma académica.
+- Predominio de trabajo administrativo sobre construcción y validación del entorno reproducible.
+- Ausencia de evidencias técnicas verificables (logs/capturas/scripts) para cerrar hitos del escenario A.
+- Riesgo de arrastre hacia mayo: iniciar Zero Trust sin baseline perimetral medido debilita la comparativa experimental del TFG.
+- Señales de fricción en priorización (commits de mantenimiento frecuentes sin cierre de tareas de laboratorio).
 
 ## 4. Tablero del Sprint Actual
 ### TODO
-- [ ] T1. Crear `infra/perimetral/docker-compose.yml` con 2 contenedores y red plana.
-- [ ] T2. Validar conectividad A->B (ping) y guardar evidencia reproducible.
-- [ ] T3. Aplicar bloqueo simple de tráfico entre contenedores y documentar resultado.
-- [ ] T4. Redactar borrador inicial de `Estado del Arte` (Cap. 2) con fuentes Zero Trust (NIST/IEEE).
-- [ ] T5. Definir KPI semanales mínimos: entregables técnicos cerrados, evidencias y riesgos.
+- [ ] T1. Crear `infra/perimetral/docker-compose.yml` con servicios Web + BBDD en red plana y levantar entorno.
+- [ ] T2. Ejecutar prueba de conectividad completa entre contenedores y guardar evidencia (captura + log de comandos).
+- [ ] T3. Aplicar bloqueo simple de tráfico lateral y documentar antes/después con resultados reproducibles.
+- [ ] T4. Redactar borrador del capítulo "Estado del Arte" con base NIST/IEEE y referencias iniciales.
+- [ ] T5. Definir y registrar KPI semanales del experimento (entregables cerrados, evidencia, riesgos abiertos).
 
 ### DOING
-- [ ] D1. Confirmar trámite de subida/aprobación del TFG en la plataforma ETSINF.
-- [ ] D2. Normalizar nombre oficial del log de decisiones y reflejarlo en todos los documentos.
+- [ ] D1. Convertir apuntes Docker en artefacto técnico accionable para cerrar T1-T3.
+- [ ] D2. Verificar estado del trámite TFG en ETSINF para eliminar dependencia administrativa externa.
 
 ### DONE
-- [x] Refactor del flujo administrativo en GitHub Actions con payload estructurado.
-- [x] Actualización de artefactos de gestión iniciales en `/admin/` (ROADMAP, STATE y reporte ejecutivo).
-- [x] Estructura base de directorios del proyecto creada (`docs/`, `infra/`, `tests/`).
+- [x] Actualización semanal de artefactos de gestión (`STATE.md` y reporte ejecutivo del 06/04).
+- [x] Normalización del log de decisiones a `admin/DECISIONS_LOG.md`.
+- [x] Carga inicial de investigación técnica Docker (`Apuntes Docker101.md`).
