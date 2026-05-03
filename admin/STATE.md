@@ -1,6 +1,6 @@
 # STATE - Seguimiento TFG Ciberseguridad
 
-Fecha de actualización: 2026-04-12
+Fecha de actualización: 2026-05-03
 
 ## 1. Resumen Semanal
 - Commits últimos 7 días: **10** (`e1527b3`, `e123e97`, `29ddeab`, `6394dd0`, `1d360b9`, `7b48170`, `ff4d052`, `01a067f`, `b529d71`, `c0b8523`).
@@ -21,17 +21,27 @@ Fecha de actualización: 2026-04-12
 
 ## 4. Tablero del Sprint Actual
 ### TODO
-- [ ] T1. Crear `infra/perimetral/docker-compose.yml` con servicios Web + BBDD en red plana y levantar entorno.
 - [ ] T2. Ejecutar prueba de conectividad completa entre contenedores y guardar evidencia (captura + log de comandos).
-- [ ] T3. Aplicar bloqueo simple de tráfico lateral y documentar antes/después con resultados reproducibles.
+- [ ] T3. Documentar flujo de ataque completo (pasos 1-6 de `Prototipo Red perimetral.md`) con capturas de evidencia.
 - [ ] T4. Redactar borrador del capítulo "Estado del Arte" con base NIST/IEEE y referencias iniciales.
 - [ ] T5. Definir y registrar KPI semanales del experimento (entregables cerrados, evidencia, riesgos abiertos).
 
 ### DOING
-- [ ] D1. Convertir apuntes Docker en artefacto técnico accionable para cerrar T1-T3.
+- [ ] D1. Completar código fuente de `infra/perimetral/` para hacer el entorno ejecutable.
+  - [x] Estructura de ficheros `infra/perimetral/` creada
+  - [x] `docker-compose.yaml` con redes `net_dmz` / `net_interna` y 4 servicios definidos
+  - [ ] Rellenar `webapp/Dockerfile` + `webapp/app.py` (Flask con endpoint `/ping` vulnerable a RCE)
+  - [ ] Crear y rellenar `webapp/requirements.txt` (`flask`)
+  - [ ] Rellenar `backend/Dockerfile` + `backend/app.py` (Flask API interna sin autenticación)
+  - [ ] Crear y rellenar `backend/requirements.txt` (`flask`, `psycopg2-binary`)
+  - [ ] Rellenar `nginx/nginx.conf` (reverse proxy → `webapp:5000`)
+  - [ ] Rellenar `db/init.sql` (tabla `usuarios` con datos sensibles de prueba)
+  - [ ] Ejecutar `docker compose up --build` y verificar que los 4 servicios arrancan sin errores
 - [ ] D2. Verificar estado del trámite TFG en ETSINF para eliminar dependencia administrativa externa.
 
 ### DONE
 - [x] Actualización semanal de artefactos de gestión (`STATE.md` y reporte ejecutivo del 06/04).
 - [x] Normalización del log de decisiones a `admin/DECISIONS_LOG.md`.
 - [x] Carga inicial de investigación técnica Docker (`Apuntes Docker101.md`).
+- [x] Documento de diseño del Escenario A: `docs/01_investigacion/Prototipo Red perimetral.md` (arquitectura, modelo de amenaza, flujo de ataque, KPIs).
+- [x] `infra/perimetral/docker-compose.yaml` con estructura de servicios y redes creado.
