@@ -17,9 +17,9 @@
 - **Evento:** Email de validación.
 - **Acuerdo:** Héctor da el OK oficial al modelo de amenazas reformulado, al alcance y a las opciones de título. Resumen validado preliminarmente.
 
-## 2026-04-19 - Subida a Plataforma y Consulta Metodológica
-- **Evento:** Email enviado por Pau.
-- **Acciones:**
-  1. Solicitud de OK final para subir el TFG a la plataforma con el Título 1: *"Análisis comparativo de seguridad entre modelos de Defensa Perimetral y Zero Trust en infraestructuras contenerizadas"*.
-  2. Consulta técnica sobre cómo llevar la trazabilidad del laboratorio y documentar los errores/cambios de configuración.
-- **ESTADO:** 🟡 Esperando respuesta de Héctor.
+## 2026-04-19 al 2026-04-27 - Aprobación Oficial y Metodología
+- **Evento:** Intercambio de correos y confirmación automática del sistema EBRON.
+- **Acciones y Acuerdos:**
+  1. **Burocracia:** TFG subido, validado por el tutor y APROBADO oficialmente por Secretaría. Título oficial fijado: *"Análisis comparativo de seguridad entre modelos de Defensa Perimetral y Zero Trust en infraestructuras contenerizadas"*.
+  2. **Metodología acordada:** Trabajar con plan previo (no improvisar). Mantener un diario de laboratorio interno y recopilar bibliografía en paralelo.
+- **ESTADO:** 🟢 Burocracia inicial completada. Proyecto 100% oficializado.
