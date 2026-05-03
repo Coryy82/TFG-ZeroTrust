@@ -3,21 +3,23 @@
 Fecha de actualización: 2026-05-03
 
 ## 1. Resumen Semanal
-- Commits últimos 7 días: **10** (`e1527b3`, `e123e97`, `29ddeab`, `6394dd0`, `1d360b9`, `7b48170`, `ff4d052`, `01a067f`, `b529d71`, `c0b8523`).
-- Trabajo completado: consolidación de la capa de gestión del proyecto (workflow administrativo, roadmap, estado y reportes), normalización documental (`DECISIONS_LOG.md`) y primer material técnico de investigación (`docs/01_investigacion/Apuntes Docker101.md`).
-- Evidencia de retrabajo/control: secuencia commit experimental + revert en workflow (`e123e97` -> `29ddeab`), seguida de refactor estable (`6394dd0`, `7b48170`).
-- Avance técnico del laboratorio: **sin entregables ejecutables** del escenario perimetral (no hay `docker-compose.yml` funcional ni pruebas de conectividad/bloqueo en commits).
+- Commits últimos 7 días: **1** (`6058c3f`).
+- Trabajo completado según commits: actualización administrativa del estado semanal y creación del reporte ejecutivo del 19/04.
+- No se observa evidencia nueva de ejecución técnica del laboratorio: no hay commits con `docker-compose` funcional, pruebas de conectividad, capturas, logs, bloqueo lateral ni avances del borrador académico.
+- Tendencia observada: continuidad mínima en seguimiento del proyecto, con velocidad técnica nula durante la semana.
 
 ## 2. Comparativa y Retrasos
-- Frente al estado anterior, aumenta la disciplina de gestión (más trazabilidad y limpieza documental), pero la velocidad de implementación técnica sigue baja.
-- Alineación con `admin/ROADMAP.md` (Marzo-Abril): **desalineación parcial**. Se avanzó en preparación y documentación, pero siguen pendientes los hitos críticos: Compose operativo, red plana validada, bloqueo simple y borrador consolidado del Estado del Arte.
-- Delta semanal: mejora administrativa sostenida; retraso acumulado en hitos experimentales que condicionan los objetivos de mayo (Zero Trust + Wazuh).
+- Comparado con la semana anterior, la actividad baja de **3 a 1 commit** y se concentra al 100% en gestión administrativa.
+- Alineación con `admin/ROADMAP.md`:
+  - **Marzo-Abril (Escenario A perimetral):** retraso alto. Siguen sin cerrarse los hitos de Docker Compose, conectividad entre contenedores, bloqueo simple y evidencias reproducibles.
+  - **Mayo (Zero Trust + Wazuh):** riesgo de arranque condicionado. El roadmap exige iniciar segmentación y visibilidad, pero la baseline perimetral A todavía no está validada.
+- Delta principal: se mantiene la trazabilidad administrativa, pero aumenta el retraso acumulado en entregables técnicos y académicos.
 
 ## 3. Bloqueos
-- Predominio de trabajo administrativo sobre construcción y validación del entorno reproducible.
-- Ausencia de evidencias técnicas verificables (logs/capturas/scripts) para cerrar hitos del escenario A.
-- Riesgo de arrastre hacia mayo: iniciar Zero Trust sin baseline perimetral medido debilita la comparativa experimental del TFG.
-- Señales de fricción en priorización (commits de mantenimiento frecuentes sin cierre de tareas de laboratorio).
+- Inactividad técnica visible en Git durante la semana: solo se registra un commit administrativo.
+- Falta de evidencias reproducibles para cerrar el Escenario A (comandos, logs, capturas o scripts de validación).
+- Riesgo metodológico: avanzar a Zero Trust/Wazuh sin baseline perimetral medida compromete la comparativa central del TFG.
+- Riesgo de arrastre académico: el borrador de "Estado del Arte" continúa pendiente pese a estar previsto en el bloque marzo-abril.
 
 ## 4. Tablero del Sprint Actual
 ### TODO
