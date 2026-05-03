@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      # TODO: nginx.conf está vacío — rellenar con bloque http{} + server{} + proxy_pass a webapp:5000
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - net_dmz
+    depends_on:
+      - webapp
+
+  webapp:
+    # TODO: webapp/Dockerfile está vacío — usar FROM python:3.11-slim, COPY, RUN pip install, CMD
+    # TODO: webapp/app.py está vacío — añadir endpoint GET /ping con os.popen() sin sanitizar (RCE intencional)
+    # TODO: webapp/requirements.txt está vacío — añadir flask==3.0.3
+    build: ./webapp
+    networks:
+      - net_dmz      # Visible desde nginx (DMZ exterior)
+      - net_interna  # PUENTE hacia red interna — punto de fallo del modelo perimetral
+    environment:
+      # PUNTO DÉBIL INTENCIONAL: credenciales en texto plano, accesibles con `env` tras RCE
+      - DB_HOST=db
+      - DB_PASSWORD=supersecret
+    depends_on:
+      - backend:
+          condition: service_healthy
+      - db
+
+  backend:
+    # TODO: backend/Dockerfile está vacío — mismo patrón que webapp/Dockerfile
+    # TODO: backend/app.py está vacío — añadir GET /api/datos que devuelva filas de la DB sin autenticación
+    # TODO: crear backend/requirements.txt — añadir flask==3.0.3 y psycopg2-binary==2.9.9
+    # NOTA: el healthcheck usa curl — asegurarse de que el Dockerfile instala curl, o cambiar el test
+    build: ./backend
+    networks:
+      - net_interna  # Solo accesible desde la red interna (sin firewall interno que bloquee a webapp)
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=supersecret
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 5s
+      retries: 5
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    networks:
+      - net_interna  # Activo principal a proteger — accesible desde webapp sin control adicional
+    environment:
+      - POSTGRES_PASSWORD=supersecret
+      - POSTGRES_DB=empresa_db
+    volumes:
+      # TODO: db/init.sql está vacío — añadir CREATE TABLE usuarios + INSERT con datos sensibles de prueba
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  net_dmz:
+    driver: bridge
+  net_interna:
+    driver: bridge
