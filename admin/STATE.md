@@ -41,7 +41,6 @@ Fecha de actualización: 2026-05-03
   - [ ] Rellenar `nginx/nginx.conf` (reverse proxy → `webapp:5000`)
   - [ ] Rellenar `db/init.sql` (tabla `usuarios` con datos sensibles de prueba)
   - [ ] Ejecutar `docker compose up --build` y verificar que los 4 servicios arrancan sin errores
-- [ ] D2. Verificar estado del trámite TFG en ETSINF para eliminar dependencia administrativa externa.
 
 ### DONE
 - [x] Actualización semanal de artefactos de gestión (`STATE.md` y reporte ejecutivo del 26/04).
@@ -53,3 +52,4 @@ Fecha de actualización: 2026-05-03
 - [x] Carga inicial de investigación técnica Docker (`Apuntes Docker101.md`).
 - [x] Documento de diseño del Escenario A: `docs/01_investigacion/Prototipo Red perimetral.md` (arquitectura, modelo de amenaza, flujo de ataque, KPIs).
 - [x] `infra/perimetral/docker-compose.yaml` con estructura de servicios y redes creado.
+- [x] Verificar estado del trámite TFG en ETSINF para eliminar dependencia administrativa externa: TFG oficializado y subido a plataforma
