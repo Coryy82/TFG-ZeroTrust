@@ -1,22 +1,17 @@
-version: '3.9'
 
 services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
-      # TODO: nginx.conf está vacío — rellenar con bloque http{} + server{} + proxy_pass a webapp:5000
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
       - net_dmz
     depends_on:
-      - webapp
+      - "webapp"
 
   webapp:
-    # TODO: webapp/Dockerfile está vacío — usar FROM python:3.11-slim, COPY, RUN pip install, CMD
-    # TODO: webapp/app.py está vacío — añadir endpoint GET /ping con os.popen() sin sanitizar (RCE intencional)
-    # TODO: webapp/requirements.txt está vacío — añadir flask==3.0.3
     build: ./webapp
     networks:
       - net_dmz      # Visible desde nginx (DMZ exterior)
@@ -26,14 +21,12 @@ services:
       - DB_HOST=db
       - DB_PASSWORD=supersecret
     depends_on:
-      - backend:
-          condition: service_healthy
-      - db
+      backend:
+        condition: service_healthy
+      db:
+        condition: service_started
 
   backend:
-    # TODO: backend/Dockerfile está vacío — mismo patrón que webapp/Dockerfile
-    # TODO: backend/app.py está vacío — añadir GET /api/datos que devuelva filas de la DB sin autenticación
-    # TODO: crear backend/requirements.txt — añadir flask==3.0.3 y psycopg2-binary==2.9.9
     # NOTA: el healthcheck usa curl — asegurarse de que el Dockerfile instala curl, o cambiar el test
     build: ./backend
     networks:
@@ -56,7 +49,6 @@ services:
       - POSTGRES_PASSWORD=supersecret
       - POSTGRES_DB=empresa_db
     volumes:
-      # TODO: db/init.sql está vacío — añadir CREATE TABLE usuarios + INSERT con datos sensibles de prueba
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
