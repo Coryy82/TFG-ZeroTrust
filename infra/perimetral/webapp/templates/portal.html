@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Empresa S.L. — Portal corporativo{% endblock %}
+
+{% block content %}
+<section class="empresa-hero py-5">
+    <div class="container py-4">
+        <h1 class="display-5 fw-bold">Empresa S.L.</h1>
+        <p class="lead mb-0">Soluciones tecnológicas para el sector industrial desde 2008.</p>
+    </div>
+</section>
+
+<section id="equipo" class="container py-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="h3 mb-1">Directorio del equipo</h2>
+            <p class="text-muted mb-0">Listado de personal interno autorizado para acceder a la intranet.</p>
+        </div>
+        <span class="badge text-bg-light border">Datos sincronizados desde RRHH</span>
+    </div>
+
+    {% if empleados %}
+    <div class="row g-4">
+        {% for e in empleados %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title mb-1">{{ e.nombre }}</h5>
+                    <p class="text-muted small mb-3">{{ e.rol }}</p>
+                    <p class="card-text small mb-0">
+                        <span class="text-secondary">Correo:</span><br>
+                        <code>{{ e.email }}</code>
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0 small text-muted">
+                    Última sincronización: 2026-05-09
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        El servicio interno de RRHH no está disponible en este momento. Reintenta en unos minutos.
+    </div>
+    {% endif %}
+</section>
+
+<section id="contacto" class="bg-white border-top py-5">
+    <div class="container">
+        <h2 class="h4 mb-3">Contacto</h2>
+        <p class="mb-1"><strong>Sede central:</strong> Polígono Industrial Norte, Nave 14 &mdash; Valencia</p>
+        <p class="mb-1"><strong>Teléfono:</strong> +34 960 000 000</p>
+        <p class="mb-0"><strong>Soporte interno:</strong> <code>helpdesk@empresa.local</code></p>
+    </div>
+</section>
+{% endblock %}

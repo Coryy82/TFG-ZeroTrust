@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Diagnóstico de red &middot; Empresa S.L.{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Diagnóstico de red</li>
+        </ol>
+    </nav>
+
+    <h1 class="h3 mb-1">Diagnóstico de red</h1>
+    <p class="text-muted">Verifica la conectividad contra servicios internos. Solo accesible para el equipo de sistemas.</p>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <form method="get" action="/admin/diagnostico" class="row g-2 align-items-end">
+                <div class="col-md-8">
+                    <label for="host" class="form-label small">Host o IP a comprobar</label>
+                    <input type="text" class="form-control" id="host" name="host" value="{{ host|default('') }}" placeholder="db, backend, 8.8.8.8...">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">Ejecutar ping</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if resultado is not none %}
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <span class="small text-muted">Salida del comando</span>
+            <span class="badge text-bg-light border">ping {{ host }}</span>
+        </div>
+        <div class="card-body">
+            <pre class="mb-0 small">{{ resultado }}</pre>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

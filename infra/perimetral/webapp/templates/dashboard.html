@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard administrativo &middot; Empresa S.L.{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">Dashboard administrativo</h1>
+            <p class="text-muted mb-0">Bienvenido, <strong>{{ usuario }}</strong>. Última conexión registrada: 2026-05-08 09:42 UTC.</p>
+        </div>
+        <a href="/admin/logout" class="btn btn-outline-secondary btn-sm">Cerrar sesión</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">Estado de servicios</h5>
+                    <ul class="list-unstyled small mb-0">
+                        <li><span class="badge text-bg-success me-2">OK</span> Portal público</li>
+                        <li><span class="badge text-bg-success me-2">OK</span> API RRHH (backend)</li>
+                        <li><span class="badge text-bg-success me-2">OK</span> Base de datos</li>
+                        <li><span class="badge text-bg-warning me-2">WARN</span> Backup nocturno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">Accesos recientes</h5>
+                    <ul class="list-unstyled small mb-0">
+                        <li><code>admin</code> &middot; 2026-05-08 09:42</li>
+                        <li><code>admin</code> &middot; 2026-05-07 18:11</li>
+                        <li><code>admin</code> &middot; 2026-05-07 12:03</li>
+                        <li><code>jmartinez</code> &middot; 2026-05-04 16:50</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Diagnóstico de red</h5>
+                    <p class="text-muted small flex-grow-1">
+                        Herramienta interna para verificar conectividad con servicios internos
+                        (DB, API RRHH, equipos de monitorización).
+                    </p>
+                    <a href="/admin/diagnostico" class="btn btn-primary btn-sm align-self-start">Abrir diagnóstico</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-secondary mt-4 small mb-0">
+        Recordatorio del equipo de sistemas: la rotación trimestral de credenciales está pendiente desde marzo.
+        Procedimiento documentado en el wiki interno.
+    </div>
+</section>
+{% endblock %}
