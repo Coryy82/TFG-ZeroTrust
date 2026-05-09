@@ -41,7 +41,7 @@ Fecha de actualización: 2026-05-03
   - [x] Añadir header `X-Powered-By: Empresa-Portal/1.4.2` (CWE-200 fingerprint)
   - [x] Actualizar `webapp/Dockerfile` para copiar `templates/` y `static/`
   - [x] Validar cadena end-to-end: recon → backup.txt → login → SSTI `{{7*7}}` → RCE `id` → exfiltración `env` → lateral `curl backend`
-  - [x] Crear documento de sesión `docs/01_investigacion/20260509a_Sesion_Refactor_EscenarioA_HTB.md` (antes/después)
+  - [x] Crear documento de sesión `docs/04_diario_laboratorio/20260509a_Sesion_Refactor_EscenarioA_HTB.md` (antes/después)
   - [x] Registrar decisión en `admin/DECISIONS_LOG.md`
   - [ ] Capturar evidencias gráficas (capturas de navegador) para la memoria del TFG
   - [ ] Cronometrar KPIs nuevos definidos en `20260509a_Sesion_Refactor_EscenarioA_HTB.md` sección 7

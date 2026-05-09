@@ -1,7 +1,7 @@
 # Sesión de refactorización — Escenario A hacia formato HTB Academy
 
 > **Periodo:** 7 de mayo – 9 de mayo de 2026
-> **Propósito de este documento:** Registro cronológico e inmutable de la sesión en la que el Escenario A pasó de ser un endpoint vulnerable suelto (`/diagnostico` con `os.popen`) a una **cadena de ataque encadenada estilo Hack The Box Academy** (recon → information disclosure → autenticación con credenciales filtradas → SSTI Jinja2 → RCE → post-explotación lateral). Este documento es independiente de [20260505_Sesion_Diseno_EscenarioA.md](20260505_Sesion_Diseno_EscenarioA.md) y de [20260419_Prototipo_Red_Perimetral.md](20260419_Prototipo_Red_Perimetral.md), que se mantienen como fotografías de la sesión anterior.
+> **Propósito de este documento:** Registro cronológico e inmutable de la sesión en la que el Escenario A pasó de ser un endpoint vulnerable suelto (`/diagnostico` con `os.popen`) a una **cadena de ataque encadenada estilo Hack The Box Academy** (recon → information disclosure → autenticación con credenciales filtradas → SSTI Jinja2 → RCE → post-explotación lateral). Este documento es independiente de [20260505_Sesion_Diseno_EscenarioA.md](20260505_Sesion_Diseno_EscenarioA.md) y de [20260419_Prototipo_Red_Perimetral.md](../01_investigacion/20260419_Prototipo_Red_Perimetral.md), que se mantienen como fotografías de la sesión anterior.
 
 ---
 
@@ -183,7 +183,7 @@ Sin cambios. Flask y `requests` cubren todo (Jinja2 viene con Flask).
 
 ### Documentación NO tocada (por filosofía de fotografías inmutables)
 
-- `docs/01_investigacion/20260505_Sesion_Diseno_EscenarioA.md`
+- `docs/04_diario_laboratorio/20260505_Sesion_Diseno_EscenarioA.md`
 - `docs/01_investigacion/20260419_Prototipo_Red_Perimetral.md`
 
 Cualquier delta con respecto al diseño original se registra en este documento, no editando los previos.

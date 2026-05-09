@@ -424,7 +424,7 @@ La SSTI por sí sola da RCE en `webapp`. Pero el **impacto real** (lectura de la
 ## 9. Aplicaciones para el TFG
 
 1. **Sección "Estado del Arte"** → citar SSTI como ejemplo de fallo de capa de aplicación que el modelo perimetral **no detecta** (no es tráfico anómalo, es una request HTTP bien formada).
-2. **Sección "Diseño de la Solución" del Escenario A** → la cadena documentada en [20260509a_Sesion_Refactor_EscenarioA_HTB.md](20260509a_Sesion_Refactor_EscenarioA_HTB.md) usa SSTI Jinja2 como vector central de RCE.
+2. **Sección "Diseño de la Solución" del Escenario A** → la cadena documentada en [20260509a_Sesion_Refactor_EscenarioA_HTB.md](../04_diario_laboratorio/20260509a_Sesion_Refactor_EscenarioA_HTB.md) usa SSTI Jinja2 como vector central de RCE.
 3. **Sección "Diseño de la Solución" del Escenario B** → cada paso de la cadena es un control Zero Trust independiente (tabla de la sección 8 de este documento).
 4. **Sección "Pruebas y Mediciones"** → reproducción end-to-end con `curl`, registro de tiempos por paso, comparación con el mismo ataque bloqueado en el Escenario B.
 5. **Sección "Análisis de problemas"** → discutir CWE-1336 vs CWE-78 vs CWE-94, por qué el primero es más representativo de aplicaciones modernas que un `os.popen` directo.
