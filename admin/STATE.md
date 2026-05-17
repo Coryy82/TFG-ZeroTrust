@@ -35,7 +35,7 @@ Fecha de actualizacion: 2026-05-10
 ### DOING
 - [ ] D3. Cerrar baseline cuantitativa del Escenario A antes de cambiar a Zero Trust.
   - [ ] Ejecutar cadena completa en una sesion controlada.
-  - [ ] Rellenar `tests/00_PLANTILLA_KPI.md` con valores G1, G2, G3, E1, E2 y E3.
+  - [ ] Rellenar `tests/00_PLANTILLA_KPI_v2.md` con valores G1, G2, G3, E1, E2 y E3.
   - [ ] Guardar capturas y logs reproducibles para memoria.
   - [ ] Confirmar que metricas quedan como ausencia documentada por diseno perimetral.
 - [ ] D4. Iniciar diseno de Escenario B sin modificar todavia la comparativa A.
@@ -47,7 +47,7 @@ Fecha de actualizacion: 2026-05-10
 - [x] D2. Refactorizar Escenario A hacia formato HTB Academy: portal Bootstrap, `robots.txt`, `backup.txt`, login, dashboard, SSTI autenticado, RCE y movimiento lateral documentado.
 - [x] D1. Completar codigo fuente de `infra/perimetral/` para hacer el entorno ejecutable: `backend`, `db`, `nginx`, `webapp`, requisitos y configuracion base.
 - [x] Definir esquema KPI del Escenario A: G1/G3 como tupla mecanismo/valor y E3 mediante captura `tcpdump`.
-- [x] Crear `tests/00_PLANTILLA_KPI.md` para registrar evidencias cuantitativas.
+- [x] Crear `tests/00_PLANTILLA_KPI.md` y `tests/00_PLANTILLA_KPI_v2.md` para registrar evidencias cuantitativas.
 - [x] Reorganizar documentacion a convencion `docs/01_investigacion/`, `docs/02_reuniones_tutor/`, `docs/03_memoria_tfg/`, `docs/04_diario_laboratorio/`.
 - [x] Registrar ADRs del 09/05 y 10/05 en `admin/DECISIONS_LOG.md`.
 - [x] Actualizacion semanal de artefactos de gestion (`STATE.md` y reporte ejecutivo del 26/04).
