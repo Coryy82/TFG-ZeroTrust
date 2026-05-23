@@ -1,0 +1,23 @@
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-05-23 18:02 CEST
+Nmap scan report for backend (172.19.0.3)
+Host is up (0.00061s latency).
+rDNS record for 172.19.0.3: perimetral-backend-1.perimetral_net_interna
+Not shown: 4 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+5000/tcp open  upnp
+
+Nmap scan report for db (172.19.0.2)
+Host is up (0.00049s latency).
+rDNS record for 172.19.0.2: perimetral-db-1.perimetral_net_interna
+Not shown: 4 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+5432/tcp open  postgresql
+
+Nmap scan report for nginx (172.18.0.3)
+Host is up (0.00073s latency).
+rDNS record for 172.18.0.3: perimetral-nginx-1.perimetral_net_dmz
+Not shown: 4 closed tcp ports (conn-refused)
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap done: 3 IP addresses (3 hosts up) scanned in 0.03 seconds

@@ -1,0 +1,12 @@
+ count 
+-------
+     3
+(1 row)
+
+ id |    nombre     |            email            |      rol      | salario 
+----+---------------+-----------------------------+---------------+---------
+  1 | Ana García    | ana.garcia@empresa.local    | Directora IT  |   85000
+  2 | Luis Martínez | luis.martinez@empresa.local | Desarrollador |   52000
+  3 | Sara López    | sara.lopez@empresa.local    | RRHH          |   48000
+(3 rows)
+

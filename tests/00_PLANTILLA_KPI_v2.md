@@ -18,9 +18,9 @@
 
 ## 1. PLANTILLA DE CAPTURA — ESCENARIO A (PERIMETRAL)
 
-> Sesión: _______________________ — Fecha: ____-____-____ — Operador: ___________
-> Commit del repositorio: `_______________` — Versión `docker compose`: `_______________`
-> Log de arranque asociado: `tests/logs/_______________.log`
+> Sesión: `perimetral_sesion_20260523_175204` — Fecha: 2026-05-23 — Operador: Cory
+> Commit del repositorio: `c72d80b` — Versión `docker compose`: v2 (Docker Desktop)
+> Log de arranque asociado: `tests/logs/perimetral_sesion_20260523_175204/compose_up.log`
 
 ### 1.1 Métricas oficiales (validadas por tutor)
 
@@ -28,12 +28,12 @@
 
 | Cód. | Métrica | `mecanismo_existe` | Valor / Resultado | Evidencia (ruta de archivo) |
 |---|---|---|---|---|
-| G1 | Tiempo de Detección | ☐ Sí ☐ No | __________ | `tests/logs/_______________` |
-| G2 | Profundidad del ataque | n/a | _____ nodos: ☐ webapp ☐ backend ☐ db | `tests/logs/_______________` |
-| G3 | Tasa de bloqueo | ☐ Sí ☐ No | __________ % | `tests/logs/_______________` |
-| E1 | Superficie de Ataque Interna Visible | n/a | _____ / _____ servicios visibles desde webapp | `tests/logs/_______________` |
-| E2 | Volumen de datos fugados | n/a | _____ registros / _____ bytes / _____ archivos | `tests/logs/_______________` |
-| E3 | Integridad del flujo de tráfico | n/a | ☐ texto claro ☐ cifrado ☐ rechazado | `tests/logs/_______________.pcap` |
+| G1 | Tiempo de Detección | ☒ No | `(false, ∞)` — ningún mecanismo de alerta activo; accesos no generan evento alguno | `tests/logs/perimetral_sesion_20260523_175204/nginx.log` + `webapp.log` (solo access logs, sin SIEM) |
+| G2 | Profundidad del ataque | n/a | **3 nodos**: ☒ webapp ☒ backend ☒ db | `tests/logs/perimetral_sesion_20260523_175204/e1_scan.log` + `lateral.json` + `dump.txt` |
+| G3 | Tasa de bloqueo | ☒ No | `(false, 0 %)` — todas las conexiones post-RCE tuvieron éxito; ningún control cortó el flujo | `tests/logs/perimetral_sesion_20260523_175204/lateral.json` (curl 200 OK) + `dump.txt` (psql 3 rows) |
+| E1 | Superficie de Ataque Interna Visible | n/a | **3 / 3** servicios visibles desde webapp (backend:5000, db:5432, nginx:80) | `tests/logs/perimetral_sesion_20260523_175204/e1_scan.log` |
+| E2 | Volumen de datos fugados | n/a | **3 reg. empleados + 1 cred. DB** / ~766 B / 3 archivos | `tests/logs/perimetral_sesion_20260523_175204/lateral.json` (304 B) + `dump.txt` (427 B) + `creds.txt` (35 B) |
+| E3 | Integridad del flujo de tráfico | n/a | ☒ texto claro — HTTP sin TLS; JSON con nombres, emails y salarios legible en tránsito | `tests/logs/perimetral_sesion_20260523_175204/lateral.pcap` (verificado con tshark: pkts 4, 8, 20, 24 = GET + 200 OK JSON en claro) |
 
 ### 1.2.a Caracterización del punto de entrada (pre-RCE) — no comparativa A↔B
 
@@ -43,13 +43,13 @@
 
 | Cód. | Hito | Hora absoluta (`HH:MM:SS`) | Δ vs T0_entrada (s) | Evidencia (ruta) |
 |---|---|---|---|---|
-| T0_entrada | Inicio de la sesión de caracterización (p. ej. primera petición HTTP al portal) | _________ | 0 | _______________ |
-| T_recon_http | Cabeceras HTTP / fingerprint (`X-Powered-By`, etc.) | _________ | _____ | _______________ |
-| T_recon_rutas | `/robots.txt` | _________ | _____ | _______________ |
-| T_disclosure | `/backup.txt` (creds) | _________ | _____ | _______________ |
-| T_auth | Login OK en `/admin` | _________ | _____ | _______________ |
-| T_ssti_detect | `{{7*7}}` → 49 en `/admin/diagnostico` | _________ | _____ | _______________ |
-| T_rce | RCE confirmado (p. ej. `id` vía SSTI **o** instante en que la reverse shell recibe conexión) | _________ | _____ | _______________ |
+| T0_entrada | Primera petición HTTP al portal (`HEAD /` via `curl -I`) | 17:52:55 | 0 | `tests/logs/perimetral_sesion_20260523_175204/nginx.log` línea 1 |
+| T_recon_http | Cabeceras HTTP — `curl -I` → `X-Powered-By: Flask`, `Server: nginx` | 17:52:55 | 0 | `tests/logs/perimetral_sesion_20260523_175204/nginx.log` |
+| T_recon_rutas | `GET /robots.txt` manual (tras gobuster) → rutas `/admin`, `/backup.txt` | 17:53:22 | 27 | `tests/logs/perimetral_sesion_20260523_175204/webapp.log` línea 4761 |
+| T_disclosure | `GET /backup.txt` → credenciales `admin:Empresa2026!` en texto claro | 17:53:29 | 34 | `tests/logs/perimetral_sesion_20260523_175204/webapp.log` línea 4762 |
+| T_auth | `POST /admin/login` → 302 redirect (login OK, sesión establecida) | 17:53:50 | 55 | `tests/logs/perimetral_sesion_20260523_175204/webapp.log` línea 4765 |
+| T_ssti_detect | `GET /admin/diagnostico?host={{7*7}}` → respuesta con `49` confirmada | 17:54:27 | 92 | `tests/logs/perimetral_sesion_20260523_175204/webapp.log` línea 4769 + `tests/img/20260520/` |
+| T_rce | Reverse shell recibida en listener `ncat -lvnp 4444` (`Connection received on 127.0.0.1:53792`) | 17:57:56 | 301 | `tests/RCE comandos y notas.txt` (PS1: `[17:57:56] root@webapp`) |
 
 ### 1.2.b Evidencia operativa — Timings de la comparativa (post-RCE)
 
@@ -57,23 +57,35 @@
 
 | Cód. | Hito | Hora absoluta (`HH:MM:SS`) | Δ vs `T0_efectivo` (s) | Captura / log asociado |
 |---|---|---|---|---|
-| T0_efectivo | Shell post-RCE operativa en `webapp` (reverse shell o equivalente) | _________ | 0 | _______________ |
-| T_exfil_creds | Credenciales sensibles visibles (p. ej. `env` → `DB_PASSWORD`) | _________ | _____ | _______________ |
-| T_lateral | Acceso a API interna (p. ej. `curl http://backend:5000/empleados`) | _________ | _____ | _______________ |
-| T_e3_pcap | Captura `tcpdump` hacia `backend` asociada a E3 (si aplica en el protocolo) | _________ | _____ | _______________ |
-| T_objetivo | Acceso a BBDD (p. ej. `psql -h db` …) | _________ | _____ | _______________ |
+| T0_efectivo | Shell post-RCE operativa en `webapp` — reverse shell recibida, PTY mejorada con `pty.spawn` | 17:57:56 | 0 | `tests/RCE comandos y notas.txt` (PS1 `[17:57:56]`) |
+| T_exfil_creds | `env \| grep DB_` → `DB_PASSWORD=supersecret`, `DB_HOST=db` visibles y guardados en `/tmp/creds.txt` | ~17:58:20 | ~24 | `tests/logs/perimetral_sesion_20260523_175204/creds.txt` |
+| T_lateral | `curl -s http://backend:5000/empleados` → JSON 3 empleados (200 OK, sin auth) | ~18:02:00 | ~244 | `tests/logs/perimetral_sesion_20260523_175204/lateral.json` |
+| T_e3_pcap | `tcpdump -i any -w /tmp/lateral.pcap -c 50 host backend &` lanzado antes del curl | ~18:02:00 | ~244 | `tests/logs/perimetral_sesion_20260523_175204/lateral.pcap` (tshark: 32 pkts, 3 tx HTTP en claro) |
+| T_objetivo | `psql -h db -U postgres -d empresa_db` → `count=3` + dump completo de `empleados` | ~18:02:30 | ~274 | `tests/logs/perimetral_sesion_20260523_175204/dump.txt` |
 
 ### 1.3 KPIs adicionales del refactor HTB
 
 | Métrica | Valor |
 |---|---|
-| Nº pasos previos al RCE | _____ |
-| Nº endpoints públicos que filtran información | _____ |
-| Nº CWE distintos materializables | _____ |
+| Nº pasos previos al RCE | **5** (recon HTTP → robots.txt → backup.txt → login → SSTI confirm) |
+| Nº endpoints públicos que filtran información | **2** (`/robots.txt` → rutas internas; `/backup.txt` → credenciales admin en texto claro) |
+| Nº CWE distintos materializables | **4** (CWE-1336 SSTI, CWE-200 Information Disclosure, CWE-306 Missing Auth en API interna, CWE-522 Insufficiently Protected Credentials) |
 
 ### 1.4 Observaciones de la sesión
 
-> _Espacio libre para anotar incidentes, diferencias respecto a lo previsto, decisiones tomadas en caliente, criterio exacto usado para fijar `T0_efectivo`, etc._
+**Sesión oficial** (la `perimetral_sesion_20260512_155313_prueba` queda marcada como ensayo: `dump.txt` y `lateral.pcap` eran 0 bytes en esa sesión).
+
+**T0_efectivo:** fijado en `17:57:56 CEST` según primera línea de PS1 con timestamp visible en `tests/RCE comandos y notas.txt` (`[17:57:56] root@webapp:/app#`). Criterio: instante en que el listener `ncat -lvnp 4444` recibió la conexión y quedó shell operativa.
+
+**Canal post-RCE:** reverse shell via SSTI + `pty.spawn("/bin/bash")`. No se realizó `stty raw -echo` completo (PTY parcial); se aplicó `stty rows 40 cols 120`. Terminal funcional para todos los comandos KPI sin pérdida de salida.
+
+**Timestamps post-RCE:** solo parcialmente precisos. `T_exfil_creds` aproximado por PS1 `[17:58:19]`. `T_lateral`, `T_e3_pcap` y `T_objetivo` aproximados por el timestamp de `nmap` en `e1_scan.log` (`2026-05-23 18:02 CEST`). Los Δ en §1.2.b son orientativos al minuto, no al segundo exacto.
+
+**lateral.pcap:** 32 paquetes capturados + corte durante 3ª transacción (aviso `cut short` de tshark — cosmético, causado por `kill` de tcpdump). Dos transacciones HTTP completas evidencian E3: `GET /empleados HTTP/1.1` y `HTTP/1.1 200 OK, JSON (application/json)` en texto claro. Se realizaron 3 llamadas curl al endpoint (re-ejecución manual), todas capturadas o iniciadas en el pcap.
+
+**Gobuster en pre-RCE:** se ejecutó un scan automático con `gobuster` (User-Agent `gobuster/3.8.2` visible en nginx.log). Este paso no forma parte del flujo HTB canónico de la plantilla; la secuencia manual comienza con `curl -I` y continúa con `robots.txt` / `backup.txt` consultados directamente. Los tiempos de §1.2.a reflejan solo los hitos manuales relevantes.
+
+**Nota reproducibilidad:** todos los artefactos son reproducibles con `./tests/scripts/logcapture_perimetral.sh` sobre el commit `c72d80b`.
 
 ---
 
@@ -145,12 +157,12 @@ A rellenar tras completar las dos campañas de captura. Es la tabla candidata a 
 
 | Cód. | Métrica | Escenario A (perimetral) | Escenario B (Zero Trust) | Δ / interpretación |
 |---|---|---|---|---|
-| G1 | Tiempo de Detección | (false, ∞) | (true, _____ s) | ZT introduce capacidad de detección inexistente en perimetral |
-| G2 | Profundidad del ataque | _____ nodos | _____ nodos | Reducción del _____ % en alcance lateral |
-| G3 | Tasa de bloqueo | (false, 0%) | (true, _____ %) | ZT introduce contención inexistente en perimetral |
-| E1 | Superficie visible | _____ / _____ | _____ / _____ | Reducción del _____ % en visibilidad interna |
-| E2 | Volumen fugado | _____ | _____ | Reducción de _____ bytes / _____ registros |
-| E3 | Integridad tráfico interno | claro | cifrado / rechazado | mTLS impide MITM y fuerza autenticación de servicio |
+| G1 | Tiempo de Detección | `(false, ∞)` — ningún SIEM ni alerta configurada | `(true, _____ s)` | ZT introduce capacidad de detección inexistente en perimetral |
+| G2 | Profundidad del ataque | **3 nodos** (webapp → backend → db) | _____ nodos | Reducción del _____ % en alcance lateral |
+| G3 | Tasa de bloqueo | `(false, 0 %)` — ningún control detuvo movimiento lateral ni acceso a DB | `(true, _____ %)` | ZT introduce contención inexistente en perimetral |
+| E1 | Superficie visible | **3 / 3** servicios accesibles desde webapp | _____ / 3 | Reducción del _____ % en visibilidad interna |
+| E2 | Volumen fugado | **~766 B / 3 reg. empleados + 1 cred. DB** | _____ | Reducción de _____ bytes / _____ registros |
+| E3 | Integridad tráfico interno | **texto claro** (HTTP sin TLS, JSON legible en pcap) | cifrado / rechazado | mTLS impide MITM y fuerza autenticación de servicio |
 
 ---
 

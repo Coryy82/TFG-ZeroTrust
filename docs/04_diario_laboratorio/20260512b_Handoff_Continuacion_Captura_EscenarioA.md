@@ -72,21 +72,21 @@ Orden típico alineado con plantilla/E3 ADR:
 
 ### 4.4 Cierre sesión evidencias host
 
-Desde otro terminal (no matar compose hasta copiar artefactos):
+El script [`tests/scripts/logcapture_perimetral.sh`](../../tests/scripts/logcapture_perimetral.sh) crea `tests/logs/perimetral_sesion_YYYYMMDD_HHMMSS/`, espera el ataque y, al pulsar ENTER, **copia automáticamente** desde `webapp:/tmp/`:
+
+- `lateral.pcap`, `lateral.json`, `creds.txt`, `dump.txt`, `e1_scan.log`
+
+Luego vuelca logs y pregunta si hacer `compose down`. No hace falta un segundo terminal para el `cp` salvo recuperación manual.
+
+Motivo de copiar antes del `down`: el sistema de ficheros efímero del contenedor pierde `/tmp/` al bajar compose; la plantilla pide rutas bajo **`tests/logs/`**.
+
+Copia manual (solo si la sesión ya existía o falló un artefacto con compose aún arriba):
 
 ```bash
 SESSION=$(ls -td tests/logs/perimetral_sesion_* | head -1)
-# ajustar nombres de contenedor proyecto si cambian el prefijo compose
 docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/lateral.pcap "${SESSION}/lateral.pcap"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/lateral.json "${SESSION}/lateral.json"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/creds.txt     "${SESSION}/creds.txt"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/dump.txt      "${SESSION}/dump.txt"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/e1_scan.log  "${SESSION}/e1_scan.log"
+# … resto de ficheros igual que en WEBAPP_ARTIFACTS del script
 ```
-
-Motivo de copiar: el sistema de ficheros efímero del contenedor pierde `/tmp/` al hacer `compose down`; la plantilla pide rutas bajo **`tests/logs/`**.
-
-**Script de ayuda:** [`tests/scripts/logcapture_perimetral.sh`](../../tests/scripts/logcapture_perimetral.sh) — sube compose, espera ENTER, vuelca `nginx.log`, `webapp.log`, etc.
 
 ---
 
@@ -171,7 +171,7 @@ Al retomar, decidir si esa sesión se etiqueta como **ensayo** o **oficial** seg
 3. Terminal.app listener + secuencia PTY §4.2 OR decisión documentada exec §4.2 último párrafo.
 4. Pre-RCE navegador + HAR §4.1.
 5. Post-RCE comandos **línea a línea** §4.3 incl. `psql` §8 si cliente instalado.
-6. `docker compose cp` artefactos §4.4; ENTER logcapture para volcar logs.
+6. ENTER en logcapture: copia artefactos §4.4 + volcado de logs (mismo script).
 7. Rellenar [`tests/00_PLANTILLA_KPI_v2.md`](../../tests/00_PLANTILLA_KPI_v2.md) §1.2.a/b y §1.1.
 8. Actualizar [`admin/STATE.md`](../../admin/STATE.md) tachando evidencias cuando quede sesión válida.
 

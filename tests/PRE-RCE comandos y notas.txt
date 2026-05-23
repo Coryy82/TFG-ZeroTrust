@@ -1,0 +1,14 @@
+# Find webapp
+nmap localhost
+
+# Webapp banner grabbing
+curl -I http://localhost:8080
+
+# Listar directorios webapp
+gobuster dir -u http://localhost:8080 -w /snap/seclists/current/Discovery/Web-Content/common.txt
+
+# Scan robots.txt
+curl -sS http://localhost:8080/robots.txt
+
+# Scan backup.txt
+curl -sS http://localhost:8080/backup.txt

@@ -1,0 +1,67 @@
+db-1  | 2026-05-23T15:52:10.388504196Z The files belonging to this database system will be owned by user "postgres".
+db-1  | 2026-05-23T15:52:10.388541405Z This user must also own the server process.
+db-1  | 2026-05-23T15:52:10.388544402Z 
+db-1  | 2026-05-23T15:52:10.389169424Z The database cluster will be initialized with locale "en_US.utf8".
+db-1  | 2026-05-23T15:52:10.389193546Z The default database encoding has accordingly been set to "UTF8".
+db-1  | 2026-05-23T15:52:10.389197765Z The default text search configuration will be set to "english".
+db-1  | 2026-05-23T15:52:10.389201162Z 
+db-1  | 2026-05-23T15:52:10.389204138Z Data page checksums are disabled.
+db-1  | 2026-05-23T15:52:10.389207064Z 
+db-1  | 2026-05-23T15:52:10.389210041Z fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1  | 2026-05-23T15:52:10.397784585Z creating subdirectories ... ok
+db-1  | 2026-05-23T15:52:10.397953634Z selecting dynamic shared memory implementation ... posix
+db-1  | 2026-05-23T15:52:10.423711667Z selecting default max_connections ... 100
+db-1  | 2026-05-23T15:52:10.450413016Z selecting default shared_buffers ... 128MB
+db-1  | 2026-05-23T15:52:10.603409853Z selecting default time zone ... UTC
+db-1  | 2026-05-23T15:52:10.606337604Z creating configuration files ... ok
+db-1  | 2026-05-23T15:52:10.766544205Z running bootstrap script ... ok
+db-1  | 2026-05-23T15:52:10.990799692Z sh: locale: not found
+db-1  | 2026-05-23T15:52:10.991563060Z 2026-05-23 15:52:10.991 UTC [35] WARNING:  no usable system locales were found
+db-1  | 2026-05-23T15:52:11.439079637Z performing post-bootstrap initialization ... ok
+db-1  | 2026-05-23T15:52:12.455606240Z initdb: warning: enabling "trust" authentication for local connections
+db-1  | 2026-05-23T15:52:12.455625942Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1  | 2026-05-23T15:52:12.455606976Z syncing data to disk ... ok
+db-1  | 2026-05-23T15:52:12.455631764Z 
+db-1  | 2026-05-23T15:52:12.455633558Z 
+db-1  | 2026-05-23T15:52:12.455635282Z Success. You can now start the database server using:
+db-1  | 2026-05-23T15:52:12.455636995Z 
+db-1  | 2026-05-23T15:52:12.455638719Z     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1  | 2026-05-23T15:52:12.455640363Z 
+db-1  | 2026-05-23T15:52:12.501910308Z waiting for server to start....2026-05-23 15:52:12.501 UTC [41] LOG:  starting PostgreSQL 15.18 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1  | 2026-05-23T15:52:12.504950760Z 2026-05-23 15:52:12.504 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1  | 2026-05-23T15:52:12.515510075Z 2026-05-23 15:52:12.515 UTC [44] LOG:  database system was shut down at 2026-05-23 15:52:11 UTC
+db-1  | 2026-05-23T15:52:12.523681006Z 2026-05-23 15:52:12.523 UTC [41] LOG:  database system is ready to accept connections
+db-1  | 2026-05-23T15:52:12.576608231Z  done
+db-1  | 2026-05-23T15:52:12.576638596Z server started
+db-1  | 2026-05-23T15:52:12.661211932Z CREATE DATABASE
+db-1  | 2026-05-23T15:52:12.662026383Z 
+db-1  | 2026-05-23T15:52:12.662257308Z 
+db-1  | 2026-05-23T15:52:12.662264143Z /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init.sql
+db-1  | 2026-05-23T15:52:12.690627121Z CREATE TABLE
+db-1  | 2026-05-23T15:52:12.692901850Z INSERT 0 3
+db-1  | 2026-05-23T15:52:12.693855361Z 
+db-1  | 2026-05-23T15:52:12.693868619Z 
+db-1  | 2026-05-23T15:52:12.695183724Z waiting for server to shut down...2026-05-23 15:52:12.695 UTC [41] LOG:  received fast shutdown request
+db-1  | 2026-05-23T15:52:12.698078184Z .2026-05-23 15:52:12.697 UTC [41] LOG:  aborting any active transactions
+db-1  | 2026-05-23T15:52:12.700492462Z 2026-05-23 15:52:12.700 UTC [41] LOG:  background worker "logical replication launcher" (PID 47) exited with exit code 1
+db-1  | 2026-05-23T15:52:12.700648569Z 2026-05-23 15:52:12.700 UTC [42] LOG:  shutting down
+db-1  | 2026-05-23T15:52:12.703689405Z 2026-05-23 15:52:12.703 UTC [42] LOG:  checkpoint starting: shutdown immediate
+db-1  | 2026-05-23T15:52:13.034622539Z 2026-05-23 15:52:13.034 UTC [42] LOG:  checkpoint complete: wrote 930 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.029 s, sync=0.292 s, total=0.334 s; sync files=304, longest=0.004 s, average=0.001 s; distance=4254 kB, estimate=4254 kB
+db-1  | 2026-05-23T15:52:13.046403952Z 2026-05-23 15:52:13.046 UTC [41] LOG:  database system is shut down
+db-1  | 2026-05-23T15:52:13.096378240Z  done
+db-1  | 2026-05-23T15:52:13.096412864Z server stopped
+db-1  | 2026-05-23T15:52:13.097828642Z 
+db-1  | 2026-05-23T15:52:13.097843283Z PostgreSQL init process complete; ready for start up.
+db-1  | 2026-05-23T15:52:13.097847301Z 
+db-1  | 2026-05-23T15:52:13.133386342Z 2026-05-23 15:52:13.132 UTC [1] LOG:  starting PostgreSQL 15.18 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1  | 2026-05-23T15:52:13.133418250Z 2026-05-23 15:52:13.133 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1  | 2026-05-23T15:52:13.133422559Z 2026-05-23 15:52:13.133 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1  | 2026-05-23T15:52:13.141208101Z 2026-05-23 15:52:13.140 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1  | 2026-05-23T15:52:13.149891537Z 2026-05-23 15:52:13.149 UTC [59] LOG:  database system was shut down at 2026-05-23 15:52:13 UTC
+db-1  | 2026-05-23T15:52:13.158602476Z 2026-05-23 15:52:13.158 UTC [1] LOG:  database system is ready to accept connections
+db-1  | 2026-05-23T15:57:13.181951556Z 2026-05-23 15:57:13.181 UTC [57] LOG:  checkpoint starting: time
+db-1  | 2026-05-23T15:57:17.363867898Z 2026-05-23 15:57:17.363 UTC [57] LOG:  checkpoint complete: wrote 44 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=4.131 s, sync=0.030 s, total=4.184 s; sync files=12, longest=0.009 s, average=0.003 s; distance=252 kB, estimate=252 kB
+db-1  | 2026-05-23T16:02:03.583150524Z 2026-05-23 16:02:03.582 UTC [94] LOG:  could not receive data from client: Connection reset by peer
+db-1  | 2026-05-23T16:09:46.774147273Z 2026-05-23 16:09:46.773 UTC [118] FATAL:  password authentication failed for user "-d"
+db-1  | 2026-05-23T16:09:46.774220819Z 2026-05-23 16:09:46.773 UTC [118] DETAIL:  Role "-d" does not exist.
+db-1  | 2026-05-23T16:09:46.774225979Z 	Connection matched pg_hba.conf line 100: "host all all all scram-sha-256"
