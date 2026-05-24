@@ -65,3 +65,43 @@
   - **Eliminar por completo la caracterización pre-RCE.** Pierde material útil para el capítulo de diseño del escenario y para la tabla §1.3 / §2.3 (pasos previos al RCE, CWEs encadenados).
 - **Impacto:** Las nuevas sesiones de captura deben usar v2. Las entradas ADR previas que citan `tests/00_PLANTILLA_KPI.md` siguen siendo válidas como contexto histórico; donde proceda, enlazar también v2. El denominador de "pasos bloqueados por ZT" en §2.3 de v2 pasa a referirse a los **cuatro hitos post-RCE** de §2.2.b (sustituye al conteo sobre nueve hitos de la v1).
 - **Trazabilidad:** correos tutor §10–§12 en [`docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md`](../docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md); plantilla operativa [`tests/00_PLANTILLA_KPI_v2.md`](../tests/00_PLANTILLA_KPI_v2.md).
+
+---
+
+**2026-05-24 | Cambio de deadline a 21/06/2026 y activación del Sprint Final**
+
+- **Decisión:** Pivotar la convocatoria objetivo de septiembre a **julio**. El nuevo deadline de entrega es el **21/06/2026**. El ROADMAP v1 queda archivado en `admin/ROADMAP_v1_archivado.md`. El plan activo es `admin/ROADMAP_v2_sprint_final.md`.
+- **Motivo:** El contrato a tiempo completo de Pau finaliza, liberando disponibilidad de 12h/día a partir del 02/06. El tutor (correo 24/05/2026) abre la puerta explícitamente ("Lo podemos intentar sí") condicionado a un borrador "razonablemente decente" previo. Entregar en julio permite optar al máster sin perder prioridad por falta de TFG.
+- **Capacidad efectiva:** ~190-200h totales (9-12h hasta 01/06; ~180h del 02 al 21/06 a 12h/día × 0.75).
+- **Impacto en gestión:** el agente semanal debe leer `ROADMAP_v2_sprint_final.md` como fuente de verdad. `ROADMAP.md` redirige a v2. `STATE.md` reescrito con nueva estructura de tareas y hitos del Sprint Final.
+
+---
+
+**2026-05-24 | Reducción de alcance técnico del Escenario B para Sprint Final**
+
+- **Decisión:** El Escenario B se implementa con el siguiente alcance reducido (mínimo viable defendible):
+  1. Microsegmentación con 3 redes Docker aisladas: `web_zone`, `backend_zone`, `db_zone`.
+  2. Identidad de servicio mínima: `.env` por servicio, sin credenciales compartidas entre contenedores.
+  3. mTLS en un único canal: `webapp ↔ backend`. Certs autofirmados con OpenSSL. Caddy o Nginx como proxy TLS.
+  4. Wazuh manager + 1 agent en `webapp`, con 3-5 reglas custom para los 4 hitos post-RCE (§1.2.b de la plantilla KPI v2).
+- **Alternativas descartadas:**
+  - **Wazuh completo con dashboard + integraciones:** tiempo de setup 30-50h con varianza alta. No aporta valor diferencial a los KPIs G1/G3, que solo necesitan que exista un mecanismo y que dispare una alerta.
+  - **mTLS en todo el stack (incluido backend ↔ db):** añade ~8-12h de configuración por un canal secundario que no es el objetivo principal de comparación. Se documenta como trabajo futuro.
+  - **Suricata como sonda de red:** el diseño inicial (borrador pre-propuesta) lo incluía. La detección host-based de Wazuh es más relevante para el modelo de amenazas definido (RCE dentro del contenedor). Suricata queda como trabajo futuro documentado en Cap. 7.
+- **NO se implementa en este sprint:** automatización avanzada de scripts de ataque, ataques de spoofing adicionales, dashboard Wazuh custom, escalado multi-agente, despliegue Kubernetes.
+- **Impacto:** la tesis comparativa sigue siendo completamente defendible con este alcance. Los 6 KPIs son medibles y comparables. El tribunal puede preguntar por Suricata → justificación en `docs/03_memoria_tfg/04_diseno.md §4.3.5`.
+
+---
+
+**2026-05-24 | Criterio de fallback Wazuh → Falco (checkpoint duro 04/06 20:00)**
+
+- **Decisión:** Si a las **20:00 del 04/06/2026** Wazuh no tiene (a) el agent enrollado en `webapp` Y (b) al menos 1 alerta activa funcionando, se abandona Wazuh y se despliega Falco como sustituto.
+- **Motivo:** Wazuh tiene varianza de instalación alta (10-40h documentadas en la comunidad para entornos Docker). La tesis de "observabilidad activa = G1 `(true, X s)` y G3 `(true, Y%)`" es igualmente defendible con Falco (runtime security, reglas YAML). El cambio de herramienta no invalida la comparativa A/B.
+- **Protocolo de activación del fallback:**
+  1. `git checkout` de la rama o directorio de configuración Wazuh.
+  2. Crear `infra/zero_trust/falco/` con configuración base.
+  3. Definir reglas Falco equivalentes a las 3-5 reglas Wazuh previstas.
+  4. Tiempo estimado de reconversión: 3-4h.
+- **Alternativas descartadas:** Logs centralizados con script Python (solución casera). Se descarta porque no produce alertas con timestamp preciso para G1 y no es nominalmente comparable con las herramientas de observabilidad citadas en el Estado del Arte.
+- **Impacto:** este ADR debe citarse en `docs/03_memoria_tfg/04_diseno.md §4.3.4` como decisión de diseño explícita, no como improvisación.
+- **Trazabilidad:** `admin/ROADMAP_v2_sprint_final.md` §Fase 2, día 04/06.

@@ -1,56 +1,110 @@
 # STATE - Seguimiento TFG Ciberseguridad
 
-Fecha de actualizacion: 2026-05-23
+Fecha de actualización: 2026-05-24
 
-## 1. Resumen Semanal
-- Commits ultimos 7 dias: **8 entradas en git log**: 7 commits con aportacion directa (`575c5f7`, `ff4df84`, `ceabaf2`, `650fec4`, `b2380c7`, `15d575e`, `7b80070`) y 1 merge (`2838d12`).
-- Trabajo completado segun commits: captura operativa del Escenario A con payload RCE, logs, evidencias visuales y `lateral.pcap`; publicacion de `tests/00_PLANTILLA_KPI_v2.md`; ampliacion de `admin/DECISIONS_LOG.md` con la separacion metodologica pre-RCE/post-RCE; informe de estado del Escenario A; mejora del Dockerfile de `webapp`; y normalizacion menor de `.gitignore` en workflows.
-- Avance tecnico principal: el Escenario A ya no esta solo disenado, sino respaldado por evidencias de ejecucion reproducibles para navegador, consola, logs de servicios, exfiltracion y trafico lateral.
-- Avance metodologico principal: la comparativa A/B queda mejor acotada al instante `T0_efectivo` post-RCE, evitando mezclar reconocimiento/login/SSTI con los KPIs oficiales de microsegmentacion, deteccion y bloqueo.
-- Tendencia observada: la velocidad sigue siendo saludable, pero el trabajo continua centrado en cerrar y ordenar el "antes" perimetral; el arranque efectivo de Escenario B Zero Trust/Wazuh sigue pendiente.
+---
 
-## 2. Comparativa y Retrasos
-- Comparado con la semana anterior, la actividad baja ligeramente de **9 a 8 entradas de log** y de **8 a 7 commits directos**. La bajada no indica bloqueo: los commits contienen entregables pesados de evidencia, capturas, logs y plantilla KPI v2.
-- Delta frente al tablero anterior:
-  - La parte de ejecucion/captura de T7 avanza de forma sustancial: ya existen payload, capturas, logs y `pcap`.
-  - Sigue pendiente convertir esa evidencia bruta en tabla KPI cerrada con valores G1, G2, G3, E1, E2 y E3.
-  - T8-T11 permanecen activos: no hay commits que indiquen prototipo Zero Trust, Wazuh, microsegmentacion, mTLS o borrador academico consolidado.
-- Alineacion con `admin/ROADMAP.md`:
-  - **Marzo-Abril (Escenario A perimetral):** practicamente recuperado en laboratorio y evidencias, aunque falta consolidacion cuantitativa final.
-  - **Mayo (Zero Trust + Wazuh):** retraso activo. El roadmap esperaba segmentacion, SIEM y alertas; el repositorio aun no muestra implementacion del Escenario B.
-  - **Junio (experimento y medicion):** riesgo creciente si el sprint actual no convierte la baseline A en tabla final y no arranca B con controles medibles.
+## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
+
+> **Nuevo deadline: 21/06/2026** (convocatoria de julio).
+> El plan original orientado a septiembre ha quedado archivado en `admin/ROADMAP_v1_archivado.md`.
+> El plan activo es `admin/ROADMAP_v2_sprint_final.md`.
+> ADR correspondiente registrado en `admin/DECISIONS_LOG.md` (entrada 2026-05-24).
+
+Capacidad efectiva restante:
+- 24/05 → 01/06: ~9-12h (1-2h/día)
+- 02/06 → 21/06: ~180h (12h/día × 0.75 fatiga)
+- **Total: ~190-200h**
+
+---
+
+## 1. Resumen Semanal (semana del 24/05/2026)
+
+- Sprint arrancado: **Sprint Final 21/06**.
+- Commits previos (semana anterior, 8 entradas): cierre baseline Escenario A, plantilla KPI v2 §1 completa, script `logcapture_perimetral.sh` actualizado, informe técnico sesión oficial `perimetral_sesion_20260523_175204`.
+- Trabajo completado esta sesión: archivado ROADMAP v1, creado ROADMAP v2 sprint final, actualización de STATE, esqueleto 9 capítulos ETSINF, ADR de cambio de deadline y alcance.
+- Avance técnico principal: **Escenario A completamente cerrado**. Baseline cuantitativa defendible: G1–G3, E1–E3 con evidencias verificadas en `tests/00_PLANTILLA_KPI_v2.md §1`.
+- Avance pendiente más urgente: Estado del Arte v0 (25-30/05) + envío al tutor el 31/05.
+
+---
+
+## 2. Estado por Escenario
+
+### Escenario A (Perimetral) — CERRADO
+- Sesión oficial: `perimetral_sesion_20260523_175204`
+- Todos los KPIs medidos y defendibles: G1 `(false, ∞)`, G2 `3 nodos`, G3 `(false, 0%)`, E1 `3/3`, E2 `~766B/3 archivos`, E3 `texto claro`.
+- Evidencias: `creds.txt`, `lateral.json`, `dump.txt`, `lateral.pcap` (verificado tshark), `e1_scan.log`, logs de servicios.
+- Plantilla KPI v2 §1 completa. §3 columna A completa.
+- **No se abre más para captura.** La sesión del 23/05 es la oficial.
+
+### Escenario B (Zero Trust) — NO INICIADO
+- `infra/zero_trust/` contiene únicamente `.gitkeep`.
+- Especificación pendiente (target: 28-29/05 o 01/06).
+- Implementación planificada: 02-05/06.
+- Checkpoint Wazuh: 04/06 a las 20:00 → si falla, switch a Falco.
+
+---
 
 ## 3. Bloqueos
-- Bloqueo principal (actualizado 2026-05-23): la baseline A queda cerrada. El unico bloqueo activo es que el Escenario B no esta iniciado. Sin red Zero Trust ni Wazuh, no hay contraste A/B para los KPIs de junio.
-- Riesgo academico: "Estado del Arte" y "Diseno de la Solucion" siguen por detras del roadmap y deben avanzar en paralelo al prototipo tecnico.
-- ~~Riesgo metodologico: evidencias brutas sin tabla KPI~~ — RESUELTO (2026-05-23): plantilla §1 completa con valores G1-G3, E1-E3 y rutas de evidencia verificadas.
+
+- **Bloqueo activo:** Escenario B no iniciado. Sin red Zero Trust ni observabilidad no hay comparativa A/B ni KPIs §2/§3.
+- **Bloqueo potencial (R1):** Wazuh. Mitigación: fallback a Falco con timestamp duro el 04/06.
+- **Bloqueo potencial (R3):** Tutor puede tardar 1-3 semanas en responder. Mitigación: no bloquear el sprint; avanzar en paralelo.
+- **Memoria:** `docs/03_memoria_tfg/` estructurada hoy (esqueleto 9 caps). Redacción de fondo arranca el 25/05.
+
+---
 
 ## 4. Tablero del Sprint Actual
+
 ### TODO
-- [ ] T13. Crear especificacion minima del Escenario B: controles Zero Trust contra cada hito post-RCE del Escenario A.
-- [ ] T14. Iniciar prototipo `infra/zerotrust/` con separacion Web/BBDD, politicas de red y criterio de bloqueo verificable.
-- [ ] T15. Estudiar despliegue minimo de Wazuh/SIEM en Docker Compose y decidir eventos obligatorios para G1/G3.
-- [ ] T16. Redactar esqueletos de "Estado del Arte" y "Diseno de la Solucion" con NIST 800-207, BeyondCorp, OWASP y comparativa perimetral vs Zero Trust.
-- [ ] T17. Preparar protocolo de pruebas A/B post-RCE: comandos, tiempos, evidencias esperadas y tabla comparativa final.
+
+- [ ] **[HUMANO] `redactar_eda_v0`** — Redactar Estado del Arte v0 (25-30/05): NIST 800-207, BeyondCorp, OWASP, microsegmentación, comparativa perimetral vs ZT. Mínimo 5-6 páginas. Usar `docs/01_investigacion/` como insumo.
+- [ ] **[HUMANO] `spec_escenario_b`** — Redactar especificación Escenario B en `docs/01_investigacion/20260528_Prototipo_ZeroTrust.md` (28-29/05): 3 redes Docker, mTLS webapp↔backend, Wazuh mínimo + criterio fallback.
+- [ ] **[HUMANO] `email_tutor_31_05`** — Enviar email al tutor el 31/05 con índice, EdA v0 y propuesta de alcance. Preguntar si es "razonablemente decente".
+- [ ] **[HUMANO] `implementar_escenario_b`** — Implementar `infra/zero_trust/` (02-05/06). Checkpoint Wazuh 04/06 20:00.
+- [ ] **[HUMANO] `ejecutar_pruebas_ab`** — Pruebas A/B post-RCE, captura logs, cierre KPIs §2 y §3 (06-08/06).
+- [ ] **[HUMANO] `redactar_cap_3_4_5`** — Caps. 3 Análisis del Problema, 4 Diseño, 5 Desarrollo e Implantación, 6 Pruebas (09-13/06).
+- [ ] **[HUMANO] `envio_tutor_14_06`** — Email al tutor el 14/06 con memoria al 60-70%.
+- [ ] **[HUMANO] `redactar_intro_conclusiones`** — Caps. 1 Introducción y 7 Conclusiones (15-16/06).
+- [ ] **[HUMANO] `setup_overleaf`** — Crear proyecto Overleaf con plantilla ETSINF UPV (14/06).
+- [ ] **[HUMANO] `transferir_a_overleaf`** — Transferir MD a Overleaf, maquetar, BibTeX (17-18/06).
+- [ ] **[HUMANO] `envio_tutor_19_06`** — PDF compilado al tutor el 19/06.
+- [ ] **[HUMANO] `revision_final_entrega`** — Correcciones + depósito en plataforma el 21/06.
 
 ### DOING
-- [ ] D6. Disenar el Escenario B Zero Trust con visibilidad desde el primer incremento.
-  - [ ] Mapear cada hito post-RCE contra segmentacion, identidad de servicio, secretos y observabilidad.
-  - [ ] Definir que alerta debe emitir Wazuh para G1.
-  - [ ] Definir que bloqueo cuenta para G3.
-  - [ ] Fijar criterio de exito: trafico ilegitimo cortado y evento trazable generado.
 
-### DONE
-- [x] T12. Consolidar baseline A en `tests/00_PLANTILLA_KPI_v2.md` §1: valores G1-G3, E1-E3 con rutas verificadas. E3 confirmado con tshark (HTTP texto claro). Sesion oficial: `perimetral_sesion_20260523_175204`. (2026-05-23)
-- [x] D5. Cerrar baseline cuantitativa del Escenario A: pcap verificado, dump.txt con datos reales, tabla KPI defendible para la memoria. (2026-05-23)
-- [x] Integrar `docker compose cp` de artefactos en `logcapture_perimetral.sh` y corregir CRLF. (2026-05-23)
-- [x] Capturar evidencias brutas del Escenario A: RCE, screenshots, logs de servicios, `creds.txt`, `lateral.json` y `lateral.pcap`.
-- [x] Publicar `tests/00_PLANTILLA_KPI_v2.md` con separacion pre-RCE/post-RCE y definicion de `T0_efectivo`.
-- [x] Registrar ADR del 2026-05-12 sobre comparabilidad metodologica de KPIs post-RCE.
-- [x] Crear informe tecnico de estado del Escenario A.
-- [x] Mejorar soporte de entorno para la sesion perimetral mediante ajustes de Dockerfile y normalizacion de evidencias.
-- [x] D2. Refactorizar Escenario A hacia formato HTB Academy: portal Bootstrap, `robots.txt`, `backup.txt`, login, dashboard, SSTI autenticado, RCE y movimiento lateral documentado.
-- [x] D1. Completar codigo fuente de `infra/perimetral/` para hacer el entorno ejecutable: `backend`, `db`, `nginx`, `webapp`, requisitos y configuracion base.
-- [x] Definir esquema KPI del Escenario A: G1/G3 como tupla mecanismo/valor y E3 mediante captura `tcpdump`.
-- [x] Reorganizar documentacion a convencion `docs/01_investigacion/`, `docs/02_reuniones_tutor/`, `docs/03_memoria_tfg/`, `docs/04_diario_laboratorio/`.
-- [x] Documento de diseno del Escenario A: `docs/01_investigacion/20260419_Prototipo_Red_Perimetral.md`.
+*(vacío — sprint recién iniciado)*
+
+### DONE (Sprint Final — desde 24/05)
+
+- [x] **`archive_roadmap_v1`** — `ROADMAP_v1_archivado.md` creado, `ROADMAP_v2_sprint_final.md` activo, `ROADMAP.md` redirigido. (2026-05-24)
+- [x] **`actualizar_state`** — STATE.md reescrito con nuevo objetivo (21/06), nueva estructura de tareas. (2026-05-24)
+- [x] **`crear_esqueleto_memoria`** — 9 archivos MD creados en `docs/03_memoria_tfg/` siguiendo ETSINF clásica. Resumen y semilla reutilizados. (2026-05-24)
+- [x] **`marcar_obsoletos`** — README de borradores creado; `Metricas_iniciales.md` marcado OBSOLETO explícitamente. (2026-05-24)
+- [x] **`registrar_adr_alcance`** — ADR de cambio de deadline, reducción de alcance y fallback Wazuh→Falco registrado en DECISIONS_LOG.md. (2026-05-24)
+
+### DONE (Sprints anteriores — referencia)
+
+- [x] T12. Consolidar baseline A en `tests/00_PLANTILLA_KPI_v2.md` §1: valores G1-G3, E1-E3 con rutas verificadas. (2026-05-23)
+- [x] D5. Cerrar baseline cuantitativa del Escenario A. (2026-05-23)
+- [x] Integrar `docker compose cp` en `logcapture_perimetral.sh`. (2026-05-23)
+- [x] Capturar evidencias brutas del Escenario A: RCE, screenshots, logs, `creds.txt`, `lateral.json`, `lateral.pcap`. (2026-05-23)
+- [x] Publicar `tests/00_PLANTILLA_KPI_v2.md` con separación pre-RCE/post-RCE. (2026-05-12)
+- [x] Registrar ADR del 2026-05-12 sobre comparabilidad metodológica KPIs post-RCE.
+- [x] D2. Refactorizar Escenario A a formato HTB Academy. (2026-05-09)
+- [x] D1. Completar código fuente de `infra/perimetral/`. (anterior)
+- [x] Reorganizar documentación a convención `docs/01_investigacion/`, `docs/02_reuniones_tutor/`, `docs/03_memoria_tfg/`, `docs/04_diario_laboratorio/`.
+
+---
+
+## 5. Hitos críticos del Sprint Final
+
+| Fecha  | Hito                                                       | Estado   |
+|--------|------------------------------------------------------------|----------|
+| 31/05  | Borrador enviado al tutor (EdA v0 + índice 8 caps)         | Pendiente |
+| 04/06  | Checkpoint Wazuh (20:00) — continuar o switch Falco        | Pendiente |
+| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | Pendiente |
+| 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                | Pendiente |
+| 16/06  | Caps. 1 y 7 redactados                                     | Pendiente |
+| 19/06  | PDF compilado en Overleaf + email final al tutor           | Pendiente |
+| 21/06  | **ENTREGA** — PDF depositado en plataforma                 | Pendiente |
