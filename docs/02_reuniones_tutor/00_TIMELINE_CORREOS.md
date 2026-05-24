@@ -295,6 +295,36 @@
 
 ---
 
+## 15. 2026-05-24 — Pau → Héctor (solicitud convocatoria julio)
+
+> Buenos días Héctor,
+>
+> Te escribo para comentarte un par de cosas. Primero, decirte que voy avanzando en el TFG, tengo algunos artículos y material para redactar el Estado del Arte y voy a empezar a montar el Escenario con Zero Trust. Mis próximos pasos serán redactar la Introducción y el Estado del Arte y estudiar y montar la red Zero Trust.
+>
+> Segundo, mi contrato a tiempo completo está por terminar y me ha surgido la duda sobre qué tan realista sería entregar el TFG para la convocatoria de julio, sé que es un poco precipitado, pero me preguntaba si habría opción de llegar si le dedico muchas horas. Esto lo haría con el fin de poder optar a un master y no perder prioridad por no tener el TFG.
+>
+> Un saludo y gracias de antemano,
+> Pau Pérez Marco
+
+---
+
+## 16. 2026-05-24 — Héctor → Pau (luz verde condicionada a borrador)
+
+> Buenos días Pau,
+>
+> Lo podemos intentar sí.
+>
+> Lo que suelo pedir es un "mínimo" para realizar la propuesta (es mejor eso que luego echarse atrás).
+>
+> La idea sería que tuvieras un borrador lo antes posible sobre qué cosas vas a tratar en cada parte del TFG. Para ello tienes que hacer un trabajo de ver otros TFGs como lo hacen etc. Se supone que estas cosas debéis empezar ya a realizarlas como parte del TFG (no solo la parte técnica).
+>
+> Así que mira los plazos, hazte un plan, y cuando tengas algo "razonablemente decente" para enseñarme, me lo pasas y lo hablamos para ver si llegamos.
+>
+> Un saludo,
+> Hector.
+
+---
+
 ## Estado al cierre del timeline
 
 - **Propuesta:** APROBADA por el tutor el 2026-04-09 y oficializada en EBRON entre el 2026-04-19 y el 2026-04-27.
@@ -302,3 +332,4 @@
 - **Modelo de amenazas:** validado en su versión v2 (correo 2026-03-17 → respuesta 2026-04-09).
 - **Resumen:** validado provisionalmente, abierto a afinar redacción más adelante.
 - **Metodología de trabajo:** acordada en el correo 2026-04-20 (origen normativo del [`00_DIRECTRICES_TUTOR.md §5–§6`](00_DIRECTRICES_TUTOR.md)).
+- **Convocatoria objetivo:** CAMBIADA a **julio 2026**. Deadline de entrega: **21/06/2026**. Luz verde del tutor condicionada a borrador "razonablemente decente" (correo 2026-05-24, §16). Ver [`00_DIRECTRICES_TUTOR.md §7`](00_DIRECTRICES_TUTOR.md) para la estrategia de comunicación derivada.

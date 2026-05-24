@@ -23,3 +23,12 @@
   1. **Burocracia:** TFG subido, validado por el tutor y APROBADO oficialmente por Secretaría. Título oficial fijado: *"Análisis comparativo de seguridad entre modelos de Defensa Perimetral y Zero Trust en infraestructuras contenerizadas"*.
   2. **Metodología acordada:** Trabajar con plan previo (no improvisar). Mantener un diario de laboratorio interno y recopilar bibliografía en paralelo.
 - **ESTADO:** 🟢 Burocracia inicial completada. Proyecto 100% oficializado.
+
+## 2026-05-24 — Solicitud de entrega en julio y activación del Sprint Final
+
+- **Evento:** Correo de Pau al tutor solicitando valoración sobre entrega en convocatoria de julio. Respuesta del tutor abriendo la puerta condicionada a un borrador previo.
+- **Correo Pau → Héctor:** Pau informa de avance (material para Estado del Arte, inicio de montaje del Escenario B) y pregunta si es viable entregar en julio dado que su contrato a tiempo completo está por terminar.
+- **Respuesta Héctor:** "Lo podemos intentar sí." Condición explícita: tener un borrador "razonablemente decente" lo antes posible antes de comprometerse formalmente. Instrucción: consultar otros TFGs, hacer un plan y enviarlo cuando sea defendible.
+- **Decisión tomada:** Activación del Sprint Final con deadline 21/06/2026. Plan documentado en `admin/ROADMAP_v2_sprint_final.md`. ADR registrado en `admin/DECISIONS_LOG.md`.
+- **Próximo hito de comunicación:** envío al tutor el **31/05/2026** con índice de 8 capítulos + Estado del Arte v0 + propuesta de alcance del Escenario B.
+- **ESTADO:** 🟡 Sprint Final activo. Pendiente validación del tutor el 31/05.
