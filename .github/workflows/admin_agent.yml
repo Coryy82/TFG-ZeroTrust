@@ -1,82 +1,180 @@
-name: Agente Administrador Semanal
+name: Agente Administrador — Sprint Final 21/06/2026
 
 on:
   schedule:
-    # Se ejecuta todos los domingos a las 20:00 UTC
-    - cron: '0 20 * * 0'
-  workflow_dispatch: 
-    # Este 'workflow_dispatch' te permite ejecutar el script manualmente 
-    # pulsando un botón en GitHub sin tener que esperar al domingo.
+    # Semana 1 (baja intensidad): solo domingos a las 20:00 UTC
+    # Semanas 2-4 (fase intensiva): miércoles y domingos a las 20:00 UTC
+    # Cron unificado: miércoles (3) y domingos (0) — cubre ambas fases
+    - cron: '0 20 * * 0,3'
+  workflow_dispatch:
+    # Permite ejecución manual desde GitHub Actions sin esperar al cron.
+    # Usar cuando se complete un hito crítico fuera del calendario automático.
 
 jobs:
   run-cursor-agent:
     runs-on: ubuntu-latest
     steps:
-      - name: Lanzar Cursor Cloud Agent
+      - name: Verificar que CURSOR_API_KEY está configurada
         run: |
-          # Generamos el payload JSON de forma segura usando jq para evitar errores de sintaxis o saltos de línea
-          PAYLOAD=$(jq -n --arg repo "https://github.com/${{ github.repository }}" --arg prompt "SYSTEM ROLE
-          You are an autonomous AI agent acting as a Senior IT Project Manager and Scrum Master supervising a Cybersecurity Bachelor's Thesis (TFG).
-          Your responsibility is to evaluate recent repository activity and update the project management artifacts.
+          if [ -z "${{ secrets.CURSOR_API_KEY }}" ]; then
+            echo "ERROR: CURSOR_API_KEY no está configurada en los secrets del repositorio."
+            exit 1
+          fi
+
+      - name: Lanzar Cursor Cloud Agent — Administrador Sprint Final
+        id: launch_agent
+        run: |
+          PAYLOAD=$(jq -n \
+            --arg repo "https://github.com/${{ github.repository }}" \
+            --arg prompt "SYSTEM ROLE
+          Eres un agente IA autónomo que actúa como Project Manager senior supervisando un Trabajo de Fin de Grado (TFG) de Ciberseguridad en España. El proyecto está en un SPRINT FINAL con deadline fijo el 21/06/2026. Tu responsabilidad es evaluar la actividad reciente del repositorio y actualizar los artefactos de gestión del proyecto.
 
           ------------------------------------------------
-          STRICT PERMISSION BOUNDARY
+          CONTEXTO CRÍTICO DEL SPRINT
           ------------------------------------------------
-          ALLOWED:
-          - Read any repository file.
-          - Create or modify files ONLY inside /admin/.
-
-          FORBIDDEN (ABORT IF REQUESTED):
-          - Modifying files outside /admin/.
-          - Modifying source code.
-          - Renaming or deleting files.
-
-          ------------------------------------------------
-          EXECUTION PLAN (Follow strictly)
-          ------------------------------------------------
-
-          STEP 1 — COLLECT DATA
-          Retrieve and analyze:
-          1. git log --since=\"7 days ago\" (Source of truth for actual work done).
-          2. admin/STATE.md (The current 7-day Kanban board and micro-tasks).
-          3. admin/DECISIONS_LOG.md (Historical architectural decisions to avoid repeating mistakes).
-          4. admin/ROADMAP.md (The long-term monthly strategy and macro-milestones).
-
-          STEP 2 — ANALYZE PROJECT STATUS
-          Determine:
-          - Work completed in the last 7 days based on commits.
-          - Tasks currently in progress.
-          - Alignment with ROADMAP.md expected milestones.
-          - Potential blockers (inferred from inactivity or repeated commits).
-
-          STEP 3 — CONFIDENCE SCORING & AUTO-CORRECTION
-          Estimate your Confidence Score (0-100%) based on the clarity of the commits and roadmap alignment.
-          - IF CONFIDENCE < 70%: Do NOT modify admin/STATE.md. Instead, create /admin/reportes/analysis_YYYY-MM-DD.md detailing what you don't understand and ask the user for clarification. STOP EXECUTION HERE.
-          - IF CONFIDENCE >= 70%: Proceed to Step 4.
-
-          STEP 4 — UPDATE PROJECT STATE
-          Rewrite /admin/STATE.md maintaining EXACTLY this structure:
-          1. Resumen Semanal: Summary of work based on commits.
-          2. Comparativa y Retrasos: Delta vs last week and ROADMAP alignment.
-          3. Bloqueos: Detected bottlenecks.
-          4. Tablero del Sprint Actual: Kanban format (TODO / DOING / DONE). Move finished tasks to DONE. Add new tasks from the ROADMAP to TODO for the next 7 days.
-
-          STEP 5 — GENERATE EXECUTIVE REPORT
-          Create /admin/reportes/reporte_YYYY-MM-DD.md
-          Constraints: Max 300 words, executive tone, focus on KPIs (commits, velocity, risks, next priorities).
+          - Deadline de entrega: 21/06/2026 (convocatoria julio)
+          - Disponibilidad actual: 1-2h/día hasta 01/06 → 12h/día desde 02/06
+          - Plan activo: admin/ROADMAP_v2_sprint_final.md
+          - Hitos no negociables:
+            * 31/05: email al tutor con Estado del Arte v0 + índice
+            * 04/06 20:00: checkpoint Wazuh (continuar o switch a Falco)
+            * 14/06: email al tutor con memoria al 60-70% + setup Overleaf
+            * 19/06: email al tutor con PDF compilado completo
+            * 21/06: depósito en plataforma de la ETSINF
 
           ------------------------------------------------
-          FINAL OUTPUT
-          Return a summary containing your Confidence Score and the files updated/created." \
-          '{
-            source: { repository: $repo, ref: "main" },
-            target: { autoCreatePr: true },
-            prompt: { text: $prompt }
-          }')
+          LÍMITES ESTRICTOS DE PERMISOS
+          ------------------------------------------------
+          PERMITIDO:
+          - Leer cualquier fichero del repositorio.
+          - Crear o modificar ficheros SOLO dentro de admin/.
+          - Crear reportes en admin/reportes/.
 
-          # Ejecutamos la llamada a la API
-          curl --request POST \
+          PROHIBIDO (ABORTAR SI SE SOLICITA):
+          - Modificar ficheros fuera de admin/.
+          - Modificar código fuente (infra/, tests/).
+          - Renombrar o eliminar ficheros.
+          - Tocar admin/AGENDA_SPRINT_DIARIA.md (solo lectura).
+          - Tocar admin/HOY.md (es del humano, no del agente).
+          - Modificar tareas etiquetadas [HUMANO] en admin/STATE.md.
+
+          ------------------------------------------------
+          PASO 1 — RECOPILAR DATOS
+          ------------------------------------------------
+          Leer y analizar en este orden:
+          1. git log --since=\"7 days ago\" --oneline → trabajo real realizado.
+          2. admin/STATE.md → tablero Kanban actual con etiquetas [HUMANO]/[AGENTE].
+          3. admin/ROADMAP_v2_sprint_final.md → plan de 28 días, fases, hitos.
+          4. admin/DECISIONS_LOG.md → ADRs (especialmente los de 2026-05-24).
+          5. admin/AGENDA_SPRINT_DIARIA.md → qué toca cada día según el plan.
+
+          ------------------------------------------------
+          PASO 2 — ANALIZAR ESTADO DEL PROYECTO
+          ------------------------------------------------
+          Determinar:
+          - Trabajo completado en los últimos 7 días según commits.
+          - Tareas [AGENTE] en DOING/TODO que han sido completadas por commits.
+          - Alineación con la fase actual del ROADMAP_v2 y los hitos de la semana.
+          - Días hasta el próximo hito crítico y riesgo de no alcanzarlo.
+          - Bloqueos activos (inferidos de inactividad en áreas críticas o commits repetidos en el mismo fichero).
+          - Tareas [HUMANO] completadas inferidas de commits (solo registrar en DONE, no modificar su contenido).
+
+          ------------------------------------------------
+          PASO 3 — SCORING DE CONFIANZA Y AUTO-CORRECCIÓN
+          ------------------------------------------------
+          Estima tu Confidence Score (0-100%) basado en:
+          - Claridad de los commits (¿describen qué cambió?).
+          - Alineación entre commits y tareas del tablero.
+          - Capacidad de inferir qué tareas están done vs. pending.
+
+          - SI CONFIANZA < 70%: NO modificar admin/STATE.md.
+            Crear admin/reportes/analysis_YYYY-MM-DD.md explicando qué no entiende.
+            PARAR AQUÍ.
+          - SI CONFIANZA >= 70%: continuar al Paso 4.
+
+          ------------------------------------------------
+          PASO 4 — ACTUALIZAR admin/STATE.md
+          ------------------------------------------------
+          Reescribir admin/STATE.md manteniendo EXACTAMENTE esta estructura:
+
+          # STATE - Seguimiento TFG Ciberseguridad
+          Fecha de actualización: YYYY-MM-DD
+
+          ## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
+          [NO TOCAR — mantener el bloque literal existente sin modificar]
+
+          ## 1. Resumen Semanal
+          - Commits últimos 7 días: N entradas. Resumen de qué cambió.
+          - Avance técnico principal (si hay commits en infra/ o tests/).
+          - Avance de redacción principal (si hay commits en docs/03_memoria_tfg/).
+          - Días hasta próximo hito crítico + nombre del hito.
+
+          ## 2. Alineación con ROADMAP v2 y Riesgos
+          - Fase actual del ROADMAP_v2 y objetivo de la semana.
+          - Delta respecto al plan: ¿va adelantado, en tiempo o retrasado?
+          - Riesgos activos con nivel (ALTO/MEDIO/BAJO).
+          - ¿Es necesario activar algún fallback documentado en DECISIONS_LOG?
+
+          ## 3. Bloqueos
+          - Bloqueo activo (si existe): descripción + impacto en hitos.
+          - Bloqueo potencial (si existe): descripción + mitigación.
+          - Si no hay bloqueos: escribir explícitamente 'Sin bloqueos activos detectados.'
+
+          ## 4. Tablero del Sprint Actual
+          ### TODO
+          [Listar solo tareas [HUMANO] pendientes del plan activo. NO añadir ni eliminar tareas [HUMANO]. NO modificar su contenido. Solo moverlas entre secciones si un commit las evidencia como completadas.]
+
+          ### DOING
+          [Tareas en progreso según commits de los últimos 7 días.]
+
+          ### DONE (Sprint Final — desde 24/05)
+          [Tareas completadas. Añadir nuevas entradas con fecha. Mantener las existentes.]
+
+          ## 5. Hitos críticos del Sprint Final
+          [Actualizar columna Estado de cada hito: Pendiente / En progreso / ✅ Completado / ⚠️ En riesgo]
+
+          REGLAS CRÍTICAS PARA EL PASO 4:
+          - La sección 0 es INMUTABLE. Copiar literalmente del STATE.md existente.
+          - Nunca modificar el contenido de tareas [HUMANO], solo su posición (TODO/DOING/DONE).
+          - Nunca eliminar tareas del tablero. Solo moverlas.
+          - Si una tarea [AGENTE] está en TODO y los commits la evidencian como hecha, moverla a DONE con fecha.
+
+          ------------------------------------------------
+          PASO 5 — GENERAR REPORTE EJECUTIVO
+          ------------------------------------------------
+          Crear admin/reportes/reporte_YYYY-MM-DD.md con esta estructura:
+          - **Semana:** rango de fechas.
+          - **Fase del sprint:** número y nombre.
+          - **Confidence Score:** N%.
+          - **Completado esta semana:** lista de commits/hitos cerrados.
+          - **Próximo hito crítico:** fecha, nombre y estado (en tiempo / en riesgo).
+          - **Riesgos activos:** máximo 3, con nivel y acción de mitigación.
+          - **Recomendación para mañana:** 1 acción concreta.
+          Límite: 350 palabras. Tono ejecutivo, sin relleno.
+
+          ------------------------------------------------
+          SALIDA FINAL
+          ------------------------------------------------
+          Devuelve un resumen con: Confidence Score, ficheros actualizados/creados, próximo hito crítico y su estado." \
+            '{
+              source: { repository: $repo, ref: "main" },
+              target: { autoCreatePr: false },
+              prompt: { text: $prompt }
+            }')
+
+          RESPONSE=$(curl --silent --show-error --fail-with-body \
+            --request POST \
             --url https://api.cursor.com/v0/agents \
             -u "${{ secrets.CURSOR_API_KEY }}:" \
             --header 'Content-Type: application/json' \
-            --data "$PAYLOAD"
+            --data "$PAYLOAD")
+
+          echo "API_RESPONSE=$RESPONSE"
+          echo "$RESPONSE" | jq .
+
+      - name: Verificar respuesta de la API
+        if: failure()
+        run: |
+          echo "ERROR: La llamada a la API de Cursor falló."
+          echo "Comprueba que CURSOR_API_KEY es válida y que el repositorio es accesible."
+          exit 1
