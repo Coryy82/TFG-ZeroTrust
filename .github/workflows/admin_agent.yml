@@ -158,7 +158,7 @@ jobs:
           Devuelve un resumen con: Confidence Score, ficheros actualizados/creados, próximo hito crítico y su estado." \
             '{
               source: { repository: $repo, ref: "main" },
-              target: { autoCreatePr: false },
+              target: { autoCreatePr: true },
               prompt: { text: $prompt }
             }')
 
