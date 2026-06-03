@@ -1,61 +1,82 @@
-# HOY — 2026-05-25 (lunes)
+# HOY — 2026-06-03 (miércoles) · DÍA DE RECUPERACIÓN
 
-> Actualizar este archivo cada mañana copiando el bloque del día desde `admin/AGENDA_SPRINT_DIARIA.md`.
-> Plan ID: `redactar_eda_v0` (parcial)
-> Fase: 1 de 4 · Semana 1 · Día 2 del sprint
+> **Situación:** 2 días de retraso técnico. El docker-compose del Escenario B y el mTLS estaban previstos para 02/06 y 03/06 respectivamente. El checkpoint Wazuh es **mañana 04/06 a las 20:00**.
+> Plan ID: `implementar_escenario_b`
+> Fase: 2 de 4 · Semana 2
 
 ---
 
 ## OBJETIVO DEL DÍA
 
-Escribir las dos primeras secciones del Estado del Arte.  
-Cuando termines, el capítulo tendrá texto real en §2.1 y §2.2.
+Tener `infra/zero_trust/` levantando con las 3 redes aisladas y los servicios corriendo healthy.
+Ese es el prerequisito bloqueante para todo lo demás, incluido Wazuh mañana.
 
 ---
 
 ## SI SOLO HACES UNA COSA
 
-**Redacta §2.1** de `docs/03_memoria_tfg/02_estado_arte.md` hasta que tenga al menos 3 párrafos sólidos sobre la evolución de contenedores y por qué las redes planas son un problema de seguridad.  
-Eso solo ya hace avanzar el camino crítico.
+Escribe `infra/zero_trust/docker-compose.yaml` con las 3 redes (`web_zone`, `backend_zone`, `db_zone`) y verifica que `webapp` NO puede hacer ping a `db`. Con eso el camino crítico de mañana sigue abierto.
 
 ---
 
 ## BLOQUES DE TRABAJO
 
-### Bloque 1 — 45 min
-- [ ] Abre `docs/03_memoria_tfg/02_estado_arte.md`
-- [ ] Lee el `[TODO]` de §2.1 y el insumo `docs/01_investigacion/20260412_Apuntes_Docker101.md`
-- [ ] Sustituye el bloque `[TODO]` de §2.1 por texto real: evolución monolítico → microservicios → Docker → red plana por defecto → implicación de seguridad
-- [ ] Añade al menos un marcador `[CITAR: Docker networking / paper seguridad contenedores]`
-- **Hecho cuando:** §2.1 tiene ≥3 párrafos sin `[TODO]` sin resolver
+### Bloque 1 — 3h · docker-compose base
+- [ ] Crea `infra/zero_trust/docker-compose.yaml` con los 4 servicios (nginx, webapp, backend, db) y las 3 redes separadas
+  - `web_zone`: nginx + webapp
+  - `backend_zone`: webapp + backend
+  - `db_zone`: backend + db
+- [ ] Copia y adapta los Dockerfiles y configs de `infra/perimetral/` al nuevo directorio
+- **Hecho cuando:** `docker compose up --build -d` levanta sin errores y los 4 servicios están healthy
 
-### Bloque 2 — 40 min
-- [ ] Sustituye el `[TODO]` de §2.2 por texto real: definición del modelo perimetral, por qué funciona contra amenazas externas, por qué falla post-compromiso
-- [ ] Añade marcador `[CITAR: NIST SP 800-207 §1]`
-- **Hecho cuando:** §2.2 tiene ≥2 párrafos y termina con la frase-puente hacia ZT
+### Bloque 2 — 2h · verificación de segmentación
+- [ ] Desde dentro del contenedor `webapp`, intenta `ping db` o `curl db:5432` → debe fallar
+- [ ] Verifica que `webapp → backend → db` funciona correctamente (la app sigue sirviendo datos)
+- [ ] Documenta el resultado en `docs/04_diario_laboratorio/20260603_Sesion_ZT_DockerCompose.md` (breve, 15 min)
+- **Hecho cuando:** la segmentación bloquea el acceso directo `webapp → db` y la app funciona
 
-### Bloque 3 — 15 min
-- [ ] Abre `docs/03_memoria_tfg/99_bibliografia.md`
-- [ ] Añade estas 2 entradas con formato IEEE placeholder:
-  - NIST SP 800-207 (URL: https://doi.org/10.6028/NIST.SP.800-207)
-  - Docker networking documentation (URL: https://docs.docker.com/network/)
-- **Hecho cuando:** las 2 entradas están en el fichero con URL
+### Bloque 3 — 3h · mTLS webapp↔backend (lo que dé de sí)
+- [ ] Genera CA + certificados con OpenSSL:
+  ```
+  openssl req -x509 -newkey rsa:4096 -keyout ca.key -out ca.crt -days 365 -nodes
+  openssl req -newkey rsa:4096 -keyout server.key -out server.csr -nodes
+  openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 365
+  ```
+- [ ] Configura Nginx o Caddy en `backend` para exigir certificado cliente
+- [ ] Si terminas: configura `webapp` para presentar el cert en sus llamadas al backend
+- **Hecho cuando:** `curl` con cert cliente a `backend` devuelve 200; sin cert devuelve error TLS
+
+### Bloque 4 — 1h · commit + preparar mañana
+- [ ] `git add infra/zero_trust/ docs/04_diario_laboratorio/ && git commit -m "Escenario B: docker-compose 3 redes + segmentación verificada"`
+- [ ] Anota en papel o en un `.txt` los comandos exactos que has usado hoy (los necesitarás para el diario y para el Cap. 5)
+- [ ] Lee el bloque del 04/06 en `admin/AGENDA_SPRINT_DIARIA.md` para saber qué necesitas tener listo antes del checkpoint de las 20:00
 
 ---
 
 ## NO HACER HOY
 
-- No tocar §2.3 ni secciones siguientes (eso es mañana)
-- No reescribir el skeleton de otros capítulos
-- No buscar más de 2 referencias (el tiempo de búsqueda es una trampa)
-- No instalar ni tocar Docker ni el Escenario B (eso es el 02/06)
-- No revisar lo que ya está bien: añade `[REVISAR]` y sigue
+- No toques Wazuh hoy (es para mañana; si lo intentas antes de tener el compose estable, perderás tiempo doble)
+- No redactes memoria ni EdA (eso es semana 3)
+- No perfecciones los certs TLS si el Bloque 3 se atasca más de 2h: deja un placeholder y avanza. El mTLS puede completarse mañana mañana antes del checkpoint
+- No abras más de 2 terminales a la vez
+
+---
+
+## CRITERIO DE ÉXITO MÍNIMO DEL DÍA
+
+El día es exitoso si al terminar puedes marcar esto:
+
+- [ ] `docker compose up` en `infra/zero_trust/` levanta los 4 servicios healthy
+- [ ] `webapp` no alcanza `db` directamente (segmentación verificada)
+- [ ] Hay un commit con el progreso en `main`
+
+Cualquier avance en mTLS es bonus, no obligatorio.
 
 ---
 
 ## CIERRE
 
-Al terminar los 3 bloques:
-1. Guarda todos los archivos.
-2. Haz `git add docs/03_memoria_tfg/02_estado_arte.md docs/03_memoria_tfg/99_bibliografia.md && git commit -m "EdA: redactar §2.1 y §2.2 (contenedores + modelo perimetral)"`.
-3. Abre `admin/AGENDA_SPRINT_DIARIA.md`, localiza el bloque `2026-05-26` y copia su contenido en este archivo para mañana.
+Al terminar:
+1. Commit con lo avanzado aunque esté incompleto.
+2. Copia el bloque `### 2026-06-04` de `admin/AGENDA_SPRINT_DIARIA.md` en este archivo para mañana.
+3. Recuerda: **mañana a las 20:00 es el checkpoint Wazuh**. Si a esa hora no tienes agent enrollado y ≥1 alerta → activar Falco (ver ADR en `admin/DECISIONS_LOG.md`).
