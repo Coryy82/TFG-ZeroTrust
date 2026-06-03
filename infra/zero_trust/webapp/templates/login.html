@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Acceso administrativo &middot; Empresa S.L.{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-1">Panel administrativo</h1>
+                    <p class="text-muted small mb-4">Acceso restringido al equipo de sistemas.</p>
+
+                    {% if error %}
+                    <div class="alert alert-danger py-2 small mb-3" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" action="/admin/login" autocomplete="off">
+                        <div class="mb-3">
+                            <label for="username" class="form-label small">Usuario</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{ username|default('') }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label small">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Acceder</button>
+                    </form>
+
+                    <hr class="my-4">
+                    <p class="text-muted small mb-0">
+                        ¿Problemas para acceder? Consulta a <code>helpdesk@empresa.local</code>.
+                    </p>
+                </div>
+            </div>
+            <p class="text-center text-muted small mt-3">Sesión protegida &middot; Empresa S.L. Intranet</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

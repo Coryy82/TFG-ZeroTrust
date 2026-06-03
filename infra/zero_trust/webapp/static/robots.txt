@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin
+Disallow: /backup.txt
+Disallow: /api/
+Disallow: /internal/

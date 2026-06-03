@@ -1,0 +1,67 @@
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - web_zone
+    depends_on:
+      - "webapp"
+
+  webapp:
+    build: ./webapp
+    networks:
+      - web_zone      
+      - backend_zone
+    environment:
+      - BACKEND_URL=https://backend:443/empleados
+    volumes:
+      - ./certs/client.crt:/certs/client.crt:ro
+      - ./certs/client.key:/certs/client.key:ro
+      - ./certs/ca.crt:/certs/ca.crt:ro
+    depends_on:
+      backend:
+        condition: service_healthy
+      db:
+        condition: service_started
+
+  backend:
+    build: ./backend
+    networks:
+      - backend_zone
+      - db_zone
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=supersecret
+    volumes:
+      - ./backend/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs/server.crt:/certs/server.crt:ro
+      - ./certs/server.key:/certs/server.key:ro
+      - ./certs/ca.crt:/certs/ca.crt:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 5s
+      retries: 5
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    networks:
+      - db_zone
+    environment:
+      - POSTGRES_PASSWORD=supersecret
+      - POSTGRES_DB=empresa_db
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  web_zone:
+    driver: bridge
+  backend_zone:
+    driver: bridge
+  db_zone:
+    driver: bridge

@@ -1,0 +1,28 @@
+# Notas internas - sysadmin (NO BORRAR)
+# Migración portal v1.4.x - mar 2026
+# -----------------------------------
+
+[portal-corporativo]
+host_publico = empresa.local
+puerto = 80
+build = 20260315
+
+[panel-admin]
+ruta_interna = /admin
+usuario_servicio = admin
+password_temporal = Empresa2026!
+# TODO sysadmin: rotar password tras cierre del sprint Q1.
+#                el equipo de seguridad lleva pidiendolo desde febrero.
+
+[bbdd-rrhh]
+host = db
+db = empresa_db
+user = postgres
+# password movida a variables de entorno del contenedor (docker-compose).
+# verla con: env | grep -i password   (solo desde la red interna)
+
+[backend-rrhh]
+host = backend
+puerto = 5000
+endpoint_empleados = /empleados
+nota = la api interna NO valida tokens todavia, pendiente sprint Q2.
