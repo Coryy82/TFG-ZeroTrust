@@ -1,0 +1,383 @@
+# 1. Zero Trust y Microsegmentación
+A continuación tienes una síntesis académica, centrada en NIST SP 800-207 y en cómo llevarlo a una infraestructura Docker con `web_zone`, `backend_zone` y `db_zone`. La base normativa es clara: NIST define ZTA como un enfoque que elimina el **trust implícito**, exige autenticación/autorización continuas y busca limitar el movimiento lateral. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments)
+
+## Mapeo a tu arquitectura Docker
+
+En una arquitectura Docker segmentada, `web_zone` debe actuar como zona de exposición controlada, `backend_zone` como zona de lógica interna con acceso restringido, y `db_zone` como zona crítica con el conjunto mínimo de flujos permitidos. NIST SP 800-207 indica que la ZTA protege recursos, no segmentos de red, y que la decisión de acceso debe basarse en políticas dinámicas, identidad, estado del dispositivo y contexto. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments)
+
+- **Explicit Verification**: cada petición entre contenedores debe autenticarse y autorizarse explícitamente antes de permitir el flujo; en Docker esto se traduce en políticas de red por servicio, identidad de servicio y control del tráfico east-west entre zonas. [csrc.nist](https://csrc.nist.gov/pubs/sp/800/207/a/final)
+- **Least Privilege Access**: `web_zone` solo debe alcanzar los puertos y endpoints estrictamente necesarios del `backend_zone`, y `backend_zone` solo los puertos concretos del `db_zone`; NIST prescribe acceso por sesión y con privilegios mínimos necesarios. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments)
+- **Assume Breach**: debes diseñar como si `web_zone` ya estuviera comprometido, de modo que la segmentación reduzca el radio de daño y bloquee saltos hacia `backend_zone` y `db_zone`; NIST afirma explícitamente que ZTA está pensada para prevenir brechas y limitar el movimiento lateral interno. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments)
+
+## Microsegmentación y movimiento lateral
+
+La microsegmentación reduce el movimiento lateral porque rompe la red plana en dominios pequeños de confianza con políticas granulares, de modo que una intrusión en un contenedor no abre automáticamente acceso a los demás. NIST SP 800-207 incluye la microsegmentación como una variante de despliegue ZTA, y su motivación principal es acercar los puntos de decisión a los recursos para minimizar la zona implícitamente confiable. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments)
+
+En Docker, eso significa que `web_zone` no debería estar unido a la misma red que `db_zone`, salvo a través de `backend_zone` y solo mediante reglas explícitas. Docker permite redes definidas por el usuario y la conexión selectiva de contenedores a una o varias redes, lo que facilita implementar aislamiento por dominio funcional. La literatura de CSA también resume que la microsegmentación limita la propagación lateral y protege tráfico east-west entre cargas de trabajo. [cloudsecurityalliance](https://cloudsecurityalliance.org/articles/what-is-microsegmentation)
+
+## Evidencia académica y técnica
+
+La evidencia más directamente útil para tu TFG, con acceso abierto o documentación oficial, es la siguiente:
+
+| Fuente | Tipo | Aporte para tu tesis |
+|---|---|---|
+| **NIST SP 800-207: Zero Trust Architecture** — Rose et al., 2020. DOI: [10.6028/NIST.SP.800-207](https://doi.org/10.6028/NIST.SP.800-207)  [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments) | Estándar NIST | Define los principios de ZTA, los componentes lógicos y la variante de microsegmentación. Es la referencia principal para justificar el diseño de `web_zone`, `backend_zone` y `db_zone`. |
+| **NIST SP 800-207A: A Zero Trust Architecture Model for Access Control in Cloud-Native Applications in Multi-Cloud Environments** — Chandramouli y Butcher, 2023. DOI: [10.6028/NIST.SP.800-207A](https://doi.org/10.6028/NIST.SP.800-207A)  [csrc.nist](https://csrc.nist.gov/pubs/sp/800/207/a/final) | Guía técnica NIST | Muy relevante para contenedores y servicios cloud-native; habla de políticas de capa de red e identidad, gateways, service mesh y control de acceso en entornos nativos cloud. |
+| **Performance Analysis of Zero-Trust multi-cloud** — arXiv, 2021.  [arxiv](https://arxiv.org/pdf/2105.02334.pdf) | Preprint experimental | Útil para discutir el coste de cifrar y verificar tráfico en arquitecturas ZT; aunque no es Docker puro, sirve para argumentar el impacto operativo de aplicar ZT a comunicaciones distribuidas. |
+| **Exploring Security Enhancements in Kubernetes CNI** — IEEE, 2024/2025.  [ieeexplore.ieee](https://ieeexplore.ieee.org/iel8/6287639/6514899/10896680.pdf) | Estudio experimental | Relevante por el análisis del impacto de políticas de red en rendimiento; te sirve como evidencia indirecta para segmentación de contenedores, aunque el foco es Kubernetes/CNI. |
+| **Integrating Zero Trust Architecture in O-RAN** — IEEE, 2025.  [ieeexplore.ieee](https://ieeexplore.ieee.org/iel8/8782661/10829557/11299597.pdf) | Revisión con enfoque ZTA | Apunta que la segmentación y microsegmentación limitan el movimiento lateral y reducen superficie de ataque, útil para argumentación conceptual y estado del arte. |
+
+## Métricas cuantitativas
+
+En los resultados abiertos localizados, las métricas cuantitativas más prometedoras aparecen sobre todo en trabajos experimentales de redes de contenedores y políticas CNI, no siempre en Docker “puro”. En el material hallado, IEEE indica explícitamente que hay análisis experimental del impacto de políticas de red, y el trabajo sobre microsegmentation automática resalta que restringe eficazmente el movimiento lateral. [dl.acm](https://dl.acm.org/doi/abs/10.1016/j.cose.2025.104591)
+
+Para tu criterio de métricas, conviene extraer de los artículos completos estos indicadores:
+- **Reducción de superficie de ataque**: número de puertos/rutas east-west eliminados tras segmentar `web_zone`, `backend_zone` y `db_zone`. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments)
+- **Tiempo de detección**: latencia hasta que una política bloquea o alerta sobre tráfico no autorizado. [ieeexplore.ieee](https://ieeexplore.ieee.org/iel8/6287639/6514899/10896680.pdf)
+- **Tasa de bloqueo**: porcentaje de intentos de comunicación denegados entre zonas no permitidas. [dl.acm](https://dl.acm.org/doi/abs/10.1016/j.cose.2025.104591)
+- **Profundidad de compromiso**: cuántos saltos puede hacer un atacante desde `web_zone` antes de ser contenido; en red plana es mayor, en red segmentada debe quedar en uno o cero saltos útiles. [cloudsecurityalliance](https://cloudsecurityalliance.org/articles/what-is-microsegmentation)
+
+## Red plana frente a segmentada
+
+La red Docker plana suele permitir conectividad amplia entre contenedores, lo que facilita operaciones pero aumenta el riesgo de movimiento lateral una vez comprometido `web_zone`. En cambio, una red segmentada limita la comunicación a flujos explícitos, por ejemplo `web_zone -> backend_zone -> db_zone`, con denegación por defecto para todo lo demás. [docs.docker](https://docs.docker.com/engine/network/)
+
+| Aspecto | Red Docker plana | Red segmentada |
+|---|---|---|
+| Visibilidad entre contenedores | Alta, con alcance amplio | Reducida, solo flujos autorizados  [docs.docker](https://docs.docker.com/engine/network/) |
+| Movimiento lateral | Más fácil tras una intrusión | Fuertemente contenido por políticas  [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments) |
+| Superficie de ataque | Mayor | Menor  [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments) |
+| Gestión de acceso | Basada en conectividad de red | Basada en identidad, contexto y mínimos privilegios  [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments) |
+| Adecuación a ZTA | Baja | Alta  [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2025/11/21/securing-application-to-application-traffic-with-ai-agi-ml-powered-virtual-firewalls-a-comprehensive-framework-for-multi-cloud-hybrid-and-on-premises-environments) |
+
+## Recomendación para el TFG
+
+Para tu caso, la formulación más sólida es describir la arquitectura Docker como una implementación ZTA “por zonas funcionales” donde cada zona se asocia a políticas de acceso explícitas, microsegmentación y monitoreo continuo. La justificación normativa debe apoyarse en NIST SP 800-207 y, para entorno cloud-native, en SP 800-207A. Como evidencia experimental, usa los trabajos sobre CNI, segmentación y microsegmentation automática para respaldar el argumento de que la segmentación reduce movimiento lateral y mejora la contención. [csrc.nist](https://csrc.nist.gov/pubs/sp/800/207/a/final)
+
+Puedo continuar con una **tabla de 3 a 6 papers concretos (2020-2025)** en formato académico, con **DOI, cita IEEE y aportación experimental**.
+
+---
+
+# 2. mTLS
+Aquí tienes una base sólida y verificable para implementar **mTLS entre contenedores Docker sin PKI externa**, usando OpenSSL, Nginx y documentación oficial. La idea técnica correcta es: un contenedor actúa como servidor TLS, el otro como cliente, y ambos confían en una CA local creada por ti con OpenSSL; Nginx fuerza la autenticación mutua con `ssl_verify_client on`. [docs.docker](https://docs.docker.com/engine/security/protect-access/)
+
+## Generación de certificados
+
+OpenSSL puede crear una CA local, emitir un certificado de servidor y otro de cliente, y firmarlos para que el reverse proxy Nginx verifique ambos extremos. Docker documenta este flujo para TLS autenticado: generar clave de CA, crear CSR de servidor y cliente, firmarlos con la CA y usar `clientAuth` y `serverAuth` en `extendedKeyUsage`. [docs.docker](https://docs.docker.com/engine/security/protect-access/)
+
+Ejemplo mínimo para dos contenedores:
+1. Crear CA local.
+2. Generar clave y CSR del contenedor-servidor.
+3. Firmar el certificado del servidor con la CA.
+4. Generar clave y CSR del contenedor-cliente.
+5. Firmar el certificado del cliente con la misma CA.
+6. Montar `ca.pem`, `server-cert.pem`/`server-key.pem` y `cert.pem`/`key.pem` en los contenedores. [docs.docker](https://docs.docker.com/engine/security/certificates/)
+
+Docker recomienda proteger las claves privadas con permisos restrictivos y usar `--tlsverify` cuando se desea autenticación mutua real. NIST define que un certificado autofirmado no demuestra autenticidad por sí mismo: la confianza depende del procedimiento seguro de distribución. [csrc.nist](https://csrc.nist.gov/glossary/term/self_signed_certificate)
+
+## Nginx como reverse proxy
+
+Nginx soporta mTLS en el módulo `ngx_http_ssl_module`, y el control se hace con `ssl_verify_client`, `ssl_client_certificate` y `ssl_verify_depth`. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+- `ssl_verify_client on` obliga a que el cliente presente certificado válido. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+- `ssl_client_certificate` indica qué CA(s) se usarán para validar ese certificado de cliente. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+- `ssl_verify_depth` limita la profundidad de la cadena de confianza que Nginx aceptará. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+
+Un ejemplo funcional para Docker suele ser: Nginx escuchando en 443, validando el certificado del cliente, y reenviando al backend interno por HTTP o por TLS interno. Nginx documenta que la lista de CA configuradas con `ssl_client_certificate` se usa para verificación, mientras que otras directivas pueden controlar el comportamiento de verificación y el envío de certificados a clientes. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+
+### Configuración ejemplo
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name backend.local;
+
+    ssl_certificate     /etc/nginx/certs/server.crt;
+    ssl_certificate_key /etc/nginx/certs/server.key;
+
+    ssl_client_certificate /etc/nginx/certs/ca.crt;
+    ssl_verify_client on;
+    ssl_verify_depth 1;
+
+    location / {
+        proxy_pass http://backend:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-SSL-Client-Verify $ssl_client_verify;
+        proxy_set_header X-SSL-Client-DN $ssl_client_s_dn;
+        proxy_set_header X-SSL-Client-Serial $ssl_client_serial;
+    }
+}
+```
+
+Ese patrón encaja bien en Docker porque Nginx termina TLS en la zona perimetral del stack y el backend solo acepta tráfico ya autenticado. RFC 9440 también es relevante porque define cabeceras HTTP para transmitir identidad del cliente desde un reverse proxy TLS hacia aplicaciones internas. [dl.acm](https://dl.acm.org/doi/10.17487/RFC9440)
+
+## Variables y función
+
+Las tres directivas que pediste tienen un papel claro en la autenticación mutua:
+
+- `ssl_verify_client`: activa o desactiva la verificación de certificado de cliente; con `on` el acceso queda condicionado a un certificado válido. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+- `ssl_client_certificate`: apunta al fichero CA usado para verificar el certificado del cliente; sin esa CA, Nginx no puede construir la cadena de confianza. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+- `ssl_verify_depth`: limita cuántos niveles de certificados intermedios se aceptan; sirve para acotar la cadena y evitar validaciones demasiado profundas. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+
+El material de Nginx indica además que la verificación de cliente está pensada para `http` y `server` scope, y que la validación depende de OpenSSL y de la cadena de certificados disponible. Un detalle útil: `ssl_verify_depth` no sustituye a la autorización; solo limita la cadena, no decide si un sujeto concreto debe ser aceptado. [trac.nginx](https://trac.nginx.org/nginx/ticket/301)
+
+## Riesgos sin PKI
+
+Los certificados autofirmados funcionan para laboratorios o entornos cerrados, pero tienen limitaciones importantes frente a una PKI: rotación, revocación, auditoría y distribución segura son más difíciles. NIST señala que la confianza de un certificado autofirmado depende de cómo se distribuye y valida su huella, no de una CA externa de confianza. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2014/04/09/why-should-you-update-your-trusted-cas-and-enforce-certificate-whitelists)
+
+Los riesgos prácticos más relevantes son:
+- Si una clave privada se filtra, el atacante puede suplantar al contenedor legítimo. [docs.docker](https://docs.docker.com/engine/security/protect-access/)
+- Si distribuyes mal el certificado raíz, amplías el trust store sin control. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2014/04/09/why-should-you-update-your-trusted-cas-and-enforce-certificate-whitelists)
+- Sin revocación operativa, retirar un certificado comprometido es más difícil. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2014/04/09/why-should-you-update-your-trusted-cas-and-enforce-certificate-whitelists)
+- En producción, una PKI o una solución de emisión automatizada da mejor control de ciclo de vida y rotación. [cloudsecurityalliance](https://cloudsecurityalliance.org/blog/2014/04/09/why-should-you-update-your-trusted-cas-and-enforce-certificate-whitelists)
+
+## Buenas prácticas
+
+Docker recomienda usar TLS con `tlsverify`, proteger las claves privadas con permisos restrictivos y asumir que quien posee la clave puede administrar el daemon o servicio con privilegios altos. NIST insiste en que los certificados autofirmados solo son seguros si su distribución se controla cuidadosamente y se valida la identidad por un canal independiente. [csrc.nist](https://csrc.nist.gov/glossary/term/self_signed_certificate)
+
+OWASP y CNCF suelen alinear sus recomendaciones con estos principios: usar autenticación fuerte entre servicios, minimizar confianza implícita, y evitar que certificados raíz se distribuyan sin control en múltiples contenedores o imágenes base. Como práctica concreta para Docker, monta secretos o volúmenes solo de lectura, separa CA, servidor y cliente, y evita incrustar claves en la imagen. También es recomendable registrar y monitorizar `X-SSL-Client-Verify`, `X-SSL-Client-DN` y eventos de handshake fallido para detectar intentos de suplantación. [docs.docker](https://docs.docker.com/engine/network/ca-certs/)
+
+## Fuentes clave
+
+| Fuente | Tipo | Relevancia |
+|---|---|---|
+| Docker Docs: Protect the Docker daemon socket | Oficial | Guía práctica para TLS/mTLS con OpenSSL, `--tlsverify`, CA, claves de cliente y servidor  [docs.docker](https://docs.docker.com/engine/security/protect-access/). |
+| Docker Docs: Certificates | Oficial | Explica cómo Docker trata `.crt` y `.cert`, y cómo configurar certificados de cliente y CA  [docs.docker](https://docs.docker.com/engine/security/certificates/). |
+| Nginx docs: `ngx_http_ssl_module` | Oficial | Define `ssl_verify_client`, `ssl_client_certificate` y `ssl_verify_depth`  [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html). |
+| NIST Glossary: self-signed certificate | Oficial | Explica la limitación de confianza de los certificados autofirmados  [csrc.nist](https://csrc.nist.gov/glossary/term/self_signed_certificate). |
+| RFC 9440 | Estándar | Útil para pasar identidad del cliente desde el reverse proxy al backend  [dl.acm](https://dl.acm.org/doi/10.17487/RFC9440). |
+
+Si quieres, puedo prepararte el siguiente paso en formato de **lab reproducible** con:
+1. `docker-compose.yml`,  
+2. `nginx.conf`, 
+3. comandos OpenSSL completos,  
+4. y un ejemplo de `curl` con mTLS entre dos contenedores.
+
+---
+
+# 3. MITRE ATT&CK
+A continuación presento un análisis orientado a Docker, con mitigaciones oficiales de MITRE ATT&CK y medidas prácticas para tus dos escenarios. La lectura principal es que la **segmentación de red, el control de secretos y TLS/mTLS** son las defensas más consistentes contra reconocimiento, robo de claves, exfiltración y movimiento lateral en contenedores. [attack.mitre](https://attack.mitre.org/techniques/T1046/)
+
+## T1046 Network Service Scanning
+
+MITRE describe T1046 como descubrimiento de servicios de red mediante escaneo activo de múltiples hosts o puertos. En Docker, esto se manifiesta cuando un contenedor comprometido enumera servicios accesibles en la red plana, detecta puertos del backend o del DB, y prepara el salto lateral. [attack.mitre](https://attack.mitre.org/tactics/TA0008/)
+
+Las mitigaciones oficiales más relevantes son:
+- **Segmentación de red**: reduce qué servicios son visibles desde cada contenedor. [attack.mitre](https://attack.mitre.org/techniques/T1210/)
+- **Docker networks**: redes definidas por usuario y aislamiento por red para limitar el alcance del escaneo. [docs.docker](https://docs.docker.com/engine/security/protect-access/)
+- **Restricciones de conectividad**: solo permitir los flujos necesarios entre `web`, `backend` y `db`. [attack.mitre](https://attack.mitre.org/techniques/T1048/)
+
+Como evidencia técnica, MITRE recomienda `Network Segmentation` para reducir acceso a sistemas críticos y `Vulnerability Scanning` para identificar servicios expuestos. En Docker, la documentación de redes explica que los contenedores se comunican solo cuando comparten red o se conectan explícitamente, lo que favorece una topología cerrada por zonas. [docs.docker](https://docs.docker.com/engine/network/)
+
+### Aplicación práctica
+
+- **Escenario A, red plana Docker**: el escaneo desde `web` puede descubrir `backend` y `db`, aumentando exposición y facilitando enumeración lateral. [attack.mitre](https://attack.mitre.org/techniques/T1046/)
+- **Escenario B, web/backend/db + mTLS + Wazuh**: el escaneo sigue siendo posible, pero la segmentación y las reglas de acceso reducen la visibilidad; Wazuh ayuda a alertar sobre patrones de scan y conexiones anómalas. [arxiv](https://arxiv.org/pdf/2507.15163.pdf)
+
+## T1552.004 Private Keys
+
+MITRE define T1552.004 como la búsqueda de archivos de claves privadas almacenadas de forma insegura. En Docker esto suele ocurrir si claves TLS, tokens o ficheros de servicio se montan en rutas previsibles, se copian dentro de la imagen o quedan legibles para más de un contenedor. [attack.mitre](https://attack.mitre.org/techniques/T1552/004/)
+
+Las mitigaciones oficiales más relevantes son:
+- **Gestión de secretos**: no guardar claves en imágenes ni en repositorios; usar mecanismos de secreto y permisos mínimos. [attack.mitre](https://attack.mitre.org/techniques/T1552/007/)
+- **Docker Secrets**: recomendado para distribuir secretos a servicios sin incrustarlos en la imagen o en variables expuestas. [docs.docker](https://docs.docker.com/engine/swarm/how-swarm-mode-works/pki/)
+- **Restricciones de permisos**: limitar acceso a ficheros con claves y proteger su lectura con ACLs o montaje read-only. [attack.mitre](https://attack.mitre.org/techniques/T1552/004/)
+
+MITRE recomienda auditoría, cifrado de información sensible y permisos estrictos de archivos como medidas de mitigación. Docker refuerza este enfoque con su documentación de certificados y acceso protegido al daemon, además de su PKI integrada para Swarm. [docs.docker](https://docs.docker.com/engine/security/certificates/)
+
+### Aplicación práctica
+
+- **Escenario A**: una clave filtrada en un contenedor de `web` puede permitir suplantación del servicio y acceso a backend o a la base de datos. [attack.mitre](https://attack.mitre.org/techniques/T1552/004/)
+- **Escenario B**: con mTLS, secretos separados y `Docker Secrets`, la clave privada se restringe a cada zona; si `web` cae, no debe poder leer claves de `backend` ni `db`. [docs.docker](https://docs.docker.com/engine/swarm/how-swarm-mode-works/pki/)
+
+## T1041 Exfiltration Over C2 Channel
+
+MITRE define T1041 como la exfiltración de datos sobre el mismo canal de comando y control ya establecido. En Docker, un contenedor comprometido puede empaquetar datos sensibles y enviarlos por el tráfico normal hacia fuera, o esconder la salida dentro de peticiones aparentemente legítimas entre servicios. [attack.mitre](https://attack.mitre.org/techniques/T1041/)
+
+Las mitigaciones oficiales más relevantes son:
+- **TLS/mTLS**: dificulta la inspección y la suplantación, aunque por sí solo no evita exfiltración si el canal es legítimo. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+- **Filtrado de tráfico / políticas de acceso**: limitar destinos, puertos y rutas de salida por contenedor. [attack.mitre](https://attack.mitre.org/mitigations/M1057/)
+- **Segmentación y DLP**: bloquear o alertar sobre patrones de fuga. [attack.mitre](https://attack.mitre.org/mitigations/M1057/)
+
+MITRE vincula DLP con T1041 para detectar y bloquear datos sensibles que salen por protocolos no cifrados. Para entornos contenedorizados, la combinación de segmentación, control de egress y monitorización de flujo es la defensa más robusta. [attack.mitre](https://attack.mitre.org/techniques/T1048/003/)
+
+### Aplicación práctica
+
+- **Escenario A**: un atacante con acceso a `web` puede exfiltrar por HTTP/S sin mucho ruido, porque el tráfico entre redes está abierto y la distinción entre tráfico benigno y malicioso es más débil. [attack.mitre](https://attack.mitre.org/techniques/T1041/)
+- **Escenario B**: el uso de `mTLS` entre zonas más Wazuh reduce el riesgo, porque añade verificación fuerte y genera telemetría para detectar canales anómalos; aun así, debes complementar con restricciones de salida. [arxiv](https://arxiv.org/pdf/2507.15163.pdf)
+
+## TA0008 Lateral Movement
+
+MITRE define TA0008 como las técnicas usadas para entrar y controlar sistemas remotos dentro de una red. En Docker, el movimiento lateral aparece cuando un contenedor comprometido usa la red compartida, credenciales reutilizadas o servicios expuestos para pivotar desde `web` hacia `backend` y luego a `db`. [attack.mitre](https://attack.mitre.org/techniques/T1570/)
+
+Las mitigaciones oficiales más relevantes son:
+- **Network Segmentation**: separar zonas y bloquear acceso entre ellas por defecto. [attack.mitre](https://attack.mitre.org/techniques/T1021/001/)
+- **Docker networks**: redes por servicio o por capa funcional para impedir conectividad transversal innecesaria. [docs.docker](https://docs.docker.com/engine/network/)
+- **TLS/mTLS y políticas de acceso**: cada salto debe autenticarse y autorizarse de forma explícita. [docs.docker](https://docs.docker.com/engine/security/protect-access/)
+- **Gestión de secretos**: evitar que claves o tokens permitan moverse entre zonas. [attack.mitre](https://attack.mitre.org/techniques/T1552/007/)
+
+MITRE también destaca que la segmentación y el control de cuentas reducen el impacto de servicios remotos usados para movimiento lateral. En contenedores, esto se traduce en limitar qué contenedor puede hablar con cuál, y con qué credenciales. [attack.mitre](https://attack.mitre.org/techniques/T1021/004/)
+
+### Aplicación práctica
+
+- **Escenario A**: red plana facilita pivoting, reutilización de credenciales y propagación posterior a `db`. [attack.mitre](https://attack.mitre.org/tactics/TA0008/)
+- **Escenario B**: `web_zone`, `backend_zone` y `db_zone` con mTLS y Wazuh disminuyen el radio de movimiento lateral; una intrusión en `web` no debería abrir acceso directo a `db`. [nginx](https://nginx.org/en/docs/http/ngx_http_ssl_module.html)
+
+## Fuentes y referencia IEEE
+
+1. MITRE ATT&CK, “Network Service Discovery: T1046.” Disponible: [https://attack.mitre.org/techniques/T1046/](https://attack.mitre.org/techniques/T1046/). [attack.mitre](https://attack.mitre.org/techniques/T1046/)
+2. MITRE ATT&CK, “Unsecured Credentials: Private Keys: T1552.004.” Disponible: [https://attack.mitre.org/techniques/T1552/004/](https://attack.mitre.org/techniques/T1552/004/). [attack.mitre](https://attack.mitre.org/techniques/T1552/004/)
+3. MITRE ATT&CK, “Exfiltration Over C2 Channel: T1041.” Disponible: [https://attack.mitre.org/techniques/T1041/](https://attack.mitre.org/techniques/T1041/). [attack.mitre](https://attack.mitre.org/techniques/T1041/)
+4. MITRE ATT&CK, “Lateral Movement: TA0008.” Disponible: [https://attack.mitre.org/tactics/TA0008/](https://attack.mitre.org/tactics/TA0008/). [attack.mitre](https://attack.mitre.org/tactics/TA0008/)
+5. Docker Docs, “Protect the Docker daemon socket.” Disponible: [https://docs.docker.com/engine/security/protect-access/](https://docs.docker.com/engine/security/protect-access/). [docs.docker](https://docs.docker.com/engine/security/protect-access/)
+6. Docker Docs, “Manage swarm security with public key infrastructure (PKI).” Disponible: [https://docs.docker.com/engine/swarm/how-swarm-mode-works/pki/](https://docs.docker.com/engine/swarm/how-swarm-mode-works/pki/). [docs.docker](https://docs.docker.com/engine/swarm/how-swarm-mode-works/pki/)
+7. Docker Docs, “Networking overview.” Disponible: [https://docs.docker.com/engine/network/](https://docs.docker.com/engine/network/). [docs.docker](https://docs.docker.com/engine/network/)
+8. NIST, “Self-signed certificate.” Disponible: [https://csrc.nist.gov/glossary/term/self_signed_certificate](https://csrc.nist.gov/glossary/term/self_signed_certificate). [csrc.nist](https://csrc.nist.gov/glossary/term/self_signed_certificate)
+
+Puedo convertir esto en una **matriz técnica por técnica × mitigación × escenario**, lista para pegar en tu TFG, con redacción académica en español.
+
+---
+
+# 4. Wazuh
+Aquí tienes una guía técnica y citable, centrada en **documentación oficial de Wazuh** para desplegar y afinar detección en entornos Docker. La respuesta separa claramente lo **soportado oficialmente** de lo que son **patrones experimentales o de laboratorio**. [documentation.wazuh](https://documentation.wazuh.com/current/deployment-options/docker/wazuh-container.html)
+
+## Despliegue oficial
+
+Wazuh documenta el despliegue en Docker para sus componentes principales y también explica el uso del **Wazuh agent** para monitorizar el host Docker y sus eventos. La documentación oficial indica que el agente en Docker es una opción ligera para integraciones y recopilación de logs vía syslog, pero el uso más robusto para contenedores es instalar el agente en el host que ejecuta Docker y activar el `docker-listener`. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/container-security/monitoring-docker.html)
+
+Métodos oficiales relevantes:
+- **Wazuh agent en el host Docker**: monitoriza el daemon y los eventos de contenedores mediante `docker-listener`. [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/monitoring-docker.html)
+- **Wazuh components en Docker**: manager, indexer y dashboard desplegados como contenedores oficiales. [documentation.wazuh](https://documentation.wazuh.com/current/deployment-options/docker/index.html)
+- **Agente en contenedor**: útil para casos ligeros o integración con syslog, pero no es la vía principal recomendada para supervisar runtime container completo. [documentation.wazuh](https://documentation.wazuh.com/current/deployment-options/docker/wazuh-container.html)
+
+## Capacidades de detección
+
+Wazuh documenta casos de uso para monitorización de Docker, FIM, auditd y system calls, que son los pilares para detectar actividad sospechosa en contenedores. En concreto, el agente puede observar logs, eventos de Docker y actividad del sistema si el host está bien instrumentado. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/audit-configuration.html)
+
+Capacidades útiles para tus casos:
+- **Lectura de variables de entorno con credenciales**: no hay una detección “mágica” específica de env vars, pero sí puedes detectar procesos o comandos que intenten inspeccionar entorno, volcar configuración o leer archivos de secretos usando auditd + reglas personalizadas + FIM. [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/poc-file-integrity-monitoring.html)
+- **Enumeración interna de red**: se puede detectar indirectamente por uso de herramientas como `nmap`, `curl`, `nc` o patrones de proceso anómalos; Wazuh documenta el uso de listas CDB y reglas para marcar programas sospechosos. [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/audit-commands-run-by-user.html)
+- **Uso de nmap**: Wazuh trae ejemplos oficiales de detección de programas peligrosos y de comandos lanzados con auditd; puedes adaptar reglas para `nmap` como “programa rojo”. [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/audit-commands-run-by-user.html)
+- **Uso de curl contra servicios internos**: posible vía auditd/command monitoring, buscando ejecuciones de `curl` en contextos sensibles o con destinos internos anómalos. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/use-cases/monitoring-commands-run-as-root.html)
+- **Acceso a recursos no autorizados**: se detecta mejor combinando FIM, auditd y reglas de acceso a rutas o comandos privilegiados. [documentation.wazuh](https://documentation.wazuh.com/current/compliance/nist/file-integrity-monitoring.html)
+
+## Integraciones
+
+Wazuh documenta explícitamente la integración con **Auditd**, **FIM** y monitorización de **system calls** para Linux. También dispone de un **Docker listener** para monitorizar eventos de Docker desde el host. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/file-integrity/how-to-configure-fim.html)
+
+### Sysmon for Linux
+No encontré en la documentación oficial revisada una guía específica y directa de “Sysmon for Linux” como integración nativa principal de Wazuh para contenedores; lo oficial y estable es **Auditd** + **system calls monitoring** + **Docker listener**. Si en tu TFG quieres mencionar Sysmon for Linux, conviene tratarlo como integración complementaria del host Linux, no como mecanismo central de contenedores. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/how-it-works.html)
+
+### Auditd
+Wazuh proporciona un flujo oficial claro: instalar auditd, definir reglas, y configurar el agente para leer `/var/log/audit/audit.log`. Esta integración es la más sólida para detectar ejecución de comandos, acceso a ficheros y ciertos patrones de abuso en contenedores. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/audit-configuration.html)
+
+### FIM
+El módulo FIM monitoriza cambios en archivos y directorios concretos, comparando checksums y atributos, y genera alertas cuando hay discrepancias. Para Docker, esto es muy útil para vigilar directorios de configuración montados como volumen, secretos expuestos en rutas del host o binarios alterados. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/file-integrity/how-it-works.html)
+
+### Command Monitoring
+Wazuh documenta el monitoreo de comandos mediante auditd y reglas de ejecución, incluyendo ejemplos para comandos ejecutados como root y por categorías de programas sospechosos. Esta capacidad es especialmente importante para detectar `nmap`, `curl`, `nc`, `bash`, `sh` y utilidades de exfiltración. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/use-cases/monitoring-commands-run-as-root.html)
+
+## Reglas personalizadas
+
+Wazuh no ofrece una única regla “detección de reconocimiento interno”; en la práctica, debes construirla con **auditd + listas CDB + reglas locales**. La documentación oficial muestra el patrón: crear una lista de binarios sospechosos y una regla de alta severidad que dispare cuando se ejecuta uno de ellos. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/ruleset/decoders/custom.html)
+
+Ejemplos de enfoque práctico:
+
+```xml
+<rule id="100100" level="12">
+  <if_sid>80700</if_sid>
+  <match>nmap</match>
+  <description>Posible reconocimiento interno con nmap</description>
+</rule>
+```
+
+```xml
+<rule id="100101" level="12">
+  <if_sid>80700</if_sid>
+  <match>curl</match>
+  <description>Posible acceso no autorizado o exfiltración vía curl</description>
+</rule>
+```
+
+```xml
+<rule id="100102" level="14">
+  <if_sid>80700</if_sid>
+  <match>env</match>
+  <description>Posible lectura de variables de entorno sensibles</description>
+</rule>
+```
+
+Estos ejemplos son **experimentales** y deben adaptarse a tu decoder/ID de auditoría real; el patrón oficial de Wazuh sí está soportado, pero las expresiones concretas dependen de tu telemetría. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/ruleset/decoders/custom.html)
+
+## Limitaciones en Docker
+
+Wazuh documenta muy bien el monitoreo del host y de eventos Docker, pero hay límites claros cuando todo se intenta hacer “dentro” de contenedores. La principal limitación es que un contenedor aislado ve solo su propio espacio, así que muchas detecciones de host, proceso y red se capturan mejor desde el sistema operativo anfitrión. [documentation.wazuh](https://documentation.wazuh.com/current/getting-started/use-cases/container-security.html)
+
+Limitaciones típicas:
+- **Menor visibilidad dentro del namespace del contenedor** si el agente corre solo en el contenedor. [documentation.wazuh](https://documentation.wazuh.com/current/getting-started/use-cases/container-security.html)
+- **Dependencia de permisos del host** para leer audit logs, sockets Docker o rutas relevantes. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/container-security/monitoring-docker.html)
+- **La detección de env vars no es directa**: normalmente se infiere por acceso a procesos, archivos o comandos. [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/poc-file-integrity-monitoring.html)
+- **Sysmon for Linux no aparece como integración principal documentada para contenedores** en la documentación oficial revisada. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/how-it-works.html)
+
+## Escenario recomendado
+
+Para tu escenario de `web_zone`, `backend_zone`, `db_zone`, lo más efectivo es:
+1. Instalar Wazuh Agent en el host Docker. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/container-security/monitoring-docker.html)
+2. Activar `docker-listener` para visibilidad de runtime. [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/monitoring-docker.html)
+3. Habilitar `auditd` para comandos como `nmap`, `curl`, shells y acceso a secretos. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/audit-configuration.html)
+4. Activar FIM sobre rutas de configuración, secretos montados y directorios críticos. [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/file-integrity/how-to-configure-fim.html)
+5. Crear reglas locales para binarios y patrones sospechosos, apoyadas en listas CDB. [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/audit-commands-run-by-user.html)
+
+## Fuentes clave
+
+| Fuente | Tipo | Relevancia |
+|---|---|---|
+| Wazuh: Deployment on Docker | Oficial | Despliegue de componentes Wazuh en Docker  [documentation.wazuh](https://documentation.wazuh.com/current/deployment-options/docker/index.html). |
+| Wazuh: Deployment on Docker · Wazuh Container | Oficial | Explica el agente en contenedor y su uso ligero  [documentation.wazuh](https://documentation.wazuh.com/current/deployment-options/docker/wazuh-container.html). |
+| Wazuh: Using Wazuh to monitor Docker | Oficial | Docker listener y monitorización de eventos Docker  [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/container-security/monitoring-docker.html). |
+| Wazuh: Audit configuration | Oficial | Integración con auditd y monitoreo de syscalls  [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/system-calls-monitoring/audit-configuration.html). |
+| Wazuh: File integrity monitoring | Oficial | FIM y configuración de rutas vigiladas  [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/poc-file-integrity-monitoring.html). |
+| Wazuh: Monitoring execution of malicious commands | Oficial | Patrón para detectar `nmap`, `curl` y comandos sospechosos  [documentation.wazuh](https://documentation.wazuh.com/current/proof-of-concept-guide/audit-commands-run-by-user.html). |
+| Wazuh: Custom decoders | Oficial | Personalización de decoders y reglas  [documentation.wazuh](https://documentation.wazuh.com/current/user-manual/ruleset/decoders/custom.html). |
+
+Puedo convertir esto en un **anexo técnico para TFG** con:
+- configuración `ossec.conf`,
+- reglas locales listas para pegar,
+- y una matriz de detección por técnica ATT&CK para Docker.
+
+---
+
+# 5. Papers comparativos
+Sí encontré una base útil, pero la literatura comparativa **directa** entre seguridad perimetral tradicional y Zero Trust con métricas como MTTD/MTTR sigue siendo escasa; la mayor parte de trabajos 2020–2025 son revisiones, propuestas de arquitectura o estudios parciales en cloud, microservicios y contenedores. Aun así, sí hay fuentes académicas y técnicas suficientes para construir una comparación razonada y citarla en tu TFG. [arxiv](https://arxiv.org/html/2503.11659v2)
+
+## Estudios útiles
+
+| Estudio | Objetivo | Metodología | KPIs | Resultados principales | Limitaciones | DOI | IEEE |
+|---|---|---|---|---|---|---|---|
+| **Security of Zero Trust Networks in Cloud Computing: A Comparative Review** (Shandilya et al., 2022)  [pdfs.semanticscholar](https://pdfs.semanticscholar.org/b858/732482ec541873b4a304a163592e6d596a6d.pdf) | Comparar enfoques de red tradicional y Zero Trust en cloud computing. | Revisión comparativa de literatura sobre modelos de seguridad y ZT en cloud. | No reporta MTTD/MTTR; se centra en principios, control de acceso y visibilidad. | Concluye que ZT mejora la verificación continua, la visibilidad y la contención frente al modelo perimetral. | No es experimental; no ofrece métricas operativas cuantitativas. | 10.3390/su141811213 | Shandilya, S. K., Hussain, A., and Kim, H., “Security of Zero Trust Networks in Cloud Computing: A Comparative Review,” *Sustainability*, vol. 14, no. 18, Art. no. 11213, 2022, doi: 10.3390/su141811213.  [pdfs.semanticscholar](https://pdfs.semanticscholar.org/b858/732482ec541873b4a304a163592e6d596a6d.pdf) |
+| **Zero Trust Architecture: A Systematic Literature Review** (Gambo y Almulhem, 2025)  [arxiv](https://arxiv.org/html/2503.11659v2) | Sintetizar fundamentos, evolución y diferencias entre ZTA y PBSM/perimeter-based security model. | Revisión sistemática de literatura. | No aporta KPIs cuantitativos; sí objetivos de ZTA: prevención de brechas y restricción del movimiento lateral. | Destaca que ZTA limita el movimiento lateral y protege recursos individuales en vez de la red entera. | No experimental; carece de medidas MTTD/MTTR. | No indicado en el texto recuperado | Gambo, M. L., and Almulhem, A., “Zero Trust Architecture: A Systematic Literature Review,” arXiv, 2025.  [arxiv](https://arxiv.org/pdf/2503.11659.pdf) |
+| **A Critical Analysis of Foundations, Challenges, and Directions for Zero Trust Security in Cloud Environments** (2025)  [arxiv](https://arxiv.org/pdf/2411.06139.pdf) | Analizar fundamentos, retos y dirección futura de ZT en cloud. | Revisión crítica. | No métricas operativas; enfoque conceptual y de implementación. | Refuerza que ZT asume desconfianza por defecto y exige verificación continua. | No compara experimentalmente contra perímetro tradicional. | No indicado en el texto recuperado | “A Critical Analysis of Foundations, Challenges, and Directions for Zero Trust Security in Cloud Environments,” arXiv, 2025.  [arxiv](https://arxiv.org/pdf/2411.06139.pdf) |
+| **Zero Trust en la gestión de identidades y accesos en la nube: Una revisión de modelos, ventajas y limitaciones** (UPT, 2025)  [revistas.upt.edu](https://revistas.upt.edu.pe/ojs/index.php/ingenieria/article/view/1342/1173) | Revisar ZT aplicado a IAM en cloud. | Revisión académica. | No cuantitativo. | Útil para la parte de identidades, control de acceso y límites de la confianza implícita. | Menor peso que una publicación IEEE/ACM indexada. | No indicado | Referencia institucional en español.  [revistas.upt.edu](https://revistas.upt.edu.pe/ojs/index.php/ingenieria/article/view/1342/1173) |
+
+## Qué sí miden y qué no
+
+La evidencia encontrada prioriza principios arquitectónicos: verificación continua, privilegio mínimo, segmentación y reducción del movimiento lateral. Sin embargo, los KPIs que tú pides —**MTTD, MTTR, tasa de bloqueo, profundidad de ataque**— rara vez aparecen en papers comparativos directos entre perímetro y Zero Trust para Docker o Kubernetes. [pdfs.semanticscholar](https://pdfs.semanticscholar.org/b858/732482ec541873b4a304a163592e6d596a6d.pdf)
+
+Lo más cercano a métricas operativas suele estar en:
+- estudios de detección en contenedores y CNI,
+- evaluaciones de políticas de red,
+- trabajos de IDS/EDR con Zero Trust como marco,
+- y algunos preprints sobre microsegmentación y propagación lateral. [ieeexplore.ieee](https://ieeexplore.ieee.org/iel8/6287639/6514899/10896680.pdf)
+
+## Aplicación a Docker y cloud-native
+
+Para Docker, el mejor argumento académico es que una red plana expone más superficie de ataque y facilita el movimiento lateral, mientras que una arquitectura por zonas funcionales reduce el alcance de cada compromiso. En Kubernetes y microservicios, la literatura de Zero Trust suele centrarse en políticas por identidad, segmentación este-oeste y control estricto de flujos entre servicios. [arxiv](https://arxiv.org/pdf/2503.11659.pdf)
+
+En términos de tu caso:
+- **Seguridad perimetral tradicional**: protege el borde, pero una vez dentro de la red asume confianza amplia. [pdfs.semanticscholar](https://pdfs.semanticscholar.org/b858/732482ec541873b4a304a163592e6d596a6d.pdf)
+- **Zero Trust**: autentica y autoriza por solicitud, limita rutas laterales y reduce el impacto de una brecha. [arxiv](https://arxiv.org/pdf/2503.11659.pdf)
+- **Docker/Kubernetes/cloud-native**: la separación por zonas, service-to-service authentication y microsegmentación son los mecanismos más defendibles en el estado del arte. [arxiv](https://arxiv.org/pdf/2411.06139.pdf)
+
+## Conclusión práctica
+
+No hay muchos estudios 2020–2025 que comparen de forma experimental y directa perímetro vs Zero Trust con MTTD/MTTR en Docker. Lo que sí existe es una base sólida de revisiones académicas y trabajos cloud-native que justifican que Zero Trust mejora contención, visibilidad y reducción del movimiento lateral frente al modelo perimetral. Para el TFG, la vía más rigurosa es combinar esas revisiones con experimentos propios en Docker o Kubernetes midiendo: tiempo de detección, tasa de bloqueo, salto lateral y profundidad de compromiso. [arxiv](https://arxiv.org/pdf/2411.06139.pdf)
+
+Puedo preparar el siguiente paso como una **tabla final de 6–8 estudios** con foco en **IEEE/ACM/Springer/Elsevier/arXiv**, separando los que son **experimentales** de los que son **revisiones**, y dejando listo el texto en formato de sección de marco teórico.
