@@ -1,5 +1,5 @@
 # STATE - Seguimiento TFG Ciberseguridad
-Fecha de actualización: 2026-05-31
+Fecha de actualización: 2026-06-03
 
 ## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
 
@@ -14,24 +14,24 @@ Capacidad efectiva restante:
 - **Total: ~190-200h**
 
 ## 1. Resumen Semanal
-- Commits últimos 7 días: 4 entradas. Se amplió el Estado del Arte (`02_estado_arte.md`), se fusionó `main`, se cambió `autoCreatePr` en el workflow del agente y se actualizó el seguimiento administrativo del sprint.
-- Avance técnico principal: no hay commits en `infra/` ni `tests/`; no consta avance técnico nuevo en Escenario B.
-- Avance de redacción principal: avance parcial del Estado del Arte con análisis de seguridad perimetral, Zero Trust, microsegmentación y amenazas post-explotación; el fichero aún conserva secciones `[TODO]`, por lo que no se considera EdA v0 cerrado.
-- Días hasta próximo hito crítico: 0 días hasta el 31/05, email al tutor con Estado del Arte v0 + índice + propuesta de alcance.
+- Commits últimos 7 días: 10 entradas. Se actualizó el seguimiento administrativo, se amplió el Estado del Arte, se creó documentación base de Zero Trust, se inicializó `infra/zero_trust/` y se documentó la sesión técnica del 03/06.
+- Avance técnico principal: `infra/zero_trust/` ya contiene compose con 3 redes (`web_zone`, `backend_zone`, `db_zone`), servicios webapp/backend/db/nginx, certificados OpenSSL y mTLS `webapp` -> `backend` configurado. Wazuh sigue pendiente para el checkpoint del 04/06.
+- Avance de redacción principal: `docs/03_memoria_tfg/02_estado_arte.md` avanzó en perimetral, Zero Trust, microsegmentación, SIEM/IDS y amenazas post-explotación; aún queda `[TODO]` en trabajos relacionados, por lo que EdA v0 no está completamente cerrado.
+- Días hasta próximo hito crítico: 1 día hasta el 04/06 20:00, checkpoint Wazuh (continuar o switch a Falco).
 
 ## 2. Alineación con ROADMAP v2 y Riesgos
-- Fase actual del ROADMAP_v2: FASE 1 — SEMANA 1 (24/05-31/05), objetivo de la semana: borrador "razonablemente decente" para el tutor.
-- Delta respecto al plan: retrasado. Hay avance real en redacción, pero no hay evidencia de EdA v0 completo, envío al tutor ni especificación del Escenario B antes del cierre de la Fase 1.
+- Fase actual del ROADMAP_v2: FASE 2 — SEMANA 2 (02/06-07/06), objetivo de la semana: Escenario B funcional con segmentación, identidad, mTLS y observabilidad.
+- Delta respecto al plan: parcialmente en tiempo en la línea técnica (compose y mTLS completados el 03/06), pero con retraso administrativo/redacción por falta de evidencia del email del 31/05 y EdA v0 aún con un `[TODO]`.
 - Riesgos activos con nivel (ALTO/MEDIO/BAJO):
-  - ALTO: hito 31/05 en riesgo por ausencia de evidencia de envío al tutor y EdA aún con `[TODO]`.
-  - ALTO: especificación del Escenario B sin commit visible; comprime el arranque de implementación del 02/06.
-  - MEDIO: Wazuh mantiene alta varianza de integración antes del checkpoint del 04/06.
-  - BAJO: posible demora de respuesta del tutor; el ROADMAP ya contempla avanzar sin bloqueo.
-- ¿Es necesario activar algún fallback documentado en DECISIONS_LOG? No todavía. Mantener el fallback Wazuh -> Falco preparado para el checkpoint duro del 04/06 20:00.
+  - ALTO: Wazuh no tiene commit visible todavía y el checkpoint binario vence el 04/06 a las 20:00.
+  - MEDIO: el hito 31/05 no tiene evidencia de envío al tutor; reduce margen de feedback externo antes del bloque central de memoria.
+  - MEDIO: la captura formal de KPIs del Escenario B depende de cerrar Wazuh/Falco antes de las pruebas A/B del 06-07/06.
+  - BAJO: EdA v0 conserva un `[TODO]` en trabajos relacionados; no bloquea la implementación, pero sí el paquete académico al tutor.
+- ¿Es necesario activar algún fallback documentado en DECISIONS_LOG? No todavía. Mantener el fallback Wazuh -> Falco preparado y activarlo solo si el 04/06 20:00 no hay agent enrollado y al menos 1 alerta activa.
 
 ## 3. Bloqueos
-- Bloqueo activo: el hito del 31/05 no tiene evidencia de envío al tutor y el Estado del Arte conserva secciones pendientes; impacto directo sobre la validación temprana del alcance por parte del tutor.
-- Bloqueo potencial: Escenario B sigue sin especificación visible; mitigación: cerrar el 01/06 una especificación mínima verificable y no ampliar alcance antes del checkpoint Wazuh.
+- Bloqueo activo: no hay evidencia en commits del envío al tutor del 31/05; impacto: la validación temprana del alcance y del Estado del Arte no está asegurada.
+- Bloqueo potencial: Wazuh concentra la varianza técnica de la semana; mitigación: ejecutar el checkpoint del 04/06 como decisión binaria y activar Falco sin rediseñar el alcance si no cumple el criterio del ADR.
 
 ## 4. Tablero del Sprint Actual
 ### TODO
@@ -50,6 +50,8 @@ Capacidad efectiva restante:
 - [ ] **[HUMANO] `implementar_escenario_b`** — Implementar `infra/zero_trust/` (02-05/06). Checkpoint Wazuh 04/06 20:00. **Fases 1–4 completadas (03/06):** segmentación 3 zonas ✓, separación de secretos ✓, mTLS webapp↔backend verificado ✓. Pendiente: Fase 5 Wazuh (mañana 04/06).
 
 ### DONE (Sprint Final — desde 24/05)
+- [x] **`zt_base_mtls_fases_1_4`** — Escenario B inicializado en `infra/zero_trust/`: compose con 3 zonas, servicios base, certificados OpenSSL y mTLS `webapp` -> `backend` configurado. Pendiente Wazuh/Falco y KPIs formales. (2026-06-03)
+- [x] **`documentar_sesion_zt_2026_06_03`** — Sesión técnica Zero Trust documentada en `docs/04_diario_laboratorio/20260603_Sesion_ZT_DockerCompose.md`, con KPIs parciales observables y próximos pasos para Wazuh. (2026-06-03)
 - [x] **`spec_escenario_b`** — Especificación Escenario B completada: `docs/01_investigacion/Investigacion_ZeroTrust.md` (investigación consolidada) + `docs/01_investigacion/20260603_Prototipo_ZeroTrust.md` (prototipo 12 secciones, microsegmentación, mTLS, Wazuh, KPIs). (2026-06-03)
 - [x] **`actualizar_seguimiento_2026_05_30`** — `admin/STATE.md` y `admin/reportes/reporte_2026-05-27.md` actualizados con estado de sprint final. (2026-05-30)
 - [x] **`archive_roadmap_v1`** — `ROADMAP_v1_archivado.md` creado, `ROADMAP_v2_sprint_final.md` activo, `ROADMAP.md` redirigido. (2026-05-24)
@@ -75,7 +77,7 @@ Capacidad efectiva restante:
 |--------|------------------------------------------------------------|----------|
 | 31/05  | Borrador enviado al tutor (EdA v0 + índice 8 caps)         | ⚠️ En riesgo |
 | 04/06  | Checkpoint Wazuh (20:00) — continuar o switch Falco        | ⚠️ En riesgo |
-| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | ⚠️ En riesgo |
+| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | En progreso |
 | 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                | Pendiente |
 | 16/06  | Caps. 1 y 7 redactados                                     | Pendiente |
 | 19/06  | PDF compilado en Overleaf + email final al tutor           | Pendiente |
