@@ -21,6 +21,37 @@
 
 ---
 
+## 🔴 BLOQUE DE RECUPERACIÓN (04/06) — Borrador para el tutor
+
+> **Origen:** correos del tutor 2026-01-09 (§4) y 2026-05-24 (§16) en `docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md`.
+> El tutor pidió **(a)** un borrador "sobre qué cosas vas a tratar en cada parte del TFG" (índice + 2-3 frases por sección: contenido y objetivo) y **(b)** como paso previo, **"ver otros TFGs como lo hacen"**.
+> El hito `email_tutor_31_05` está VENCIDO. Estas tareas eran prerrequisitos que no estaban planificados de forma explícita. Se intercalan hoy sin desplazar la línea técnica.
+
+### `estudiar_otros_tfgs` — Revisión de TFGs de referencia
+- **Objetivo:** ver cómo estructuran otros TFGs de ciberseguridad/redes la memoria, para calibrar profundidad, índice y formato antes de redactar el propio borrador.
+- **Presupuesto:** 1.5h
+- [ ] Localizar 3-5 TFGs/TFMs similares (RiuNet UPV, repositorios de otras universidades) sobre Zero Trust, pentesting, microsegmentación o seguridad en contenedores — 30 min
+- [ ] Anotar de cada uno: estructura de capítulos, cómo plantean objetivos/alcance, cómo presentan pruebas y métricas — 40 min
+- [ ] Consolidar patrones comunes en un doc temporal (`docs/02_reuniones_tutor/referencias_tfgs.md`) — 20 min
+
+### `redactar_borrador_indice_anotado` — Borrador "qué trato en cada parte"
+- **Objetivo:** producir el entregable que pidió el tutor: índice de los 8 capítulos + 2-3 frases por sección describiendo qué se incluye y qué objetivo tiene cada parte.
+- **Presupuesto:** 1.5h
+- **Plan:** `email_tutor_31_05` (entregable principal)
+- [ ] Redactar el índice anotado a partir del esqueleto de `docs/03_memoria_tfg/` y la `spec_escenario_b` — 1h
+- [ ] Alinear con el modelo de amenazas v2 ya validado (correo 2026-04-09) y el título oficial — 20 min
+- [ ] Marcar con `[REVISAR]` las secciones aún incompletas en lugar de bloquearse — 10 min
+
+### `email_tutor_31_05` (recuperación) — Envío al tutor
+- **Objetivo:** enviar el borrador "razonablemente decente" lo antes posible, recuperando el hito vencido del 31/05.
+- **Presupuesto:** 45 min
+- **Plan:** `email_tutor_31_05`
+- [ ] Componer email con el índice anotado + estado real (Escenario B + Wazuh operativos) + plan/plazos hacia el 21/06 — 25 min
+- [ ] **ENVIAR** (ver plantilla `docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md §7`) — 5 min
+- [ ] Registrar envío en `docs/02_reuniones_tutor/BITACORA_REUNIONES.md` — 15 min
+
+---
+
 ## FASE 1 — SEMANA 1 (25/05–31/05) · 1-2h/día · Objetivo: borrador para tutor
 
 ---
