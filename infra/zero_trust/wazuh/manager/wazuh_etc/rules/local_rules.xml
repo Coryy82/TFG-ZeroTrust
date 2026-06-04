@@ -1,0 +1,37 @@
+<group name="zerotrust,">
+
+  <!-- docker-listener: cualquier exec en contenedores del stack ZT -->
+  <rule id="100110" level="8">
+    <if_sid>87924</if_sid>
+    <description>ZT (docker-listener): exec detectado en contenedor</description>
+  </rule>
+
+  <!-- docker-listener: exec específicamente en webapp (post-RCE simulado) -->
+  <rule id="100111" level="12">
+    <if_sid>87924</if_sid>
+    <field name="docker.Actor.Attributes.name">webapp</field>
+    <description>ZT: exec en webapp - posible actividad post-RCE (TA0008)</description>
+  </rule>
+
+  <!-- command monitoring: nmap detectado en procesos del host -->
+  <rule id="100100" level="12">
+    <if_sid>530</if_sid>
+    <match>nmap</match>
+    <description>ZT: proceso nmap detectado - reconocimiento interno (T1046)</description>
+  </rule>
+
+  <!-- command monitoring: curl hacia backend -->
+  <rule id="100101" level="10">
+    <if_sid>530</if_sid>
+    <match>curl.*backend</match>
+    <description>ZT: curl hacia backend detectado - posible exfiltracion (T1041)</description>
+  </rule>
+
+  <!-- FIM: cambio en certificados mTLS montados -->
+  <rule id="100120" level="14">
+    <if_sid>550</if_sid>
+    <match>/monitored/certs</match>
+    <description>ZT: modificacion en certificados mTLS - posible T1552.004</description>
+  </rule>
+
+</group>

@@ -1,0 +1,55 @@
+services:
+  wazuh-manager:
+    image: wazuh/wazuh-manager:4.9.2
+    hostname: wazuh-manager
+    restart: unless-stopped
+    ports:
+      - "1514:1514"
+      - "1515:1515"
+      - "55000:55000"
+    volumes:
+      - ./manager/wazuh_etc:/var/ossec/etc
+      - wazuh_logs:/var/ossec/logs
+      - wazuh_queue:/var/ossec/queue
+    networks:
+      - wazuh_net
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep wazuh-remoted >/dev/null 2>&1 && pgrep wazuh-authd >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+
+  wazuh-agent:
+    build: ./agent
+    hostname: wazuh-agent-zt
+    restart: unless-stopped
+    pid: host
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../certs:/monitored/certs:ro
+    environment:
+      - WAZUH_MANAGER=wazuh-manager
+      - WAZUH_AGENT_NAME=zt-lab-agent
+    networks:
+      - wazuh_net
+      - zt_web_zone
+      - zt_backend_zone
+    depends_on:
+      wazuh-manager:
+        condition: service_healthy
+
+networks:
+  wazuh_net:
+    driver: bridge
+  zt_web_zone:
+    external: true
+    name: zero_trust_web_zone
+  zt_backend_zone:
+    external: true
+    name: zero_trust_backend_zone
+
+volumes:
+  wazuh_logs:
+  wazuh_queue:
