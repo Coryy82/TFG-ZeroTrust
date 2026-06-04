@@ -240,14 +240,27 @@ Aplicando exclusivamente las recomendaciones de la investigación:
 
 > Fuente: `Investigacion_ZeroTrust.md` — "Monitoreo, Telemetría y Detección".
 
-### Integración (desde el host)
+> **[ACTUALIZACIÓN — 2026-06-04]** La arquitectura de referencia descrita en esta sección (Opción A: agente en el host) es correcta para producción (servidor Linux real, nodo Kubernetes como DaemonSet). Para el entorno de laboratorio (Docker Desktop + WSL2), se aplica la **Opción B: agente como contenedor Docker** con socket montado y `--pid=host`. La cobertura real obtenida es idéntica en este entorno. Ver ADR 2026-06-04 en `admin/DECISIONS_LOG.md`.
 
-La investigación es explícita: la detección efectiva en contenedores **se instrumenta desde el host**, no metiendo el agente solo dentro del contenedor (que solo ve su propio namespace).
+### Integración — Arquitectura de referencia para producción (Opción A)
 
-1. **Wazuh Agent en el host Docker** — recopila eventos del sistema y de los contenedores.
-2. **docker-listener** — visibilidad de eventos de runtime de Docker.
-3. **auditd** — monitorización de comandos (`nmap`, `curl`, `nc`, shells) y accesos a ficheros.
-4. **FIM** — integridad de ficheros sobre rutas de configuración, secretos montados y directorios críticos.
+> ~~La investigación es explícita: la detección efectiva en contenedores **se instrumenta desde el host**, no metiendo el agente solo dentro del contenedor (que solo ve su propio namespace).~~
+>
+> ~~1. **Wazuh Agent en el host Docker** — recopila eventos del sistema y de los contenedores.~~
+> ~~2. **docker-listener** — visibilidad de eventos de runtime de Docker.~~
+> ~~3. **auditd** — monitorización de comandos (`nmap`, `curl`, `nc`, shells) y accesos a ficheros.~~
+> ~~4. **FIM** — integridad de ficheros sobre rutas de configuración, secretos montados y directorios críticos.~~
+>
+> **[OBSOLETO para el laboratorio Docker Desktop + WSL2]** — En Docker Desktop, la distro WSL2 del usuario y la distro `docker-desktop` (donde corren los contenedores) son namespaces distintos. El agente instalado en Ubuntu WSL2 no ve los procesos de los contenedores. Además, el kernel personalizado de WSL2 no soporta `auditd` completo.
+
+### Integración — Implementación de laboratorio (Opción B)
+
+La implementación real en el laboratorio usa Wazuh como stack Docker, preservando la misma cobertura operativa:
+
+1. **Wazuh Agent como contenedor** con `/var/run/docker.sock` montado y `--pid=host`.
+2. **docker-listener** — visibilidad de eventos de runtime de Docker (start/stop/exec).
+3. **FIM** — sobre rutas de secretos y certs montados como volúmenes.
+4. **Command monitoring parcial** — vía acceso a `/proc` del host con `--pid=host`.
 
 ```mermaid
 flowchart TD
@@ -381,7 +394,7 @@ Procede de ficheros existentes del repositorio, no de suposiciones:
 - **Revocación y rotación de certificados** sin PKI: cómo gestionar el ciclo de vida de los autofirmados en laboratorio.
 - **Detección fiable de lectura de variables de entorno:** no existe mecanismo directo; queda por validar la eficacia de la inferencia vía auditd/FIM.
 - **Autorización fina por identidad:** mTLS solo autentica; falta definir qué puede hacer cada servicio una vez verificado.
-- **Postura sobre el agente Wazuh:** la investigación presenta cierta contradicción (agente en contenedor "ligero" vs desaconsejado para runtime completo). El prototipo **fija la postura en agente en el host** por mayor visibilidad; conviene justificarlo formalmente en el Capítulo 4 del TFG.
+- ~~**Postura sobre el agente Wazuh:** la investigación presenta cierta contradicción (agente en contenedor "ligero" vs desaconsejado para runtime completo). El prototipo **fija la postura en agente en el host** por mayor visibilidad; conviene justificarlo formalmente en el Capítulo 4 del TFG.~~ **[SUPERSEDIDO — 2026-06-04]** La postura queda resuelta por el ADR 2026-06-04 (`admin/DECISIONS_LOG.md`): el entorno Docker Desktop + WSL2 impide que el agente en el host WSL2 vea los namespaces de proceso de los contenedores, invalidando la ventaja de visibilidad de la Opción A. **La implementación de laboratorio usa Opción B (agente como contenedor Docker)**. Para el Cap. 4 del TFG: la arquitectura de producción correcta sigue siendo Opción A (agente nativo en host Linux / DaemonSet en Kubernetes); el Cap. 5 justifica la aproximación de laboratorio.
 
 ---
 

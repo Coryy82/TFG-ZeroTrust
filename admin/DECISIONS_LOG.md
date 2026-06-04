@@ -105,3 +105,28 @@
 - **Alternativas descartadas:** Logs centralizados con script Python (solución casera). Se descarta porque no produce alertas con timestamp preciso para G1 y no es nominalmente comparable con las herramientas de observabilidad citadas en el Estado del Arte.
 - **Impacto:** este ADR debe citarse en `docs/03_memoria_tfg/04_diseno.md §4.3.4` como decisión de diseño explícita, no como improvisación.
 - **Trazabilidad:** `admin/ROADMAP_v2_sprint_final.md` §Fase 2, día 04/06.
+
+---
+
+**2026-06-03 | Arquitectura mTLS: Opción B — único contenedor `backend` (Nginx + Flask)**
+
+- **Decisión:** El servicio `backend` ejecuta Nginx (PEP mTLS, puerto 443) y Flask (API interna, puerto 5000) en el **mismo contenedor**. Nginx hace `proxy_pass` a `http://localhost:5000`. El `nginx.conf` mTLS se monta como volumen de solo lectura.
+- **Alternativa descartada — Opción A (sidecar):** Separar `backend` (Nginx) y `backend-api` (Flask) en dos servicios distintos con una red `backend_internal` adicional entre ellos.
+- **Motivo del descarte de Opción A:** El patrón sidecar no está documentado en `Investigacion_ZeroTrust.md` ni en `20260603_Prototipo_ZeroTrust.md`. Introducirlo violaría la regla de trazabilidad del prototipo §Prototipo: *"no se introducen tecnologías, patrones ni controles ausentes en la investigación"*. El único contenedor `backend` es fiel al diagrama de zonas funcionales documentado.
+- **Implementación:** `CMD ["sh", "-c", "python app.py & nginx -g 'daemon off;'"]` en `infra/zero_trust/backend/Dockerfile`. Nginx instalado vía `apt-get` en la imagen.
+- **Impacto:** Sin redes adicionales. El compose mantiene exactamente `web_zone`, `backend_zone`, `db_zone` sin ninguna red `backend_internal`.
+- **Verificación:** `curl` con cert → HTTP 200; `curl` sin cert → HTTP 400 "No required SSL certificate was sent". Sesión 03/06.
+- **Trazabilidad:** [`docs/04_diario_laboratorio/20260603_Sesion_ZT_DockerCompose.md §4`](../docs/04_diario_laboratorio/20260603_Sesion_ZT_DockerCompose.md).
+
+---
+
+**2026-06-04 | Despliegue de Wazuh: Opción B — manager + agent como contenedores Docker**
+
+- **Decisión:** Wazuh se despliega enteramente en Docker. El agente corre como contenedor con `/var/run/docker.sock` montado y `--pid=host`, en lugar de instalarse como servicio nativo en la distro WSL2 del usuario.
+- **Postura original supersedida — Opción A (agente en host):** `Investigacion_ZeroTrust.md` §Monitoreo y `20260603_Prototipo_ZeroTrust.md` §8 establecían *"agente en el host Docker"* como arquitectura de referencia, argumentando mayor visibilidad sobre syscalls de todos los contenedores.
+- **Por qué se descarta Opción A en este entorno:** Docker Desktop en Windows + WSL2 crea namespaces separados: la distro Ubuntu del usuario y la distro interna `docker-desktop` (donde corren realmente los contenedores). El agente Wazuh instalado en Ubuntu WSL2 **no tiene visibilidad sobre los namespaces de proceso de `docker-desktop`**. Adicionalmente, el kernel personalizado de WSL2 tiene soporte parcial o nulo de `auditd`, impidiendo la monitorización de syscalls documentada en el prototipo. La mayor complejidad de instalación (activar `systemd` en WSL2, subsistema `audit`) no se traduce en mayor cobertura real de detección respecto a la Opción B.
+- **Por qué se elige Opción B:** un contenedor del agente con socket Docker montado y `--pid=host` proporciona la misma cobertura operativa (`docker-listener` + FIM) con plena reproducibilidad. Todo el stack levanta con un único `docker compose up` sin instalar nada en el host.
+- **Cobertura real en Docker Desktop + WSL2 (igual para Opción A y B):** `docker-listener` (eventos exec/start/stop), FIM sobre rutas montadas de secretos y certs, command monitoring parcial vía `/proc` con `--pid=host`.
+- **Limitación documentada (ninguna opción la resuelve en este entorno):** `auditd` completo con captura de syscalls de procesos en otros contenedores requiere el kernel `audit` activo. No disponible en Docker Desktop + WSL2. Se documenta en Cap. 5 del TFG como limitación de laboratorio. En un servidor Linux real o nodo Kubernetes (DaemonSet privilegiado), la Opción A funciona sin restricciones y es el patrón corporativo correcto.
+- **Criterio de fallback vigente:** ADR 2026-05-24 sigue activo — si a las 20:00 del 04/06/2026 no hay agent enrollado y ≥1 alerta → activar Falco.
+- **Trazabilidad:** [`docs/04_diario_laboratorio/20260604_Sesion_Wazuh_Docker.md`](../docs/04_diario_laboratorio/20260604_Sesion_Wazuh_Docker.md) (sesión en curso).

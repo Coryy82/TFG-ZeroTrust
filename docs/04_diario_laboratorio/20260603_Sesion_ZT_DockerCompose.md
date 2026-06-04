@@ -507,6 +507,8 @@ docker compose exec webapp curl -sk https://backend/empleados
 
 ### Fase 5 — Wazuh (objetivo del 04/06, checkpoint 20:00)
 
+> **[ACTUALIZADO — 2026-06-04]** Los pasos originales asumían Opción A (agente en host WSL2). Tras el análisis del entorno Docker Desktop + WSL2, se adopta **Opción B (manager + agent como contenedores Docker)**. Ver ADR 2026-06-04 en `admin/DECISIONS_LOG.md`. Los pasos obsoletos se conservan tachados para trazabilidad.
+
 Según el prototipo §8 y §10 Fase 5, el stack mínimo:
 
 **Paso 1 — Wazuh manager** (fuera del compose del Escenario B, como servicio separado o compose oficial de Wazuh):
@@ -517,27 +519,32 @@ docker run -d --name wazuh-manager \
   wazuh/wazuh-manager:4.x
 ```
 
-**Paso 2 — Wazuh agent en el host** (no dentro del contenedor):
-```bash
-# En el host WSL2/Linux
-curl -so wazuh-agent.deb https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.x_amd64.deb
-dpkg -i wazuh-agent.deb
-WAZUH_MANAGER=<IP_manager> wazuh-agent --enroll-agent
-```
+~~**Paso 2 — Wazuh agent en el host** (no dentro del contenedor):~~
+~~```bash~~
+~~# En el host WSL2/Linux~~
+~~curl -so wazuh-agent.deb https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.x_amd64.deb~~
+~~dpkg -i wazuh-agent.deb~~
+~~WAZUH_MANAGER=<IP_manager> wazuh-agent --enroll-agent~~
+~~```~~
+~~**[OBSOLETO — Opción A]** En Docker Desktop + WSL2, el agente instalado en Ubuntu WSL2 no ve los procesos de los contenedores (namespaces distintos). Ver ADR 2026-06-04.~~
+
+**Paso 2 (revisado) — Wazuh agent como contenedor Docker (Opción B):**
+Ver sesión `docs/04_diario_laboratorio/20260604_Sesion_Wazuh_Docker.md` para los comandos definitivos. Stack Docker con socket montado + `--pid=host`.
 
 **Paso 3 — Activar docker-listener:**
-En `ossec.conf` del agente:
+En `ossec.conf` del agente (aplica igualmente en Opción B):
 ```xml
 <wodle name="docker-listener">
   <disabled>no</disabled>
 </wodle>
 ```
 
-**Paso 4 — auditd para los 4 hitos post-RCE:**
-```bash
-# /etc/audit/rules.d/zerotrust.rules
--a always,exit -F arch=b64 -S execve -k zt_exec
-```
+~~**Paso 4 — auditd para los 4 hitos post-RCE:**~~
+~~```bash~~
+~~# /etc/audit/rules.d/zerotrust.rules~~
+~~-a always,exit -F arch=b64 -S execve -k zt_exec~~
+~~```~~
+~~**[OBSOLETO — Opción A]** `auditd` del host WSL2 no ve syscalls de los contenedores en Docker Desktop. Se sustituye por FIM + command monitoring vía docker-listener en Opción B.~~
 
 **Paso 5 — Reglas locales Wazuh** (`/var/ossec/etc/rules/local_rules.xml`):
 ```xml
