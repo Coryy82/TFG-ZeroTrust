@@ -21,6 +21,19 @@ jobs:
             exit 1
           fi
 
+      - name: Diagnóstico previo de la API de Cursor
+        run: |
+          set -euo pipefail
+          AUTH="${{ secrets.CURSOR_API_KEY }}:"
+
+          echo "=== Verificando API key (/v0/me) ==="
+          curl --silent --show-error --fail-with-body \
+            -u "$AUTH" https://api.cursor.com/v0/me | jq .
+
+          echo "=== Modelos disponibles (/v0/models) ==="
+          curl --silent --show-error --fail-with-body \
+            -u "$AUTH" https://api.cursor.com/v0/models | jq .
+
       - name: Lanzar Cursor Cloud Agent — Administrador Sprint Final
         id: launch_agent
         run: |
@@ -158,23 +171,52 @@ jobs:
           Devuelve un resumen con: Confidence Score, ficheros actualizados/creados, próximo hito crítico y su estado." \
             '{
               source: { repository: $repo, ref: "main" },
-              target: { autoCreatePr: true },
+              target: { autoCreatePr: true, skipReviewerRequest: true },
+              model: "default",
               prompt: { text: $prompt }
             }')
 
-          RESPONSE=$(curl --silent --show-error --fail-with-body \
-            --request POST \
-            --url https://api.cursor.com/v0/agents \
-            -u "${{ secrets.CURSOR_API_KEY }}:" \
-            --header 'Content-Type: application/json' \
-            --data "$PAYLOAD")
+          echo "=== Payload (repo + modelo; prompt omitido por tamaño) ==="
+          echo "$PAYLOAD" | jq 'del(.prompt)'
 
-          echo "API_RESPONSE=$RESPONSE"
-          echo "$RESPONSE" | jq .
+          AUTH="${{ secrets.CURSOR_API_KEY }}:"
+          MAX_ATTEMPTS=3
+          ATTEMPT=1
+          HTTP_CODE=0
 
-      - name: Verificar respuesta de la API
-        if: failure()
-        run: |
-          echo "ERROR: La llamada a la API de Cursor falló."
-          echo "Comprueba que CURSOR_API_KEY es válida y que el repositorio es accesible."
+          while [ "$ATTEMPT" -le "$MAX_ATTEMPTS" ]; do
+            echo "=== Intento $ATTEMPT/$MAX_ATTEMPTS — POST /v0/agents ==="
+            HTTP_CODE=$(curl --silent --show-error \
+              --request POST \
+              --url https://api.cursor.com/v0/agents \
+              -u "$AUTH" \
+              --header 'Content-Type: application/json' \
+              --data "$PAYLOAD" \
+              --output response.json \
+              --write-out "%{http_code}")
+
+            echo "HTTP status: $HTTP_CODE"
+            cat response.json | jq . 2>/dev/null || cat response.json
+
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+              echo "API_RESPONSE=$(cat response.json)"
+              exit 0
+            fi
+
+            if [ "$ATTEMPT" -lt "$MAX_ATTEMPTS" ]; then
+              WAIT=$((ATTEMPT * 30))
+              echo "Reintentando en ${WAIT}s (errores 400/5xx de GitHub/Cursor suelen ser transitorios)..."
+              sleep "$WAIT"
+            fi
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+
+          echo "ERROR: La llamada a la API de Cursor falló tras $MAX_ATTEMPTS intentos (último HTTP $HTTP_CODE)."
+          echo "Cuerpo de la respuesta:"
+          cat response.json
+          echo ""
+          echo "Causas habituales de HTTP 400:"
+          echo "  - Integración GitHub/Cursor temporalmente inestable ('Failed to determine repository default branch')."
+          echo "  - Repositorio no accesible para la API key (reconectar GitHub en Cursor Dashboard → Integrations)."
+          echo "  - API key incorrecta o sin permisos de Cloud Agents (usar clave de Dashboard → API Keys)."
           exit 1
