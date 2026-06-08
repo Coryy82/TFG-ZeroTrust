@@ -1,5 +1,5 @@
 # STATE - Seguimiento TFG Ciberseguridad
-Fecha de actualización: 2026-06-04
+Fecha de actualización: 2026-06-08
 
 ## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
 
@@ -14,25 +14,25 @@ Capacidad efectiva restante:
 - **05/06 → 21/06: ~144h restantes** (12h/día × 0.75 fatiga × 16 días)
 
 ## 1. Resumen Semanal
-- Commits recientes: incluyen Escenario B Fases 1–5 completas + diarios de laboratorio + ADRs de arquitectura.
-- Avance técnico principal: **Escenario B 100% implementado y verificado.** Stack Wazuh operativo (manager + agente Docker, enrollment estable, FIM realtime, docker-listener activo). Examen final de integración con la red ZT superado: microsegmentación, mTLS y reglas MITRE personalizadas (T1046, T1552.004) verificadas end-to-end.
-- Avance de redacción principal: `docs/03_memoria_tfg/02_estado_arte.md` avanzó en perimetral, Zero Trust, microsegmentación, SIEM/IDS y amenazas post-explotación; aún queda `[TODO]` en §2.7 "Trabajos relacionados". Los diarios de laboratorio (`20260603_Sesion_ZT_DockerCompose.md`, `20260604_Sesion_Wazuh.md`) ya son fuente directa para los Caps. 5 y 6.
-- Días hasta próximo hito crítico: 5 días hasta el 09/06 (KPIs §2/§3 cerrados).
+- Commits últimos 7 días: 11 entradas. Escenario B + Wazuh completados (04/06); sesión Wazuh documentada (520 líneas); bloque de recuperación del email al tutor en agenda; borradores de índice anotado y 4 TFGs de referencia añadidos (07/06).
+- Avance técnico principal: stack ZT operativo con 5 reglas Wazuh custom (`local_rules.xml`: docker-listener, nmap T1046, curl→backend T1041, FIM certs T1552.004). Verificación informal end-to-end el 04/06. **Pendiente:** pruebas A/B formales — no hay carpeta `tests/logs/zerotrust_sesion_*` ni §2 de `tests/00_PLANTILLA_KPI_v2.md` rellenada.
+- Avance de redacción principal: `Borrador_Indice_Anotado_HUMANO.md` e `_IA.md` listos (07/06); `02_estado_arte.md` con `[TODO]` solo en §2.7 "Trabajos relacionados". Sin evidencia de envío al tutor en `BITACORA_REUNIONES.md`.
+- Días hasta próximo hito crítico: **1 día** hasta el 09/06 (KPIs §2/§3 cerrados + Escenario B funcional certificado).
 
 ## 2. Alineación con ROADMAP v2 y Riesgos
-- Fase actual del ROADMAP_v2: FASE 2 — SEMANA 2 (02/06-07/06), objetivo de la semana: Escenario B funcional con segmentación, identidad, mTLS y observabilidad. **OBJETIVO TÉCNICO DE LA SEMANA COMPLETADO EL 04/06** con un día de margen.
-- Delta respecto al plan: la agenda del 05/06 (reglas para 4 hitos post-RCE) está parcialmente avanzada — nmap (T1046) y modificación de certs (T1552.004) ya detectados. Faltan las reglas de lectura de variables de entorno y conexión directa a db:5432. La línea técnica va **por delante** de la agenda.
+- Fase actual del ROADMAP_v2: **FASE 3 — SEMANA 3** (08/06-14/06), objetivo de la semana: comparativa KPI cerrada + 60% de la memoria redactada. Arranque hoy con cierre de KPIs y primeras secciones del Cap. 6.
+- Delta respecto al plan: la línea técnica de Fase 2 (Escenario B + Wazuh) se completó el 04/06 con 1 día de margen. **Retraso de ~2 días** en pruebas A/B formales (agenda 06-07/06 sin commits ni logs). El bloque de recuperación del email (05-07/06) avanzó en insumos (índice anotado, TFGs de referencia) pero el envío sigue pendiente. Globalmente: **técnica adelantada, captura de evidencias y comunicación con tutor retrasadas**.
 - Riesgos activos con nivel (ALTO/MEDIO/BAJO):
-  - ~~ALTO: Wazuh no tiene commit visible~~ → **RESUELTO**. Fallback Wazuh→Falco descartado.
-  - ALTO: `email_tutor_31_05` VENCIDO sin evidencia de envío; se puede recuperar hoy con un email de actualización de estado.
-  - MEDIO: `redactar_eda_v0` tiene `[TODO]` en §2.7 Trabajos relacionados; bloquea el paquete académico al tutor.
-  - BAJO: las pruebas A/B formales (06-07/06) están en plazo; el entorno ya está levantado y los escenarios de ataque validados.
-- ¿Es necesario activar algún fallback? No. Wazuh operativo. Fallback Wazuh→Falco cerrado definitivamente.
+  - ALTO: `email_tutor_31_05` VENCIDO — materiales listos (índice anotado + EdA ~95%) pero sin registro de envío en bitácora.
+  - ALTO: hito 09/06 en riesgo — `tests/00_PLANTILLA_KPI_v2.md` §2 y §3 vacíos; sin sesión formal de captura en Escenario B.
+  - MEDIO: `redactar_eda_v0` bloqueado en §2.7; no impide el email pero retrasa el paquete académico completo.
+  - BAJO: reglas Wazuh específicas para `env | grep DB_` y conexión `db:5432` sin diario `20260605_Sesion_ZT_Reglas.md`; parcialmente cubiertas por docker-listener y microsegmentación.
+- ¿Es necesario activar algún fallback? No. Wazuh operativo; fallback Wazuh→Falco cerrado definitivamente (checkpoint 04/06 superado).
 
 ## 3. Bloqueos
-- Bloqueo activo: `email_tutor_31_05` sin evidencia de envío. Acción: componer y enviar hoy un email de actualización al tutor con el estado real (Escenario B completo, Wazuh operativo, pruebas A/B en curso el 06-07/06).
-- Bloqueo menor: `redactar_eda_v0` con secciones `[TODO]` sin cerrar en §2.7. No bloquea la línea técnica pero sí el paquete académico hacia el tutor.
-- Sin bloqueo técnico activo: el stack ZT + Wazuh está operativo y documentado.
+- Bloqueo activo: `ejecutar_pruebas_ab` sin evidencia formal — sin logs `zerotrust_sesion_*` ni KPI §2 rellenado. Impacto directo en hito 09/06 y en todo el Cap. 6. Acción: ejecutar hoy la sesión de captura replicando protocolo del 23/05.
+- Bloqueo activo: `email_tutor_31_05` sin envío registrado. Impacto: validación formal del tutor pendiente. Acción: enviar hoy con índice anotado ya preparado + estado técnico real.
+- Bloqueo menor: `redactar_eda_v0` §2.7 sin cerrar. Impacto: paquete académico incompleto, no bloquea la línea técnica.
 
 ## 4. Tablero del Sprint Actual
 ### TODO
@@ -47,9 +47,11 @@ Capacidad efectiva restante:
 
 ### DOING
 - [ ] **[HUMANO] `redactar_eda_v0`** — Redactar Estado del Arte v0: NIST 800-207, BeyondCorp, OWASP, microsegmentación, comparativa perimetral vs ZT. ⚠️ VENCIDO. Pendiente solo §2.7 "Trabajos relacionados" (resto completado).
-- [ ] **[HUMANO] `ejecutar_pruebas_ab`** — Pruebas A/B post-RCE, captura logs, cierre KPIs §2 y §3 (06-08/06). Infraestructura lista: Escenario A y B levantados, escenarios de ataque validados informalmente el 04/06. Pendiente: ejecución formal con captura de evidencias y relleno de `tests/00_PLANTILLA_KPI_v2.md`.
+- [ ] **[HUMANO] `ejecutar_pruebas_ab`** — Pruebas A/B post-RCE, captura logs, cierre KPIs §2 y §3 (06-08/06). ⚠️ VENCIDO 2 días. Infraestructura lista; Wazuh verificado informalmente el 04/06. Pendiente: sesión formal con `tests/logs/zerotrust_sesion_*/` y relleno de `tests/00_PLANTILLA_KPI_v2.md` §2 y §3.
 
 ### DONE (Sprint Final — desde 24/05)
+- [x] **`redactar_borrador_indice_anotado`** — Borradores de índice anotado (8 caps + 2-3 frases/sección) en `docs/03_memoria_tfg/Borradores y pretrabajos/Borrador_Indice_Anotado_HUMANO.md` y `_IA.md`. (2026-06-07)
+- [x] **`estudiar_otros_tfgs`** — 4 TFGs de referencia localizados en `docs/01_investigacion/TFG_Otros/` (Zero Trust, pentesting, Wazuh/Suricata). (2026-06-07)
 - [x] **`wazuh_fase5_escenario_b`** — Fase 5 Wazuh completada (04/06/2026): manager + agente Docker, FIM realtime sobre `/monitored/certs`, docker-listener, reglas MITRE T1046/T1552.004 verificadas. Examen final de integración con red ZT superado (microsegmentación + mTLS + detección end-to-end). Sesión documentada en `docs/04_diario_laboratorio/20260604_Sesion_Wazuh.md`. (2026-06-04)
 - [x] **`implementar_escenario_b`** — `infra/zero_trust/` completado: 3 zonas de red, secretos separados, mTLS webapp↔backend, Wazuh manager+agente. Checkpoint 04/06 20:00 SUPERADO. (2026-06-04)
 - [x] **`zt_base_mtls_fases_1_4`** — Escenario B inicializado en `infra/zero_trust/`: compose con 3 zonas, servicios base, certificados OpenSSL y mTLS `webapp` -> `backend` configurado. (2026-06-03)
@@ -77,9 +79,9 @@ Capacidad efectiva restante:
 ## 5. Hitos críticos del Sprint Final
 | Fecha  | Hito                                                       | Estado   |
 |--------|------------------------------------------------------------|----------|
-| 31/05  | Borrador enviado al tutor (EdA v0 + índice 8 caps)         | ⚠️ VENCIDO SIN EVIDENCIA — recuperar hoy |
+| 31/05  | Borrador enviado al tutor (EdA v0 + índice 8 caps)         | ⚠️ VENCIDO — índice anotado listo (07/06), envío pendiente |
 | 04/06  | Checkpoint Wazuh (20:00) — continuar o switch Falco        | ✅ SUPERADO — Wazuh operativo, fallback descartado |
-| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | 🟡 En progreso — infra lista, pruebas formales el 06-07/06 |
+| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | ⚠️ En riesgo — infra lista, captura formal sin ejecutar |
 | 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                | Pendiente |
 | 16/06  | Caps. 1 y 7 redactados                                     | Pendiente |
 | 19/06  | PDF compilado en Overleaf + email final al tutor           | Pendiente |
