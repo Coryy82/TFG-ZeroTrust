@@ -130,3 +130,18 @@
 - **Limitación documentada (ninguna opción la resuelve en este entorno):** `auditd` completo con captura de syscalls de procesos en otros contenedores requiere el kernel `audit` activo. No disponible en Docker Desktop + WSL2. Se documenta en Cap. 5 del TFG como limitación de laboratorio. En un servidor Linux real o nodo Kubernetes (DaemonSet privilegiado), la Opción A funciona sin restricciones y es el patrón corporativo correcto.
 - **Criterio de fallback vigente:** ADR 2026-05-24 sigue activo — si a las 20:00 del 04/06/2026 no hay agent enrollado y ≥1 alerta → activar Falco.
 - **Trazabilidad:** [`docs/04_diario_laboratorio/20260604_Sesion_Wazuh_Docker.md`](../docs/04_diario_laboratorio/20260604_Sesion_Wazuh_Docker.md) (sesión en curso).
+
+---
+
+**2026-06-06 | Enfoque narrativo del TFG: objetivos como pregunta de investigación (feedback tutor)**
+
+- **Decisión:** Reformular el objetivo principal del TFG (§1.2 Introducción, resumen ejecutivo si se retoca, y §7.1 Conclusiones) como **respuesta a una pregunta de investigación**, no como *"comparar dos arquitecturas funcionalmente idénticas"*. La comparativa A/B (perimetral vs Zero Trust) queda como **método experimental** para responder esa pregunta; no como mensaje central del trabajo.
+- **Origen:** Correo del tutor Héctor del 06/06/2026 tras revisión del índice anotado enviado el mismo día. Cita textual: *"En realidad, tu objetivo es mas amplio, no es 'comparar' es responder a una pregunta clave e importante. Tienes que vender la 'cabra', pensar bien lo que quieres transmitir, ligarlo bien al problema y a la solución etc."* Validación general del planteamiento: positiva; puede avanzar hacia la memoria.
+- **Formulación de trabajo (borrador, pendiente de cerrar en redacción):** *¿En qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas?* La hipótesis, el modelo de amenazas v2, el diseño de ambos escenarios y las métricas G1–G3 / E1–E3 deben enlazarse explícitamente a esa pregunta.
+- **Alternativa descartada:** Mantener el objetivo formulado solo como comparativa descriptiva (*"comparar dos arquitecturas sometidas a la misma auditoría"*). El tutor la considera insuficiente para el marco académico del TFG: no articula el problema ni la contribución.
+- **Impacto en documentación:**
+  - Actualizar `docs/03_memoria_tfg/Borradores y pretrabajos/Borrador_Indice_Anotado_HUMANO.md` §1.2 cuando se revise el borrador.
+  - Alinear `docs/03_memoria_tfg/01_intro.md` y `07_conclusiones.md` con el hilo problema → pregunta → hipótesis → diseño → pruebas → respuesta.
+  - El título oficial (*"Análisis comparativo de seguridad..."*) se mantiene; la palabra "comparativo" describe el método, no sustituye la pregunta de investigación.
+- **Próximo contacto acordado:** cita en despacho del tutor cuando haya contenido redactado sustancial (alineado con hito 14/06).
+- **Trazabilidad:** [`docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md`](../docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md) §17–§18; [`docs/02_reuniones_tutor/BITACORA_REUNIONES.md`](../docs/02_reuniones_tutor/BITACORA_REUNIONES.md) entrada 2026-06-06; [`docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md`](../docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md) §1 y §7.

@@ -325,6 +325,39 @@
 
 ---
 
+## 17. 2026-06-06 — Pau → Héctor (índice anotado — recuperación hito 31/05)
+
+> Buenos días Héctor,
+>
+> Disculpa la demora. He revisado otros trabajos como me indicaste y, con la parte técnica del laboratorio ya avanzada (ambos escenarios desplegados), he preparado el borrador del índice.
+>
+> Adjunto el índice anotado del TFG.
+> Por el lado de la redacción, tengo empezados el Estado del Arte y el Diseño de la solución.
+>
+> ¿Es razonablemente decente este planteamiento para continuar hacia la memoria?
+>
+> Gracias de antemano,
+> Pau Pérez Marco
+
+---
+
+## 18. 2026-06-06 — Héctor → Pau (validación del borrador + feedback objetivos)
+
+> Buenos días Pau,
+>
+> Sí, pero hay matices siempre. Por ejemplo cuando dices
+>
+> "Objetivo principal: comparar dos arquitecturas funcionalmente idénticas, Perimetral vs Zero Trust, sometidas a la misma auditoría post-explotación."
+>
+> En realidad, tu objetivo es mas amplio, no es "comparar" es responder a una pregunta clave e importante. Tienes que vender la "cabra", pensar bien lo que quieres transmitir, ligarlo bien al problema y a la solución etc.
+>
+> En general lo veo bien, si quieres avanzando y cuando tengas contenido quedamos un día en mi despacho y lo repasamos y te doy feedback.
+>
+> Un saludo,
+> Hector.
+
+---
+
 ## Estado al cierre del timeline
 
 - **Propuesta:** APROBADA por el tutor el 2026-04-09 y oficializada en EBRON entre el 2026-04-19 y el 2026-04-27.
@@ -332,4 +365,5 @@
 - **Modelo de amenazas:** validado en su versión v2 (correo 2026-03-17 → respuesta 2026-04-09).
 - **Resumen:** validado provisionalmente, abierto a afinar redacción más adelante.
 - **Metodología de trabajo:** acordada en el correo 2026-04-20 (origen normativo del [`00_DIRECTRICES_TUTOR.md §5–§6`](00_DIRECTRICES_TUTOR.md)).
-- **Convocatoria objetivo:** CAMBIADA a **julio 2026**. Deadline de entrega: **21/06/2026**. Luz verde del tutor condicionada a borrador "razonablemente decente" (correo 2026-05-24, §16). Ver [`00_DIRECTRICES_TUTOR.md §7`](00_DIRECTRICES_TUTOR.md) para la estrategia de comunicación derivada.
+- **Convocatoria objetivo:** **julio 2026**. Deadline de entrega: **21/06/2026**. Luz verde del tutor tras borrador "razonablemente decente" enviado el **2026-06-06** (§17–§18). Ver [`00_DIRECTRICES_TUTOR.md §7`](00_DIRECTRICES_TUTOR.md).
+- **Borrador índice anotado:** ENVIADO 2026-06-06. Validación general positiva; matizar redacción de objetivos (pregunta de investigación, no solo "comparar"). Próximo paso acordado: cita en despacho cuando haya contenido redactado.

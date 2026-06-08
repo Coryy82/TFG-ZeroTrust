@@ -32,3 +32,16 @@
 - **Decisión tomada:** Activación del Sprint Final con deadline 21/06/2026. Plan documentado en `admin/ROADMAP_v2_sprint_final.md`. ADR registrado en `admin/DECISIONS_LOG.md`.
 - **Próximo hito de comunicación:** envío al tutor el **31/05/2026** con índice de 8 capítulos + Estado del Arte v0 + propuesta de alcance del Escenario B.
 - **ESTADO:** 🟡 Sprint Final activo. Pendiente validación del tutor el 31/05.
+
+## 2026-06-06 — Envío del índice anotado y validación del borrador
+
+- **Evento:** Correo de Pau al tutor con el índice anotado del TFG (recuperación del hito vencido del 31/05). Respuesta del tutor con luz verde condicionada y feedback de redacción.
+- **Correo Pau → Héctor (06/06/2026 14:32):** Disculpa por la demora. Revisión de otros trabajos como indicó el tutor. Laboratorio con ambos escenarios desplegados. Adjunto `Borrador_Indice_Anotado` (índice anotado). Redacción en curso: Estado del Arte y Diseño de la solución. Pregunta de validación: *¿Es razonablemente decente este planteamiento para continuar hacia la memoria?*
+- **Respuesta Héctor (06/06/2026):** *"Sí, pero hay matices siempre."* En general ve bien el planteamiento. Puede avanzar; cuando haya contenido redactado, quedar en su despacho para repaso y feedback presencial.
+- **Feedback crítico de redacción (objetivos):** El objetivo principal no debe formulase solo como *"comparar dos arquitecturas"* — es más amplio: **responder a una pregunta clave e importante**. Hay que *"vender la cabra"*: pensar qué se quiere transmitir, ligarlo bien al problema y a la solución. Cita textual el borrador: *"Objetivo principal: comparar dos arquitecturas funcionalmente idénticas, Perimetral vs Zero Trust, sometidas a la misma auditoría post-explotación."*
+- **Acciones derivadas:**
+  1. Reformular §1.2 Objetivos (y posiblemente Introducción/Conclusiones) como **pregunta de investigación** + hipótesis, no como lista de tareas comparativas.
+  2. Seguir redacción (EdA, Diseño) y pruebas A/B sin bloquearse esperando más feedback.
+  3. **Próximo contacto:** solicitar cita en despacho cuando haya borrador sustancial (caps. 3–6 o memoria ~60–70%, alineado con hito 14/06).
+- **Artefacto enviado:** `docs/03_memoria_tfg/Borradores y pretrabajos/Borrador_Indice_Anotado_HUMANO.md`
+- **ESTADO:** 🟢 Hito `email_tutor_31_05` recuperado y validado en línea general. Sprint Final desbloqueado para redacción y pruebas formales.
