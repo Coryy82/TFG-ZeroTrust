@@ -1,0 +1,7 @@
+webapp-1  | 2026-06-08T18:51:20.510392002Z  * Serving Flask app 'app'
+webapp-1  | 2026-06-08T18:51:20.510534156Z  * Debug mode: off
+webapp-1  | 2026-06-08T18:51:20.515666670Z [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+webapp-1  | 2026-06-08T18:51:20.515691287Z  * Running on all addresses (0.0.0.0)
+webapp-1  | 2026-06-08T18:51:20.515695986Z  * Running on http://127.0.0.1:5000
+webapp-1  | 2026-06-08T18:51:20.515699613Z  * Running on http://172.21.0.3:5000
+webapp-1  | 2026-06-08T18:51:20.515702910Z [33mPress CTRL+C to quit[0m

@@ -126,7 +126,7 @@
 - **Postura original supersedida — Opción A (agente en host):** `Investigacion_ZeroTrust.md` §Monitoreo y `20260603_Prototipo_ZeroTrust.md` §8 establecían *"agente en el host Docker"* como arquitectura de referencia, argumentando mayor visibilidad sobre syscalls de todos los contenedores.
 - **Por qué se descarta Opción A en este entorno:** Docker Desktop en Windows + WSL2 crea namespaces separados: la distro Ubuntu del usuario y la distro interna `docker-desktop` (donde corren realmente los contenedores). El agente Wazuh instalado en Ubuntu WSL2 **no tiene visibilidad sobre los namespaces de proceso de `docker-desktop`**. Adicionalmente, el kernel personalizado de WSL2 tiene soporte parcial o nulo de `auditd`, impidiendo la monitorización de syscalls documentada en el prototipo. La mayor complejidad de instalación (activar `systemd` en WSL2, subsistema `audit`) no se traduce en mayor cobertura real de detección respecto a la Opción B.
 - **Por qué se elige Opción B:** un contenedor del agente con socket Docker montado y `--pid=host` proporciona la misma cobertura operativa (`docker-listener` + FIM) con plena reproducibilidad. Todo el stack levanta con un único `docker compose up` sin instalar nada en el host.
-- **Cobertura real en Docker Desktop + WSL2 (igual para Opción A y B):** `docker-listener` (eventos exec/start/stop), FIM sobre rutas montadas de secretos y certs, command monitoring parcial vía `/proc` con `--pid=host`.
+- **Cobertura real en Docker Desktop + WSL2 (igual para Opción A y B):** FIM sobre rutas montadas de secretos y certs; detección post-RCE vía `process-webapp` (lectura `/proc/*/cmdline` en webapp vía socket Docker, cada 2s) + respaldo `process-list` (`ps auxww` cada 5s). `docker-listener` solo para ciclo de vida de contenedores (no modela reverse shell interno). Detalle: diario 20260609 §10.
 - **Limitación documentada (ninguna opción la resuelve en este entorno):** `auditd` completo con captura de syscalls de procesos en otros contenedores requiere el kernel `audit` activo. No disponible en Docker Desktop + WSL2. Se documenta en Cap. 5 del TFG como limitación de laboratorio. En un servidor Linux real o nodo Kubernetes (DaemonSet privilegiado), la Opción A funciona sin restricciones y es el patrón corporativo correcto.
 - **Criterio de fallback vigente:** ADR 2026-05-24 sigue activo — si a las 20:00 del 04/06/2026 no hay agent enrollado y ≥1 alerta → activar Falco.
 - **Trazabilidad:** [`docs/04_diario_laboratorio/20260604_Sesion_Wazuh_Docker.md`](../docs/04_diario_laboratorio/20260604_Sesion_Wazuh_Docker.md) (sesión en curso).
@@ -145,3 +145,34 @@
   - El título oficial (*"Análisis comparativo de seguridad..."*) se mantiene; la palabra "comparativo" describe el método, no sustituye la pregunta de investigación.
 - **Próximo contacto acordado:** cita en despacho del tutor cuando haya contenido redactado sustancial (alineado con hito 14/06).
 - **Trazabilidad:** [`docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md`](../docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md) §17–§18; [`docs/02_reuniones_tutor/BITACORA_REUNIONES.md`](../docs/02_reuniones_tutor/BITACORA_REUNIONES.md) entrada 2026-06-06; [`docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md`](../docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md) §1 y §7.
+
+---
+
+**2026-06-09 | Detección Wazuh post-RCE: `process-webapp` + protocolo de sesión unificado**
+
+- **Problema detectado en sesión `zerotrust_sesion_20260609_085050`:** Wazuh no generó alertas 100100/100101 en la ventana T0→T_fin (06:52–06:55 UTC). Los controles ZT sí bloquearon el ataque (evidencia en artefactos post-RCE), pero el KPI **G1** (latencia de detección) quedó sin medir.
+- **Causas raíz:**
+  1. `process-list` (`ps auxww`) con frecuencia **15 s** — procesos efímeros (`nmap` ~4 s, `curl` <1 s) no capturados.
+  2. Modelo de amenaza desalineado: reglas **100110/100111** orientadas a `docker exec`; el vector real del TFG es **reverse shell dentro de webapp**.
+  3. `docker compose up` del stack ZT recrea redes externas y desestabiliza el agente Wazuh justo antes del ataque.
+  4. (Sesiones 08/06 invalidadas por otro bug) Flask backend en `0.0.0.0:5000` — corregido con `127.0.0.1` el 08–09/06.
+- **Decisión:** Rediseñar la telemetría de detección post-RCE:
+  - Nueva fuente **`process-webapp`**: logcollector ejecuta cada **2 s** un script que, vía socket Docker, hace `docker exec` en webapp y lee **`/proc/*/cmdline`** (sustituye `docker top`, roto en Docker Desktop, y `ps`, ausente en la imagen webapp).
+  - Reglas **100100–100104** atadas a `location: process-webapp` (nmap, curl→backend, tcpdump, psql, grep credenciales).
+  - Respaldo **100105/100106** en `process-list` (`ps auxww`, pid:host) cada 5 s.
+  - **Eliminar** reglas 100110/100111 (docker exec; fuera del vector reverse shell).
+  - Agente: `docker.io` + `process-webapp.sh` con LF forzado (`.gitattributes`, `sed` en Dockerfile); invocación `bash script.sh` en `ossec.conf`.
+  - Regla **100104**: regex PCRE2 (`grep` + `DB_|POSTGRES|SECRET`); OSRegex con paréntesis impedía arrancar `analysisd`.
+- **Decisión protocolo de sesión:** `tests/scripts/logcapture_zerotrust.sh` pasa a ser el flujo obligatorio para Escenario B:
+  1. Levantar **ZT primero** (`up --build`) — crea las redes externas `zero_trust_*`.
+  2. Levantar **Wazuh después** (`up --build`); reiniciar manager+agente (reglas).
+  3. Validar `process-webapp` antes de iniciar RCE.
+  4. Volcado unificado al pulsar ENTER.
+  - Wazuh **no** puede preceder a ZT: el compose de Wazuh referencia redes `external` que solo existen tras el `up` del stack ZT.
+- **Sesiones y validez KPI:**
+  - `20260608_*`: invalidadas (bypass `:5000`).
+  - `20260609_085050`: **válida** para E1–E3, G2–G3; **no válida** para G1.
+  - Pendiente: nueva sesión post-rediseño para cerrar G1.
+- **Latencia objetivo G1:** ≤5 s con agente estable y `process-webapp` activo.
+- **Diseño (Cap. 4/5):** flujo agente → socket Docker → `/proc` en webapp → reglas 530 → `alerts.json`; diagrama y limitaciones en diario §10.
+- **Trazabilidad:** [`docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md`](../docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md) (§10 mecanismo, §11 incidencias implantación).

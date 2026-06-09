@@ -1,0 +1,7 @@
+* Host backend:5000 was resolved.
+* IPv6: (none)
+* IPv4: 172.18.0.2
+*   Trying 172.18.0.2:5000...
+* connect to 172.18.0.2 port 5000 from 172.18.0.3 port 46070 failed: Connection refused
+* Failed to connect to backend port 5000 after 4 ms: Could not connect to server
+* closing connection #0

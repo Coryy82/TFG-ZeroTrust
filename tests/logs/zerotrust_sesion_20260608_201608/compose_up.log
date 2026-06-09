@@ -1,0 +1,130 @@
+ Image zero_trust-webapp Building 
+ Image zero_trust-backend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.07kB done
+#1 DONE 0.0s
+
+#2 [backend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 500B 0.0s done
+#2 DONE 0.1s
+
+#3 [webapp internal] load build definition from Dockerfile
+#3 transferring dockerfile: 496B 0.0s done
+#3 DONE 0.1s
+
+#4 [webapp internal] load metadata for docker.io/library/python:3.11-slim
+#4 DONE 1.3s
+
+#5 [backend internal] load .dockerignore
+#5 transferring context: 2B 0.0s done
+#5 DONE 0.0s
+
+#6 [webapp internal] load .dockerignore
+#6 transferring context: 2B 0.0s done
+#6 DONE 0.1s
+
+#7 [webapp 1/6] FROM docker.io/library/python:3.11-slim@sha256:a3ab0b966bc4e91546a033e22093cb840908979487a9fc0e6e38295747e49ac0
+#7 resolve docker.io/library/python:3.11-slim@sha256:a3ab0b966bc4e91546a033e22093cb840908979487a9fc0e6e38295747e49ac0
+#7 resolve docker.io/library/python:3.11-slim@sha256:a3ab0b966bc4e91546a033e22093cb840908979487a9fc0e6e38295747e49ac0 0.1s done
+#7 DONE 0.1s
+
+#8 [backend internal] load build context
+#8 transferring context: 63B 0.0s done
+#8 DONE 0.0s
+
+#9 [backend 2/6] RUN apt-get update && apt-get install -y curl nmap nginx && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [backend 5/6] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [backend 3/6] WORKDIR /app
+#11 CACHED
+
+#12 [backend 4/6] COPY requirements.txt .
+#12 CACHED
+
+#13 [backend 6/6] COPY app.py .
+#13 CACHED
+
+#14 [backend] exporting to image
+#14 exporting layers done
+#14 exporting manifest sha256:8ff132293da86ce34bf95e600ecb977b82436277c1884449f9707322e5dd6111 done
+#14 exporting config sha256:69cfc81527a1d6c1d5c639051c1f2b7eeb411e69e5bc1e739c2b5c33854e92eb done
+#14 ...
+
+#15 [webapp internal] load build context
+#15 transferring context: 401B 0.1s done
+#15 DONE 0.2s
+
+#16 [webapp 7/8] COPY templates/ ./templates/
+#16 CACHED
+
+#17 [webapp 2/8] RUN apt-get update && apt-get install -y     curl nmap tcpdump postgresql-client tzdata     && rm -rf /var/lib/apt/lists/*
+#17 CACHED
+
+#18 [webapp 3/8] WORKDIR /app
+#18 CACHED
+
+#19 [webapp 4/8] COPY requirements.txt .
+#19 CACHED
+
+#20 [webapp 5/8] RUN pip install --no-cache-dir -r requirements.txt
+#20 CACHED
+
+#21 [webapp 6/8] COPY app.py .
+#21 CACHED
+
+#22 [webapp 8/8] COPY static/ ./static/
+#22 CACHED
+
+#14 [backend] exporting to image
+#14 exporting attestation manifest sha256:ff16fd01ac9d287496c1a547c25b9c702611e1ad8920fc63e799984c561fb1ce
+#14 exporting attestation manifest sha256:ff16fd01ac9d287496c1a547c25b9c702611e1ad8920fc63e799984c561fb1ce 0.1s done
+#14 exporting manifest list sha256:2fe2f28160ab86410af098863b93ddf2b9098947fafefe1add7437cc69a6607d 0.1s done
+#14 naming to docker.io/library/zero_trust-backend:latest 0.0s done
+#14 unpacking to docker.io/library/zero_trust-backend:latest
+#14 unpacking to docker.io/library/zero_trust-backend:latest 0.0s done
+#14 DONE 0.4s
+
+#23 [webapp] exporting to image
+#23 exporting layers done
+#23 exporting manifest sha256:60161cecf0fa7026b213be7204c97a8dc04d44178876bda95f39d3b0f53dda8e 0.0s done
+#23 exporting config sha256:17669d38c2fa8bb35970fe29c7b7bc8278b4865fb090a86ce2b5ce185995a1f9 done
+#23 exporting attestation manifest sha256:4b864f1f24af66afaea1307bc66024efeacc4412a914431e145330719e0541d1 0.1s done
+#23 exporting manifest list sha256:52c33cff0c3cabe2fc37815151f82b87c82eecbd970eec7374b82d3d413169c8 0.0s done
+#23 naming to docker.io/library/zero_trust-webapp:latest done
+#23 unpacking to docker.io/library/zero_trust-webapp:latest 0.0s done
+#23 DONE 0.4s
+
+#24 [backend] resolving provenance for metadata file
+#24 DONE 0.0s
+
+#25 [webapp] resolving provenance for metadata file
+#25 DONE 0.0s
+ Image zero_trust-backend Built 
+ Image zero_trust-webapp Built 
+ Network zero_trust_db_zone Creating 
+ Network zero_trust_db_zone Created 
+ Network zero_trust_backend_zone Creating 
+ Network zero_trust_backend_zone Created 
+ Network zero_trust_web_zone Creating 
+ Network zero_trust_web_zone Created 
+ Container zero_trust-db-1 Creating 
+ Container zero_trust-db-1 Created 
+ Container zero_trust-backend-1 Creating 
+ Container zero_trust-backend-1 Created 
+ Container zero_trust-webapp-1 Creating 
+ Container zero_trust-webapp-1 Created 
+ Container zero_trust-nginx-1 Creating 
+ Container zero_trust-nginx-1 Created 
+ Container zero_trust-db-1 Starting 
+ Container zero_trust-db-1 Started 
+ Container zero_trust-backend-1 Starting 
+ Container zero_trust-backend-1 Started 
+ Container zero_trust-backend-1 Waiting 
+ Container zero_trust-backend-1 Healthy 
+ Container zero_trust-webapp-1 Starting 
+ Container zero_trust-webapp-1 Started 
+ Container zero_trust-nginx-1 Starting 
+ Container zero_trust-nginx-1 Started 

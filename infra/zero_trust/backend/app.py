@@ -25,4 +25,5 @@ def empleados():
     return jsonify([{"nombre": r[0], "email": r[1], "rol": r[2], "salario": r[3]} for r in rows])
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    # Solo loopback: el PEP mTLS (Nginx :443) es el unico punto de entrada desde backend_zone.
+    app.run(host="127.0.0.1", port=5000)

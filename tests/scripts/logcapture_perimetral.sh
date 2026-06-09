@@ -19,7 +19,6 @@ LOG_ROOT="${REPO_ROOT}/tests/logs"
 SESSION="${LOG_ROOT}/perimetral_sesion_$(date +%Y%m%d_%H%M%S)"
 
 SERVICES=(nginx webapp backend db)
-# Artefactos generados en post-RCE dentro de webapp (handoff §4.3–4.4)
 WEBAPP_ARTIFACTS=(lateral.pcap lateral.json creds.txt dump.txt e1_scan.log)
 
 mkdir -p "${SESSION}"

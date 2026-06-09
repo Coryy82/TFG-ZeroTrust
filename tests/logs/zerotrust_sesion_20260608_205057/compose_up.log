@@ -1,0 +1,130 @@
+ Image zero_trust-webapp Building 
+ Image zero_trust-backend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.07kB done
+#1 DONE 0.0s
+
+#2 [backend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 500B 0.0s done
+#2 DONE 0.1s
+
+#3 [webapp internal] load build definition from Dockerfile
+#3 transferring dockerfile: 496B 0.0s done
+#3 DONE 0.1s
+
+#4 [backend internal] load metadata for docker.io/library/python:3.11-slim
+#4 ...
+
+#5 [auth] library/python:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#4 [backend internal] load metadata for docker.io/library/python:3.11-slim
+#4 DONE 1.8s
+
+#6 [backend internal] load .dockerignore
+#6 transferring context: 2B 0.0s done
+#6 DONE 0.0s
+
+#7 [webapp internal] load .dockerignore
+#7 transferring context: 2B 0.0s done
+#7 DONE 0.1s
+
+#8 [backend internal] load build context
+#8 DONE 0.0s
+
+#9 [webapp internal] load build context
+#9 DONE 0.0s
+
+#10 [webapp 1/6] FROM docker.io/library/python:3.11-slim@sha256:a3ab0b966bc4e91546a033e22093cb840908979487a9fc0e6e38295747e49ac0
+#10 resolve docker.io/library/python:3.11-slim@sha256:a3ab0b966bc4e91546a033e22093cb840908979487a9fc0e6e38295747e49ac0 0.1s done
+#10 resolve docker.io/library/python:3.11-slim@sha256:a3ab0b966bc4e91546a033e22093cb840908979487a9fc0e6e38295747e49ac0 0.1s done
+#10 DONE 0.1s
+
+#8 [backend internal] load build context
+#8 transferring context: 63B 0.0s done
+#8 DONE 0.1s
+
+#11 [backend 2/6] RUN apt-get update && apt-get install -y curl nmap nginx && rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [backend 3/6] WORKDIR /app
+#12 CACHED
+
+#13 [backend 4/6] COPY requirements.txt .
+#13 CACHED
+
+#14 [backend 5/6] RUN pip install --no-cache-dir -r requirements.txt
+#14 CACHED
+
+#15 [backend 6/6] COPY app.py .
+#15 CACHED
+
+#16 [backend] exporting to image
+#16 exporting layers done
+#16 ...
+
+#9 [webapp internal] load build context
+#9 transferring context: 401B 0.1s done
+#9 DONE 0.1s
+
+#17 [webapp 4/8] COPY requirements.txt .
+#17 CACHED
+
+#18 [webapp 2/8] RUN apt-get update && apt-get install -y     curl nmap tcpdump postgresql-client tzdata     && rm -rf /var/lib/apt/lists/*
+#18 CACHED
+
+#19 [webapp 3/8] WORKDIR /app
+#19 CACHED
+
+#20 [webapp 5/8] RUN pip install --no-cache-dir -r requirements.txt
+#20 CACHED
+
+#21 [webapp 6/8] COPY app.py .
+#21 CACHED
+
+#22 [webapp 7/8] COPY templates/ ./templates/
+#22 CACHED
+
+#23 [webapp 8/8] COPY static/ ./static/
+#23 CACHED
+
+#16 [backend] exporting to image
+#16 exporting manifest sha256:8ff132293da86ce34bf95e600ecb977b82436277c1884449f9707322e5dd6111 done
+#16 exporting config sha256:69cfc81527a1d6c1d5c639051c1f2b7eeb411e69e5bc1e739c2b5c33854e92eb done
+#16 exporting attestation manifest sha256:f947c5d87097a9688ef294a1122a7a06d04faef65e310d5ac70dfde33a01bd93
+#16 exporting attestation manifest sha256:f947c5d87097a9688ef294a1122a7a06d04faef65e310d5ac70dfde33a01bd93 0.2s done
+#16 exporting manifest list sha256:71cbeab59c6ab69b14fccbfc8574f2d2818497f95f16730c61d20e7d2ad346f0 0.1s done
+#16 naming to docker.io/library/zero_trust-backend:latest
+#16 naming to docker.io/library/zero_trust-backend:latest 0.0s done
+#16 unpacking to docker.io/library/zero_trust-backend:latest 0.0s done
+#16 DONE 0.6s
+
+#24 [webapp] exporting to image
+#24 exporting layers done
+#24 exporting manifest sha256:60161cecf0fa7026b213be7204c97a8dc04d44178876bda95f39d3b0f53dda8e 0.0s done
+#24 exporting config sha256:17669d38c2fa8bb35970fe29c7b7bc8278b4865fb090a86ce2b5ce185995a1f9 done
+#24 exporting attestation manifest sha256:af344876fec7bdc024bcd9a45ac5ab26eef290e8b7e6c623cec9aecbc73fa0f6 0.2s done
+#24 exporting manifest list sha256:7a35928c06bbf313d2bd8f37aad11d9b7fe19737a30884e634ec7aaa07795955 0.1s done
+#24 naming to docker.io/library/zero_trust-webapp:latest 0.0s done
+#24 unpacking to docker.io/library/zero_trust-webapp:latest 0.0s done
+#24 DONE 0.6s
+
+#25 [backend] resolving provenance for metadata file
+#25 DONE 0.0s
+
+#26 [webapp] resolving provenance for metadata file
+#26 DONE 0.0s
+ Image zero_trust-backend Built 
+ Image zero_trust-webapp Built 
+ Container zero_trust-db-1 Running 
+ Container zero_trust-backend-1 Recreate 
+ Container zero_trust-backend-1 Recreated 
+ Container zero_trust-webapp-1 Recreate 
+ Container zero_trust-webapp-1 Recreated 
+ Container zero_trust-nginx-1 Running 
+ Container zero_trust-backend-1 Starting 
+ Container zero_trust-backend-1 Started 
+ Container zero_trust-backend-1 Waiting 
+ Container zero_trust-backend-1 Healthy 
+ Container zero_trust-webapp-1 Starting 
+ Container zero_trust-webapp-1 Started 

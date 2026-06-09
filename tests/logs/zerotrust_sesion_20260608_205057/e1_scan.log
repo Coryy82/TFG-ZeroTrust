@@ -1,0 +1,18 @@
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-06-08 20:52 CEST
+Failed to resolve "db".
+Nmap scan report for backend (172.21.0.2)
+Host is up (0.0012s latency).
+rDNS record for 172.21.0.2: zero_trust-backend-1.zero_trust_backend_zone
+Not shown: 3 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+443/tcp  open  https
+5000/tcp open  upnp
+
+Nmap scan report for nginx (172.19.0.3)
+Host is up (0.0018s latency).
+rDNS record for 172.19.0.3: zero_trust-nginx-1.zero_trust_web_zone
+Not shown: 4 closed tcp ports (conn-refused)
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap done: 2 IP addresses (2 hosts up) scanned in 4.08 seconds

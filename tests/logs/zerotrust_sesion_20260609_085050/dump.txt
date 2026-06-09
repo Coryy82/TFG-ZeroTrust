@@ -1,0 +1,3 @@
+bash: nc: command not found
+nmap: unrecognized option '-zv'
+See the output of nmap -h for a summary of options.

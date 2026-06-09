@@ -91,20 +91,20 @@
 
 ## 2. PLANTILLA DE CAPTURA — ESCENARIO B (ZERO TRUST)
 
-> Sesión: _______________________ — Fecha: ____-____-____ — Operador: ___________
-> Commit del repositorio: `_______________` — Versión `docker compose`: `_______________`
-> Log de arranque asociado: `tests/logs/_______________.log`
+> Sesión: `zerotrust_sesion_20260609_130120` — Fecha: 2026-06-09 — Operador: Cory
+> Commit del repositorio: `271b38d9` — Versión `docker compose`: v2 (Docker Desktop)
+> Log de arranque asociado: `tests/logs/zerotrust_sesion_20260609_130120/compose_up.log`
 
 ### 2.1 Métricas oficiales
 
 | Cód. | Métrica | `mecanismo_existe` | Valor / Resultado | Evidencia |
 |---|---|---|---|---|
-| G1 | Tiempo de Detección | ☐ Sí ☐ No | __________ | `tests/logs/_______________` |
-| G2 | Profundidad del ataque | n/a | _____ nodos | `tests/logs/_______________` |
-| G3 | Tasa de bloqueo | ☐ Sí ☐ No | __________ % | `tests/logs/_______________` |
-| E1 | Superficie de Ataque Interna Visible | n/a | _____ / _____ | `tests/logs/_______________` |
-| E2 | Volumen de datos fugados | n/a | _____ registros / _____ bytes | `tests/logs/_______________` |
-| E3 | Integridad del flujo de tráfico | n/a | ☐ claro ☐ cifrado ☐ rechazado | `tests/logs/_______________.pcap` |
+| G1 | Tiempo de Detección | ☒ Sí ☐ No | `(true, 22 s)` — 1.ª alerta Wazuh **100100** (nmap) a `11:14:30 UTC` = `13:14:30 CEST`; Δ vs `T0_efectivo` `13:14:08` | `tests/logs/zerotrust_sesion_20260609_130120/wazuh_alerts.json` (L1) + `session_chrono.txt` |
+| G2 | Profundidad del ataque | n/a | **1 nodo**: ☒ webapp ☐ backend ☐ db | `tests/logs/zerotrust_sesion_20260609_130120/e1_scan.log` + `dump.txt` (`db` no resuelve; lateral sin datos) |
+| G3 | Tasa de bloqueo | ☒ Sí ☐ No | `(true, 100 %)` — exfil, lateral y acceso a DB fallaron; sin JSON en claro en tránsito | `tests/logs/zerotrust_sesion_20260609_130120/creds.txt` (vacío) + `lateral.json` (vacío) + `lateral_attempt.log` + `dump.txt` |
+| E1 | Superficie de Ataque Interna Visible | n/a | **1 / 3** — `nginx:80` y `backend:443` visibles; `db` no resuelve; `:5000` cerrado | `tests/logs/zerotrust_sesion_20260609_130120/e1_scan.log` |
+| E2 | Volumen de datos fugados | n/a | **0 registros / 0 B** — sin credenciales en env ni JSON de empleados | `tests/logs/zerotrust_sesion_20260609_130120/creds.txt` + `lateral.json` |
+| E3 | Integridad del flujo de tráfico | n/a | ☒ cifrado ☒ rechazado — TLS en pcap; `curl` HTTPS → **400** sin cert cliente; `:5000` connection refused | `tests/logs/zerotrust_sesion_20260609_130120/lateral.pcap` (26 pkts, 8386 B) + `lateral_attempt.log` + `backend.log` (L17) |
 
 ### 2.2.a Caracterización del punto de entrada (pre-RCE) — opcional en B
 
@@ -112,13 +112,13 @@
 
 | Cód. | Hito | Hora absoluta (`HH:MM:SS`) | Δ vs T0_entrada (s) | Evidencia | Notas |
 |---|---|---|---|---|---|
-| T0_entrada | (opcional) | _________ | 0 | _______________ | ☐ omitido — ver sesión A |
-| T_recon_http | | _________ | _____ | _______________ | |
-| T_recon_rutas | | _________ | _____ | _______________ | |
-| T_disclosure | | _________ | _____ | _______________ | |
-| T_auth | | _________ | _____ | _______________ | |
-| T_ssti_detect | | _________ | _____ | _______________ | |
-| T_rce | | _________ | _____ | _______________ | |
+| T0_entrada | (opcional) | — | — | — | ☒ omitido — mismo vector HTB que sesión A (§1.2.a) |
+| T_recon_http | | — | — | | |
+| T_recon_rutas | | — | — | | |
+| T_disclosure | | — | — | | |
+| T_auth | | — | — | | |
+| T_ssti_detect | | — | — | | |
+| T_rce | | — | — | `tests/logs/zerotrust_sesion_20260609_130120/nginx.log` (SSTI 504 ~11:13 UTC) | RCE explotable; diferencia en post-RCE |
 
 ### 2.2.b Evidencia operativa — Timings de la comparativa (post-RCE)
 
@@ -126,26 +126,38 @@
 
 | Cód. | Hito | Hora absoluta (`HH:MM:SS`) | Δ vs `T0_efectivo` (s) | Captura / log asociado | ¿Bloqueado por control ZT? |
 |---|---|---|---|---|---|
-| T0_efectivo | Shell post-RCE operativa en `webapp` | _________ | 0 | _______________ | n/a |
-| T_exfil_creds | | _________ | _____ | _______________ | ☐ Sí ☐ No |
-| T_lateral | | _________ | _____ | _______________ | ☐ Sí ☐ No |
-| T_e3_pcap | | _________ | _____ | _______________ | ☐ Sí ☐ No |
-| T_objetivo | | _________ | _____ | _______________ | ☐ Sí ☐ No |
+| T0_efectivo | Shell post-RCE operativa en `webapp` (2.º intento tras reinicio RS) | 13:14:08 | 0 | `tests/logs/zerotrust_sesion_20260609_130120/t0_efectivo.txt` | n/a |
+| T_exfil_creds | `env \| grep DB_` → sin variables; `creds.txt` vacío | 13:14:16 | 8 | `tests/logs/zerotrust_sesion_20260609_130120/creds.txt` | ☒ Sí ☐ No |
+| T_lateral | `curl` `:5000` → connection refused; `https://backend/empleados` → 400 sin cert | 13:15:15 | 67 | `tests/logs/zerotrust_sesion_20260609_130120/lateral_attempt.log` + `lateral.json` | ☒ Sí ☐ No |
+| T_e3_pcap | `tcpdump -c 100 host backend` antes del curl lateral | 13:14:50 | 42 | `tests/logs/zerotrust_sesion_20260609_130120/lateral.pcap` + `tcpdump.log` | n/a (medición E3) |
+| T_objetivo | `psql -h db` → DNS falla; `nmap db:5432` sin target | 13:16:18 | 130 | `tests/logs/zerotrust_sesion_20260609_130120/dump.txt` | ☒ Sí ☐ No |
 
 ### 2.3 KPIs adicionales
 
 | Métrica | Valor |
 |---|---|
-| Nº pasos previos al RCE | _____ (o `n/a` si §2.2.a omitida) |
-| Nº endpoints públicos que filtran información | _____ |
-| Nº CWE distintos materializables | _____ |
-| Nº de hitos post-RCE bloqueados por controles ZT | _____ / 4 |
+| Nº pasos previos al RCE | `n/a` — §2.2.a omitida; mismo flujo que sesión A |
+| Nº endpoints públicos que filtran información | **2** (idéntico a A por diseño: `/robots.txt`, `/backup.txt`) |
+| Nº CWE distintos materializables | **4** (mismos que A; la mitigación está en post-RCE) |
+| Nº de hitos post-RCE bloqueados por controles ZT | **3 / 3** objetivos de ataque (`T_exfil_creds`, `T_lateral`, `T_objetivo`); `T_e3_pcap` es medición |
 
 > **Denominador 4:** corresponde a los cuatro hitos de §2.2.b (`T_exfil_creds`, `T_lateral`, `T_e3_pcap`, `T_objetivo`). Si un hito no aplica en B, anótalo en §2.4 y ajusta el denominador con justificación.
 
 ### 2.4 Observaciones de la sesión
 
-> _Espacio libre._
+**Sesión oficial** Escenario B (sustituye a `zerotrust_sesion_20260609_085050` para G1: aquella no generó alertas `process-webapp` en la ventana post-RCE). Sesiones `20260608_*` invalidadas por bypass Flask en `0.0.0.0:5000`.
+
+**T0_efectivo:** `13:14:08 CEST` (`tests/logs/zerotrust_sesion_20260609_130120/t0_efectivo.txt`). Corresponde al **2.º intento** post-RCE: el 1.º (13:09–13:11) se abortó por fallo al lanzar `tcpdump` (pegado multilínea en reverse shell). Tras limpieza de la carpeta de sesión, `session_chrono.txt` y `wazuh_alerts.json` contienen **solo** el 2.º intento (≥ `11:14:08 UTC`).
+
+**G1:** Primera alerta válida = regla **100100** (nmap) a `2026-06-09T11:14:30+0000` → **22 s** tras T0. También dispararon **100102** (tcpdump, 11:14:50 UTC) y **100103** (psql, 11:16:47 UTC). No hubo **100101** en el 2.º intento (`curl` efímero vs poll 2 s); **100104** (`grep` creds) no aparece en ningún intento. `wazuh_alerts.json` volcado manualmente (filtro ventana ataque); logs de servicio [4/7] completados tras fallo CRLF en `logcapture_zerotrust.sh` (corregido el mismo día).
+
+**Controles ZT verificados:** microsegmentación (`db` invisible desde webapp), Flask backend solo en `127.0.0.1` (`:5000` refused), mTLS en PEP (`400 No required SSL certificate`), sin secretos en env de webapp.
+
+**Correlación logs:** `backend.log` L17 registra `GET /empleados` → 400 a `11:15:32 UTC` (= 13:15:32 CEST), coherente con `lateral_attempt.log`.
+
+**Canal post-RCE:** reverse shell SSTI + `pty.spawn`; `nc` no instalado en webapp (sustituido por `nmap` para probe 5432).
+
+**Reproducibilidad:** `./tests/scripts/logcapture_zerotrust.sh` sobre commit `271b38d9`.
 
 ---
 
@@ -157,12 +169,12 @@ A rellenar tras completar las dos campañas de captura. Es la tabla candidata a 
 
 | Cód. | Métrica | Escenario A (perimetral) | Escenario B (Zero Trust) | Δ / interpretación |
 |---|---|---|---|---|
-| G1 | Tiempo de Detección | `(false, ∞)` — ningún SIEM ni alerta configurada | `(true, _____ s)` | ZT introduce capacidad de detección inexistente en perimetral |
-| G2 | Profundidad del ataque | **3 nodos** (webapp → backend → db) | _____ nodos | Reducción del _____ % en alcance lateral |
-| G3 | Tasa de bloqueo | `(false, 0 %)` — ningún control detuvo movimiento lateral ni acceso a DB | `(true, _____ %)` | ZT introduce contención inexistente en perimetral |
-| E1 | Superficie visible | **3 / 3** servicios accesibles desde webapp | _____ / 3 | Reducción del _____ % en visibilidad interna |
-| E2 | Volumen fugado | **~766 B / 3 reg. empleados + 1 cred. DB** | _____ | Reducción de _____ bytes / _____ registros |
-| E3 | Integridad tráfico interno | **texto claro** (HTTP sin TLS, JSON legible en pcap) | cifrado / rechazado | mTLS impide MITM y fuerza autenticación de servicio |
+| G1 | Tiempo de Detección | `(false, ∞)` — ningún SIEM ni alerta configurada | `(true, 22 s)` — Wazuh 100100 (nmap) | ZT introduce capacidad de detección inexistente en perimetral |
+| G2 | Profundidad del ataque | **3 nodos** (webapp → backend → db) | **1 nodo** (solo webapp) | Reducción del **67 %** en alcance lateral (2 nodos menos) |
+| G3 | Tasa de bloqueo | `(false, 0 %)` — ningún control detuvo movimiento lateral ni acceso a DB | `(true, 100 %)` — exfil, lateral y DB bloqueados | ZT introduce contención inexistente en perimetral |
+| E1 | Superficie visible | **3 / 3** servicios accesibles desde webapp | **1 / 3** (`db` no resuelve; `:5000` cerrado) | Reducción del **67 %** en visibilidad interna |
+| E2 | Volumen fugado | **~766 B / 3 reg. empleados + 1 cred. DB** | **0 B / 0 registros** | Reducción de **~766 B** y **3 registros** (exfil anulada) |
+| E3 | Integridad tráfico interno | **texto claro** (HTTP sin TLS, JSON legible en pcap) | **cifrado + rechazado** (TLS en pcap; HTTP 400 sin cert) | mTLS impide MITM y fuerza autenticación de servicio |
 
 ---
 

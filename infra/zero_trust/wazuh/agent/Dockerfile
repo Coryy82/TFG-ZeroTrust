@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 ARG WAZUH_VERSION=4.9.2
 
 RUN apt-get update && apt-get install -y \
-    curl gnupg python3 python3-pip netcat-openbsd \
+    curl gnupg python3 python3-pip netcat-openbsd docker.io \
     && pip3 install docker \
     && rm -rf /var/lib/apt/lists/*
 
@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y wazuh-agent=${WAZUH_VERSION}-1 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ossec.conf /var/ossec/etc/ossec.conf
+COPY process-webapp.sh /var/ossec/scripts/process-webapp.sh
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh /var/ossec/scripts/process-webapp.sh \
+    && chmod +x /entrypoint.sh /var/ossec/scripts/process-webapp.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

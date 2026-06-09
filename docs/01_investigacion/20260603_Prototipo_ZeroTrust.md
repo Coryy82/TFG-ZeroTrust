@@ -255,32 +255,38 @@ Aplicando exclusivamente las recomendaciones de la investigación:
 
 ### Integración — Implementación de laboratorio (Opción B)
 
-La implementación real en el laboratorio usa Wazuh como stack Docker, preservando la misma cobertura operativa:
+La implementación real en el laboratorio usa Wazuh como stack Docker (ADR 2026-06-04 y refinamiento 2026-06-09):
 
 1. **Wazuh Agent como contenedor** con `/var/run/docker.sock` montado y `--pid=host`.
-2. **docker-listener** — visibilidad de eventos de runtime de Docker (start/stop/exec).
-3. **FIM** — sobre rutas de secretos y certs montados como volúmenes.
-4. **Command monitoring parcial** — vía acceso a `/proc` del host con `--pid=host`.
+2. **`process-webapp` (principal, 2 s)** — script que resuelve el contenedor `webapp` por labels Compose y lee `/proc/*/cmdline` vía `docker exec`; cubre el vector **reverse shell post-RCE** (no `docker exec` externo).
+3. **`process-list` (respaldo, 5 s)** — `ps auxww` con pid:host.
+4. **FIM** — integridad sobre certs mTLS montados en el agente (`/monitored/certs`).
+5. **docker-listener** — solo ciclo de vida de contenedores (start/stop/redes); no sustituye la observación intra-contenedor.
 
 ```mermaid
 flowchart TD
-    Host["Host Docker"] -->|"Wazuh agent"| Manager["Wazuh manager"]
-    Host -->|"docker-listener"| Manager
-    Host -->|"auditd: comandos"| Manager
-    Host -->|"FIM: ficheros/secretos"| Manager
-    Manager --> Alertas["Alertas y telemetria (G1)"]
+    Webapp["webapp comprometido<br/>/proc/PID/cmdline"] -->|"docker exec"| Agent["wazuh-agent<br/>process-webapp.sh"]
+    Agent -->|"cada 2s"| Manager["wazuh-manager<br/>reglas 100100-100104"]
+    Agent -->|"FIM certs"| Manager
+    Agent -->|"process-list 5s"| Manager
+    Manager --> Alertas["alerts.json → KPI G1"]
 ```
 
-### Cómo se detecta cada técnica
+> **Detalle de implementación y depuración:** [`docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md`](../docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md) §10 (diseño) y §11 (incidencias).
 
-| Técnica ATT&CK | Mecanismo de detección | Naturaleza (según investigación) |
-|---|---|---|
-| **T1046** Reconocimiento interno | Command monitoring + listas CDB (binarios sospechosos: `nmap`, `nc`) | Soportada |
-| **TA0008** Movimiento lateral | auditd sobre comandos de conexión + telemetría de docker-listener; la segmentación además lo bloquea a nivel red | Soportada / bloqueo por red |
-| **T1552.004** Robo de claves | FIM sobre rutas de secretos + auditd sobre accesos a ficheros de claves | Soportada |
-| **T1041** Exfiltración | auditd sobre `curl`/utilidades de salida; requiere complementar con control de egress | Parcial (mTLS no previene fuga por canal legítimo) |
+### Cómo se detecta cada técnica (implementación laboratorio 09/06)
 
-> **Limitaciones documentadas:** la detección de lectura de **variables de entorno no es directa**; se infiere por acceso a procesos, archivos o comandos. **Sysmon for Linux** no es la integración principal para contenedores; el stack estable es auditd + system calls + docker-listener.
+| Técnica ATT&CK | Mecanismo de detección | Regla | Naturaleza |
+|---|---|---|---|
+| **T1046** Reconocimiento interno | `process-webapp` detecta `nmap` en cmdline | 100100 | Soportada |
+| **T1041** Exfiltración / lateral | `process-webapp` detecta `curl` hacia `backend` | 100101 | Soportada (mTLS bloquea en red; alerta = intento) |
+| **T1040** Captura tráfico | `process-webapp` detecta `tcpdump` | 100102 | Soportada |
+| **T1021** Acceso remoto a BD | `process-webapp` detecta `psql` | 100103 | Soportada (microsegmentación bloquea; alerta = intento) |
+| **T1552.001** Credenciales en env | `process-webapp` detecta `grep` + patrones DB/SECRET | 100104 | Inferida (comando, no lectura directa de env) |
+| **T1552.004** Robo de claves mTLS | FIM sobre `/monitored/certs` | 100120 | Soportada (ruido inode WSL2 documentado) |
+| **TA0008** Movimiento lateral | Bloqueo primario: microsegmentación + mTLS; detección vía 100101/100102 | — | Bloqueo red + alerta comportamiento |
+
+> **Limitaciones documentadas:** detección por **muestreo cada 2 s**, no syscall tracing; `auditd` no disponible en Docker Desktop + WSL2; sin Wazuh Indexer (solo `alerts.json`). En producción (nodo Linux / K8s DaemonSet) se mantendría el mismo modelo lógico con mayor fidelidad de `/proc` o auditd.
 
 ---
 

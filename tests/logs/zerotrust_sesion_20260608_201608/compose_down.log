@@ -1,0 +1,22 @@
+ Container zero_trust-nginx-1 Stopping 
+ Container zero_trust-nginx-1 Stopped 
+ Container zero_trust-nginx-1 Removing 
+ Container zero_trust-nginx-1 Removed 
+ Container zero_trust-webapp-1 Stopping 
+ Container zero_trust-webapp-1 Stopped 
+ Container zero_trust-webapp-1 Removing 
+ Container zero_trust-webapp-1 Removed 
+ Container zero_trust-backend-1 Stopping 
+ Container zero_trust-backend-1 Stopped 
+ Container zero_trust-backend-1 Removing 
+ Container zero_trust-backend-1 Removed 
+ Container zero_trust-db-1 Stopping 
+ Container zero_trust-db-1 Stopped 
+ Container zero_trust-db-1 Removing 
+ Container zero_trust-db-1 Removed 
+ Network zero_trust_backend_zone Removing 
+ Network zero_trust_web_zone Removing 
+ Network zero_trust_db_zone Removing 
+ Network zero_trust_backend_zone Resource is still in use 
+ Network zero_trust_web_zone Resource is still in use 
+ Network zero_trust_db_zone Removed 

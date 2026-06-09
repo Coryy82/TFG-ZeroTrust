@@ -1,5 +1,5 @@
 # STATE - Seguimiento TFG Ciberseguridad
-Fecha de actualización: 2026-06-08
+Fecha de actualización: 2026-06-09 (tarde — cierre KPI Escenario B)
 
 ## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
 
@@ -15,22 +15,21 @@ Capacidad efectiva restante:
 
 ## 1. Resumen Semanal
 - Commits últimos 7 días: **13 entradas** (02/06–08/06). Resumen: inicialización completa de `infra/zero_trust/` (compose 3 zonas, mTLS, Wazuh manager+agente), sesión Wazuh documentada (04/06), índice anotado y envío al tutor (06/06), ADR de objetivos como pregunta de investigación (08/06), avance EdA §2.1–§2.6 (02/06), actualizaciones de seguimiento admin.
-- Avance técnico principal: stack ZT operativo con Wazuh enrollado, FIM y docker-listener; reglas MITRE T1046 y T1552.004 implementadas. **Pendiente:** reglas para lectura de `env` y conexión directa a `db:5432`; pruebas A/B formales sin ejecutar (no hay `tests/logs/zerotrust_sesion_*`; plantilla KPI v2 §2/§3 vacía).
+- Avance técnico principal: **comparativa KPI A↔B cerrada.** Sesión oficial B: `zerotrust_sesion_20260609_130120` (G1 `(true, 22 s)`, E1–E3, G2–G3). Plantilla `tests/00_PLANTILLA_KPI_v2.md` §2/§3 rellenada. Wazuh `process-webapp` (2s) validado en laboratorio. Fix `logcapture_zerotrust.sh` CRLF + `.gitattributes` para scripts.
 - Avance de redacción principal: índice anotado enviado al tutor 06/06 (validación general positiva). `02_estado_arte.md` §2.1–§2.6 completados; §2.7 Trabajos relacionados sigue con `[TODO]`. Feedback tutor incorporado en ADR 06/06; pendiente aplicar en §1.2 Introducción.
 - Días hasta próximo hito crítico: **1 día** hasta el 09/06 (KPIs §2/§3 cerrados + Escenario B verificado).
 
 ## 2. Alineación con ROADMAP v2 y Riesgos
 - Fase actual del ROADMAP_v2: **FASE 3 — SEMANA 3** (08/06–14/06), objetivo de la semana: comparativa KPI cerrada + 60% memoria redactada (Caps. 3–6 en borrador).
-- Delta respecto al plan: la línea técnica de implementación ZT+Wazuh va **adelantada** (Fase 2 cerrada el 04/06). Las pruebas A/B formales planificadas para 06–07/06 están **retrasadas** (~1–2 días). La redacción arranca hoy según agenda (08/06: KPIs + Cap. 6) pero depende de datos de laboratorio aún no capturados.
+- Delta respecto al plan: la línea técnica de implementación ZT+Wazuh va **adelantada** (Fase 2 cerrada el 04/06). **Pruebas A/B formales cerradas el 09/06** (sesión B `130120` + baseline A `20260523_175204`). Siguiente foco: redacción Caps. 3–6 con datos KPI ya capturados.
 - Riesgos activos con nivel (ALTO/MEDIO/BAJO):
-  - **ALTO:** hito 09/06 (KPIs §2/§3) en riesgo — sin sesión formal Escenario B ni valores en plantilla; bloquea Cap. 6 y la comparativa cuantitativa.
   - **MEDIO:** `redactar_eda_v0` con `[TODO]` en §2.7 Trabajos relacionados; no bloquea la línea técnica pero retrasa el paquete académico completo.
-  - **MEDIO:** solo 2 de 4 reglas Wazuh post-RCE verificadas (nmap, certs); faltan `env | grep` y acceso `db:5432`.
+  - **BAJO:** limitaciones metodológicas G1 documentadas (22 s, cobertura parcial 100101/100104) — honestas en §2.4 plantilla y diario §12.7.
   - **BAJO:** feedback tutor sobre objetivos como pregunta de investigación — ADR registrado; aplicación en redacción prevista para Caps. 1 y 7 (15–16/06).
 - ¿Es necesario activar algún fallback documentado en DECISIONS_LOG? **No.** Wazuh operativo; fallback Wazuh→Falco descartado definitivamente.
 
 ## 3. Bloqueos
-- **Bloqueo activo:** `ejecutar_pruebas_ab` no ejecutada en la ventana 06–07/06. Sin logs `zerotrust_sesion_*` ni KPIs §2/§3 rellenados, no se puede cerrar el hito del 09/06 ni redactar §6.3/§6.4 de la memoria. Impacto directo en hitos 09/06 y 14/06.
+- **Sin bloqueo activo en pruebas A/B.** KPIs §2/§3 cerrados en `tests/00_PLANTILLA_KPI_v2.md`. Trazabilidad sesión B: `docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md` §12.
 - **Bloqueo potencial:** §2.7 EdA sin cerrar. Mitigación: redactar 2–3 párrafos hoy en paralelo o tras las pruebas (presupuesto 30 min según agenda 28/05).
 - Sin bloqueo técnico de infraestructura: el stack ZT + Wazuh levanta y está documentado en diarios 03–04/06.
 
@@ -46,9 +45,9 @@ Capacidad efectiva restante:
 
 ### DOING
 - [ ] **[HUMANO] `redactar_eda_v0`** — Redactar Estado del Arte v0: NIST 800-207, BeyondCorp, OWASP, microsegmentación, comparativa perimetral vs ZT. ⚠️ VENCIDO parcialmente. Pendiente solo §2.7 "Trabajos relacionados" (resto completado).
-- [ ] **[HUMANO] `ejecutar_pruebas_ab`** — Pruebas A/B post-RCE, captura logs, cierre KPIs §2 y §3 (06-08/06). ⚠️ VENCIDO (ventana 06-07/06). Infraestructura lista: Escenario A y B levantados, escenarios de ataque validados informalmente el 04/06. Pendiente: ejecución formal con captura de evidencias en `tests/logs/zerotrust_sesion_*/` y relleno de `tests/00_PLANTILLA_KPI_v2.md` §2 y §3.
 
 ### DONE (Sprint Final — desde 24/05)
+- [x] **`ejecutar_pruebas_ab`** — Comparativa A↔B cerrada. Sesión oficial B `zerotrust_sesion_20260609_130120`; plantilla KPI v2 §2/§3; diario §12. (2026-06-09)
 - [x] **`registrar_adr_feedback_tutor`** — ADR 2026-06-06: objetivos reformulados como pregunta de investigación tras feedback tutor del 06/06. Registrado en `admin/DECISIONS_LOG.md`. (2026-06-08)
 - [x] **`email_tutor_31_05`** — Índice anotado enviado al tutor el 06/06/2026. Validación general positiva; feedback: objetivos como pregunta de investigación. Registrado en `docs/02_reuniones_tutor/` (timeline §17–§18). (2026-06-06)
 - [x] **`wazuh_fase5_escenario_b`** — Fase 5 Wazuh completada (04/06/2026): manager + agente Docker, FIM realtime sobre `/monitored/certs`, docker-listener, reglas MITRE T1046/T1552.004 verificadas. Examen final de integración con red ZT superado (microsegmentación + mTLS + detección end-to-end). Sesión documentada en `docs/04_diario_laboratorio/20260604_Sesion_Wazuh.md`. (2026-06-04)
@@ -80,7 +79,7 @@ Capacidad efectiva restante:
 |--------|------------------------------------------------------------|----------|
 | 06/06  | Borrador índice anotado enviado al tutor (recuperación 31/05) | ✅ Completado — validación general positiva; matizar objetivos |
 | 04/06  | Checkpoint Wazuh (20:00) — continuar o switch Falco        | ✅ Completado — Wazuh operativo, fallback descartado |
-| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | ⚠️ En riesgo — infra lista; pruebas formales y plantilla KPI pendientes |
+| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | ✅ Completado — sesión `130120`, plantilla KPI v2, cuadro §3 |
 | 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                | Pendiente |
 | 16/06  | Caps. 1 y 7 redactados                                     | Pendiente |
 | 19/06  | PDF compilado en Overleaf + email final al tutor           | Pendiente |

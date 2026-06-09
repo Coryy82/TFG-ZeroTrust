@@ -1,0 +1,84 @@
+ Image wazuh-wazuh-agent Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 598B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 965B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:22.04
+#3 ...
+
+#4 [auth] library/ubuntu:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:22.04
+#3 DONE 1.2s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B 0.0s done
+#5 DONE 0.0s
+
+#6 [1/9] FROM docker.io/library/ubuntu:22.04@sha256:4f838adc7181d9039ac795a7d0aba05a9bd9ecd480d294483169c5def983b64d
+#6 resolve docker.io/library/ubuntu:22.04@sha256:4f838adc7181d9039ac795a7d0aba05a9bd9ecd480d294483169c5def983b64d 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 102B 0.0s done
+#7 DONE 0.0s
+
+#8 [6/9] COPY ossec.conf /var/ossec/etc/ossec.conf
+#8 CACHED
+
+#9 [8/9] COPY entrypoint.sh /entrypoint.sh
+#9 CACHED
+
+#10 [4/9] RUN echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg]     https://packages.wazuh.com/4.x/apt/ stable main"     > /etc/apt/sources.list.d/wazuh.list
+#10 CACHED
+
+#11 [5/9] RUN apt-get update && apt-get install -y wazuh-agent=4.9.2-1     && rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [7/9] COPY process-webapp.sh /var/ossec/scripts/process-webapp.sh
+#12 CACHED
+
+#13 [2/9] RUN apt-get update && apt-get install -y     curl gnupg python3 python3-pip netcat-openbsd docker.io     && pip3 install docker     && rm -rf /var/lib/apt/lists/*
+#13 CACHED
+
+#14 [3/9] RUN curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH     | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg
+#14 CACHED
+
+#15 [9/9] RUN sed -i 's/\r$//' /entrypoint.sh /var/ossec/scripts/process-webapp.sh     && chmod +x /entrypoint.sh /var/ossec/scripts/process-webapp.sh
+#15 CACHED
+
+#16 exporting to image
+#16 exporting layers done
+#16 exporting manifest sha256:e75c26a221185a7ccb961405491a5e81371a56915c2a3cea4c0ead49e600ce65 done
+#16 exporting config sha256:07f3d4f4c4923305671d3f68f8fada4f2ebaadfda6852c4a2a9c97fff9661236 done
+#16 exporting attestation manifest sha256:618a7ff134b568560671ede396662bd50388345aa70fffcbc04372ed6748eac8 0.0s done
+#16 exporting manifest list sha256:f6b41a1e6a05abbe9233e89ed04a2e8e14d3dd67f1465b767c3b00590541d0dd 0.0s done
+#16 naming to docker.io/library/wazuh-wazuh-agent:latest
+#16 naming to docker.io/library/wazuh-wazuh-agent:latest done
+#16 unpacking to docker.io/library/wazuh-wazuh-agent:latest 0.0s done
+#16 DONE 0.1s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image wazuh-wazuh-agent Built 
+ Network wazuh_wazuh_net Creating 
+ Network wazuh_wazuh_net Created 
+ Volume wazuh_wazuh_logs Creating 
+ Volume wazuh_wazuh_logs Created 
+ Volume wazuh_wazuh_queue Creating 
+ Volume wazuh_wazuh_queue Created 
+ Container wazuh-wazuh-manager-1 Creating 
+ Container wazuh-wazuh-manager-1 Created 
+ Container wazuh-wazuh-agent-1 Creating 
+ Container wazuh-wazuh-agent-1 Created 
+ Container wazuh-wazuh-manager-1 Starting 
+ Container wazuh-wazuh-manager-1 Started 
+ Container wazuh-wazuh-manager-1 Waiting 
+ Container wazuh-wazuh-manager-1 Healthy 
+ Container wazuh-wazuh-agent-1 Starting 
+ Container wazuh-wazuh-agent-1 Started 
