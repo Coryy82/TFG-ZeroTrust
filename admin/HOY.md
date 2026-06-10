@@ -1,171 +1,147 @@
-# HOY — 2026-06-08 (domingo) · ⚠️ RECUPERAR PRUEBAS A/B + ARRANQUE CAP. 6 + PREPARAR TUTOR
+# HOY — 2026-06-10 (miércoles) · REDACCIÓN CAP. 6 + CAP. 4 (laboratorio cerrado)
 
-> **Situación:** Fase 3 — Semana 3. El índice anotado ya está enviado y validado (06/06). El stack ZT + Wazuh está operativo desde el 04/06. **Bloqueo activo:** `ejecutar_pruebas_ab` no se ejecutó en la ventana 06–07/06 — no hay `tests/logs/zerotrust_sesion_*` ni KPIs §2/§3 rellenados. El hito del **09/06** (KPIs cerrados) está en riesgo.
-> Plan IDs: `ejecutar_pruebas_ab` (recuperación) → `redactar_cap_3_4_5` → `preparar_reunion_tutor`
-> Fase: 3 de 4 · Semana 3 · **Deadline duro mañana 09/06:** KPIs §2/§3 cerrados.
+> **Situación:** Fase 3 — Semana 3. **Hito 09/06 ✅** — KPIs §2/§3 cerrados; sesión oficial B `zerotrust_sesion_20260609_130120`; plantilla en `tests/00_PLANTILLA_KPI_v2.md`; diario §12.
+> **Bloqueo resuelto:** `ejecutar_pruebas_ab` → DONE. **Bloqueo activo ahora:** memoria sin redactar (Cap. 6 esqueleto con `[TODO]`; Cap. 4 sin empezar).
+> Plan IDs: `redactar_cap_3_4_5` (prioridad) → `redactar_eda_v0` (§2.7) → `preparar_reunion_tutor` (opcional)
+> Fase: 3 de 4 · Semana 3 · **Próximo hito duro 14/06:** Caps. 3–6 en borrador + email tutor 60–70%.
 
 ---
 
 ## OBJETIVO DEL DÍA
 
-1. **Desbloquear la línea crítica:** ejecutar la sesión formal de pruebas A/B en Escenario B, capturar evidencias y cerrar `tests/00_PLANTILLA_KPI_v2.md` §2 y §3.
-2. **Arrancar el corazón del TFG:** redactar las primeras secciones de `06_pruebas.md` (§6.1–§6.3) con los datos capturados.
-3. **Preparar la reunión con el tutor:** el tutor pidió cita en despacho cuando haya contenido redactado. Hoy toca preparar el material (objetivos reformulados, extracto de pruebas, preguntas) y, si los KPIs quedan cerrados, solicitar la cita.
+1. **Convertir datos KPI en prosa:** redactar `06_pruebas.md` §6.1–§6.3 usando la plantilla cerrada y la sesión `130120` (sin volver al laboratorio).
+2. **Recuperar agenda del 09/06:** arrancar `04_diseno.md` §4.1–§4.3 (al menos borrador de Escenario B).
+3. **Cerrar deuda EdA:** §2.7 Trabajos relacionados (30–45 min).
 
 ---
 
 ## SI SOLO HACES UNA COSA
 
-Ejecuta la cadena post-RCE completa en Escenario B, captura los logs en `tests/logs/zerotrust_sesion_YYYYMMDD_HHMMSS/` y rellena al menos `tests/00_PLANTILLA_KPI_v2.md` §2. Sin eso no hay Cap. 6 ni comparativa cuantitativa.
+Redacta **§6.3 Resultados Escenario B** en `docs/03_memoria_tfg/06_pruebas.md` copiando valores verificados de `tests/00_PLANTILLA_KPI_v2.md` §2 y la tabla comparativa §3. Sin eso no hay corazón del TFG ni reunión con el tutor.
 
 ---
 
-## CONTEXTO: QUÉ DIJO EL TUTOR (06/06)
+## CONTEXTO: QUÉ CAMBIÓ DESDE EL 08/06
 
-Del correo **§18** en `docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md`:
 
-- **Luz verde general:** puede avanzar hacia la memoria.
-- **Matiz crítico:** el objetivo no es solo *"comparar dos arquitecturas"* — debe **responder a una pregunta clave**. *"Vender la cabra"*: problema → hipótesis → diseño → pruebas → respuesta.
-- **Próximo contacto:** *"cuando tengas contenido quedamos un día en mi despacho"* — alineado con memoria ~60–70% (hito 14/06), pero conviene ir preparando el dossier hoy.
+| Tema                      | Estado anterior (reporte 08/06)  | Estado actual                                                    |
+| ------------------------- | -------------------------------- | ---------------------------------------------------------------- |
+| KPIs §2/§3                | En riesgo                        | ✅ Cerrados en plantilla                                          |
+| Sesión ZT                 | Sin `zerotrust_sesion_`* oficial | ✅ `20260609_130120` (limpia, 2.º intento)                        |
+| G1 Wazuh                  | Pendiente validar                | ✅ `(true, 22 s)` — regla 100100                                  |
+| Cap. 6                    | No iniciado                      | Sigue en esqueleto — **tarea de hoy**                            |
+| `logcapture_zerotrust.sh` | —                                | Fix CRLF + `.gitattributes` (no repetir pruebas salvo regresión) |
 
-**Pregunta de investigación (ADR 2026-06-06, borrador):**
-> *¿En qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas?*
+
+**Fuentes de verdad para redacción (no inventar):**
+
+- `tests/00_PLANTILLA_KPI_v2.md` (§1 A, §2 B, §3 comparativa)
+- `tests/logs/zerotrust_sesion_20260609_130120/` (evidencias)
+- `docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md` §12
 
 ---
 
 ## BLOQUES DE TRABAJO
 
-### Bloque 0 — 5h · Recuperación: pruebas A/B formales (`ejecutar_pruebas_ab`)
+### Bloque 0 — 15 min · Alineación y cierre administrativo
 
-**Prioridad máxima.** Recupera las tareas vencidas del 06–07/06 antes de redactar.
-
-**Pre-vuelo (15 min):**
-```bash
-cd infra/zero_trust
-docker compose up --build -d
-docker compose ps   # todos healthy
-```
-
-**Sesión formal Escenario B:**
-- [ ] Ejecutar cadena pre-RCE (recon → info disclosure → login → SSTI → RCE) — 1h
-- [ ] Registrar `T0_efectivo` con timestamp visible — 15 min
-- [ ] Ejecutar los 4 hitos post-RCE y anotar bloqueo/detección — 2h
-  1. `env | grep DB_` → exfiltración creds (`T_exfil_creds`)
-  2. `nmap` escaneo interno (`T_scan`)
-  3. `curl` a `backend:5000/empleados` con `tcpdump` (`T_lateral`, `T_e3_pcap`)
-  4. Conexión directa `webapp → db:5432` (`T_objetivo`)
-- [ ] Capturar logs en `tests/logs/zerotrust_sesion_YYYYMMDD_HHMMSS/` — 1h
-- [ ] Verificar `lateral.pcap`: TLS o rechazo mTLS (evidencia E3) — 30 min
-- [ ] Documentar sesión en `docs/04_diario_laboratorio/20260608_Sesion_ZT_PruebasAB.md` — 45 min
-
-**Verificaciones Wazuh pendientes (integrar en la sesión, no como bloque aparte):**
-```bash
-# Regla env | grep DB_
-docker exec zero_trust-webapp-1 env | grep -i db
-docker exec wazuh-wazuh-manager-1 tail -50 /var/ossec/logs/alerts/alerts.json | grep -i "env\|DB_\|credential"
-
-# Bloqueo microsegmentación webapp → db:5432
-docker exec zero_trust-webapp-1 nc -zv db 5432
-```
-
-- [ ] Confirmar alerta o ausencia documentada para `env | grep`
-- [ ] Confirmar bloqueo de red para `db:5432` (evidencia G3/E1, no requiere regla Wazuh)
-
-**Hecho cuando:** existe carpeta `zerotrust_sesion_*` con logs, pcap, creds y cronología anotada.
+- Leer `admin/STATE.md` y confirmar que no hay tareas de laboratorio pendientes
+- Actualizar cabecera de `docs/03_memoria_tfg/06_pruebas.md`: §2/§3 ya no están "pendiente" — citar sesión `130120`
+- (Opcional) Borrador de `admin/reportes/reporte_2026-06-10.md` con hito 09/06 cerrado — 10 min
 
 ---
 
-### Bloque 1 — 2h · Cierre KPIs (`ejecutar_pruebas_ab` + agenda 08/06)
+### Bloque 1 — 4h · Cap. 6 Pruebas §6.1–§6.3 (`redactar_cap_3_4_5`) — PRIORIDAD MÁXIMA
 
-- [ ] Rellenar `tests/00_PLANTILLA_KPI_v2.md` §2 (Escenario B) con valores reales — 1h
-- [ ] Rellenar `tests/00_PLANTILLA_KPI_v2.md` §3 (tabla comparativa A vs B) — 1h
-- [ ] Hacer capturas de pantalla de evidencias clave para Cap. 6 — 30 min (si queda tiempo en el bloque)
+Recupera tareas vencidas del **08/06** (agenda). No abrir §6.4 hoy salvo que §6.1–6.3 queden cerrados antes.
 
-**Hecho cuando:** §2 y §3 de la plantilla KPI v2 tienen todos los campos rellenados (G1–G3, E1–E3, timings §2.2.b, denominador 4 hitos).
+**§6.1 Metodología (1h)**
 
----
+- §6.1.1 Entorno: Windows + WSL2, Docker Compose v2, scripts `logcapture_*.sh`
+- §6.1.2 Protocolo: cadena pre-RCE + T0 + 4 hitos post-RCE + captura (igual en A y B)
+- §6.1.3 T0_efectivo y ventana post-RCE — citar ADR 2026-05-12 y plantilla KPI v2
 
-### Bloque 2 — 3h · Arranque Cap. 6 Pruebas (`redactar_cap_3_4_5`)
+**§6.2 Escenario A (1h)** — la tabla ya está; convertir a prosa breve
 
-Solo después de tener datos del Bloque 0–1. Fuentes: plantilla KPI v2 §1 (A, ya completo) + §2/§3 (recién cerrados).
+- Completar narrativa alrededor de tablas existentes (sesión `perimetral_sesion_20260523_175204`)
+- Párrafo por métrica G1–G3, E1–E3 con mecanismo perimetral (o ausencia)
 
-- [ ] Redactar `docs/03_memoria_tfg/06_pruebas.md` §6.1 "Metodología de pruebas" — 1h
-- [ ] Redactar §6.2 "Resultados Escenario A" (completar texto a partir de plantilla §1) — 1h
-- [ ] Redactar §6.3 "Resultados Escenario B" con datos de hoy — 1h
+**§6.3 Escenario B (2h)** — **corazón del día**
 
-**Hecho cuando:** §6.1–§6.3 tienen prosa redactada (no solo `[TODO]`), con tablas y referencias a rutas de evidencia.
+- §6.3.1 Cronología: T0 `13:14:08`, hitos de `session_chrono.txt` (7 líneas, 2.º intento)
+- §6.3.2 Tabla KPI desde plantilla §2.1 — rutas `tests/logs/zerotrust_sesion_20260609_130120/`
+- Párrafos honestos: G1 22 s; sin 100101/100104; reinicio mid-sesión documentado en §2.4 plantilla
+- Mencionar controles: microsegmentación, mTLS 400, Flask `127.0.0.1`, Wazuh `process-webapp`
+- Listar 2–3 rutas de evidencia clave para el tutor (`e1_scan.log`, `lateral.pcap`, `wazuh_alerts.json` L1)
 
----
-
-### Bloque 3 — 1.5h · Preparar reunión con el tutor (`preparar_reunion_tutor`)
-
-El tutor no exige la cita hoy, pero hay que tener el material listo para solicitarla en cuanto el Cap. 6 tenga borrador sustancial.
-
-**Documentos a preparar:**
-- [ ] Actualizar §1.2 del índice anotado con la pregunta de investigación (ADR 2026-06-06) — 20 min
-  - Archivo: `docs/03_memoria_tfg/Borradores y pretrabajos/Borrador_Indice_Anotado_HUMANO.md`
-  - Corregir typos pendientes: *preubas* → *pruebas* (§7.1), *Los 6 métricas* → *Las 6 métricas* (§3.4)
-- [ ] Redactar borrador de §1.2 Objetivos para `01_intro.md` (pregunta + hipótesis + método comparativo) — 30 min
-- [ ] Preparar dossier de reunión (1–2 páginas) — 30 min
-  - Pregunta de investigación propuesta
-  - Extracto EdA §2.1–§2.6 (ya redactado)
-  - Tabla KPI §3 (si Bloque 1 cerrado) o resumen cualitativo provisional
-  - Borrador §6.1–§6.3 (si Bloque 2 avanzado)
-  - Lista de 3–5 preguntas concretas para el tutor
-- [ ] Borrador de email para solicitar cita en despacho — 15 min
-  - Asunto sugerido: `TFG — Solicitud cita despacho: borrador pruebas + objetivos reformulados`
-  - Adjuntar o pegar: dossier + índice actualizado
-  - Pedir feedback sobre: formulación de objetivos, profundidad Cap. 6, coherencia narrativa problema→solución
-
-**Preguntas sugeridas para el tutor:**
-1. ¿La pregunta de investigación propuesta articula bien el problema y la contribución?
-2. ¿El nivel de detalle previsto en Cap. 6 (tabla KPI + análisis por métrica) es el adecuado?
-3. ¿El SIEM como mecanismo auxiliar de G1/G3 queda bien delimitado frente al núcleo (segmentación + mTLS)?
-4. ¿Conviene adelantar la cita antes del 14/06 o esperar al envío del 60–70%?
-
-**Hecho cuando:** tienes dossier + email borrador listos para enviar en cuanto §6.3 esté redactado (hoy tarde o mañana temprano).
+**Hecho cuando:** §6.1–§6.3 sin `[TODO POST-PRUEBAS]`; figuras marcadas `[FIG:]` donde falten capturas.
 
 ---
 
-### Bloque 4 (opcional, 30 min) · Cerrar §2.7 EdA (`redactar_eda_v0`)
+### Bloque 2 — 3h · Cap. 4 Diseño §4.1–§4.3 (`redactar_cap_3_4_5`) — RECUPERACIÓN 09/06
 
-Solo si los bloques 0–2 están cerrados o bloqueados por un problema técnico >2h.
+Solo si Bloque 1 avanza bien; si no, dejar para mañana 11/06.
 
-- [ ] Redactar §2.7 "Trabajos relacionados" en `docs/03_memoria_tfg/02_estado_arte.md` — 30 min
-  - Fuentes locales: Jiménez (UPM ZT), Vico (SIEM), Torregrosa (acceso remoto), Pérez/G6508
-  - 2–3 párrafos: posicionar este TFG frente a trabajos similares (comparativa A/B cuantitativa, no despliegue SIEM)
+**Insumos:** `docs/01_investigacion/20260603_Prototipo_ZeroTrust.md`, diarios 03–09/06, `infra/zero_trust/docker-compose.yaml`
+
+- §4.1 Visión general comparativa A vs B (misma app, distinto modelo de red) — 45 min
+- §4.2 Escenario A: topología red plana + decisiones + 4 hitos — 1h (*insumo: prototipo perimetral*)
+- §4.3 Escenario B: principios ZT → 3 zonas + mTLS + Wazuh `process-webapp` — 1h 15 min
+- Marcar `[FIG:]` para diagramas (Mermaid o draw.io después)
+
+**Hecho cuando:** §4.1–§4.3 con prosa continua (aunque §4.4–4.5 sigan en `[TODO]`).
+
+---
+
+### Bloque 3 — 45 min · EdA §2.7 (`redactar_eda_v0`)
+
+- Redactar `docs/03_memoria_tfg/02_estado_arte.md` §2.7 "Trabajos relacionados" — 2–3 párrafos
+- Posicionar este TFG: comparativa A/B **cuantitativa** + cadena HTB + laboratorio reproducible
+- Fuentes locales: TFGs en `docs/01_investigacion/TFG_Otros/` (Jiménez, Vico, Torregrosa, G6508)
+- Añadir 1–2 referencias a `99_bibliografia.md` si faltan
+
+**Hecho cuando:** desaparece el único `[TODO]` de `02_estado_arte.md`.
+
+---
+
+### Bloque 4 (opcional, 1h) · Preparar reunión tutor
+
+El tutor pidió cita cuando haya contenido redactado (`00_TIMELINE_CORREOS.md` §18).
+
+- Actualizar §1.2 objetivos en `01_intro.md` o índice anotado con pregunta de investigación (ADR 2026-06-06)
+- Dossier 1–2 páginas: pregunta + tabla KPI §3 + extracto §6.3 borrador
+- Borrador email solicitud cita en despacho (no enviar hasta §6.3 legible)
 
 ---
 
 ## NO HACER HOY
 
-- No redactar Cap. 4 Diseño completo (eso es mañana 09/06 según agenda).
-- No abrir Overleaf ni maquetar LaTeX (hito 14/06).
-- No reabrir `infra/zero_trust/` salvo fallo bloqueante en las pruebas (timeboxing 2h → documentar y seguir).
-- No esperar respuesta del tutor para ejecutar las pruebas — la línea crítica es laboratorio, no correo.
-- No perfeccionar §2.7 si las pruebas A/B siguen sin ejecutar.
+- **No** repetir sesión de laboratorio ZT (KPI cerrado; evidencias limpias en `130120`).
+- **No** abrir Overleaf (hito 14/06).
+- **No** redactar Cap. 7 Conclusiones antes de tener §6.4 comparativa (agenda 10/06).
+- **No** perfeccionar infra salvo regresión bloqueante (>2h → documentar y seguir redactando).
+- **No** reabrir debate Wazuh vs Falco (cerrado 04/06).
 
 ---
 
 ## CRITERIO DE ÉXITO MÍNIMO DEL DÍA
 
-El día es exitoso si al terminar puedes marcar esto:
+- `06_pruebas.md` §6.3 Escenario B redactado con datos reales de plantilla §2
+- `06_pruebas.md` §6.1 metodología redactada
+- §2.7 EdA cerrado
 
-- [ ] Sesión formal Escenario B ejecutada con logs en `tests/logs/zerotrust_sesion_*`
-- [ ] `tests/00_PLANTILLA_KPI_v2.md` §2 y §3 cerrados con valores reales
-- [ ] `06_pruebas.md` §6.1–§6.3 con borrador redactado (aunque sea primera pasada)
-- [ ] Dossier de reunión tutor preparado + email borrador para solicitar cita
-- [ ] §1.2 objetivos reformulados como pregunta de investigación (índice o `01_intro.md`)
+**Mínimo absoluto (si el día se acorta):** solo §6.3 + §6.1.1–6.1.2.
 
-**Mínimo absoluto (si el día se acorta):** pruebas ejecutadas + §2 KPI rellenado. El resto pasa a mañana 09/06 con prioridad.
+**Stretch (día completo 8h+):** §6.2 prosa + §4.1–4.3 borrador + dossier tutor.
 
 ---
 
 ## CIERRE
 
 Al terminar:
-1. Actualiza `admin/STATE.md`: mueve tareas completadas; si §2/§3 cerrados, marca progreso en `ejecutar_pruebas_ab`.
-2. Si enviaste solicitud de cita al tutor: regístrala en `docs/02_reuniones_tutor/BITACORA_REUNIONES.md`.
-3. **Hito mañana 09/06:** KPIs §2/§3 cerrados + Escenario B verificado. Si hoy no cierras §3, mañana es solo laboratorio + KPI, sin Cap. 4.
-4. **Hito 14/06 en 6 días:** memoria 60–70% + email tutor. La reunión en despacho alimenta ese envío.
-5. Mañana (09/06): copiar el bloque `### 2026-06-09` de `AGENDA_SPRINT_DIARIA.md` en este archivo.
+
+1. Actualizar `admin/STATE.md`: mover progreso en `redactar_cap_3_4_5`; marcar §2.7 si cerrado.
+2. Si redactaste §6.3: anotar en `docs/04_diario_laboratorio/` un párrafo de cierre (o ampliar §12 con “redacción Cap. 6 iniciada”).
+3. **Mañana 11/06 (agenda):** §6.4 comparativa A vs B (tabla §3 → prosa) + figuras Cap. 6.
+4. Recordatorio: **14/06 en 4 días** — email tutor con memoria 60–70%.
+

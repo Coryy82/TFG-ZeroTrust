@@ -10,7 +10,7 @@
 
 ## 2.1 Evolución hacia infraestructuras contenerizadas
 
-[DONE] De servidores monolíticos a microservicios. Docker como estándar de facto. Kubernetes para orquestación. La "comodidad" de las redes planas por defecto (`bridge` en Docker) y sus implicaciones de seguridad: visibilidad total entre contenedores de la misma red, sin control de flujo lateral.
+[REVISAR] De servidores monolíticos a microservicios. Docker como estándar de facto. Kubernetes para orquestación. La "comodidad" de las redes planas por defecto (`bridge` en Docker) y sus implicaciones de seguridad: visibilidad total entre contenedores de la misma red, sin control de flujo lateral.
 
 [CITAR: Docker networking documentation / paper IEEE sobre contenedores y seguridad]
 
@@ -75,7 +75,7 @@ NO APLICA A ESTE TFG, DOCKER ES SIMPLEMENTE UNA HERRAMIENTA DE TRABAJO PARA DESP
 
 ## 2.5 Sistemas de detección y observabilidad (SIEM/IDS)
 
-[DONE] Papel del SIEM en un modelo Zero Trust: no solo detectar, sino correlacionar eventos de múltiples fuentes para identificar comportamiento anómalo. Wazuh como solución open-source para entornos Docker. Comparativa Wazuh vs Suricata: Wazuh orientado a host-based detection (logs, integridad de ficheros, reglas de correlación); Suricata orientado a network-based detection (captura de paquetes, firmas). Justificación de la elección para este TFG.
+[REVISAR] Papel del SIEM en un modelo Zero Trust: no solo detectar, sino correlacionar eventos de múltiples fuentes para identificar comportamiento anómalo. Wazuh como solución open-source para entornos Docker. Comparativa Wazuh vs Suricata: Wazuh orientado a host-based detection (logs, integridad de ficheros, reglas de correlación); Suricata orientado a network-based detection (captura de paquetes, firmas). Justificación de la elección para este TFG.
 
 [CITAR: Wazuh documentation — agent deployment en Docker]
 [CITAR: Suricata documentation — network IDS/IPS]
@@ -111,4 +111,4 @@ No veo necesario cubrir esto en el estado del arte ya que no forma parte del enf
 [CITAR: buscar 2-3 papers IEEE de comparativas de seguridad en contenedores]
 
 ### Texto redactado
-Debo encontrar papers similares todavía
+Añadir conclusiones de papeles encontrados
