@@ -1,5 +1,5 @@
 # STATE - Seguimiento TFG Ciberseguridad
-Fecha de actualización: 2026-06-09 (tarde — cierre KPI Escenario B)
+Fecha de actualización: 2026-06-10 (noche — Bloques 1–3 redacción memoria)
 
 ## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
 
@@ -14,24 +14,29 @@ Capacidad efectiva restante:
 - **05/06 → 21/06: ~144h restantes** (12h/día × 0.75 fatiga × 16 días)
 
 ## 1. Resumen Semanal
-- Commits últimos 7 días: **13 entradas** (02/06–08/06). Resumen: inicialización completa de `infra/zero_trust/` (compose 3 zonas, mTLS, Wazuh manager+agente), sesión Wazuh documentada (04/06), índice anotado y envío al tutor (06/06), ADR de objetivos como pregunta de investigación (08/06), avance EdA §2.1–§2.6 (02/06), actualizaciones de seguimiento admin.
-- Avance técnico principal: **comparativa KPI A↔B cerrada.** Sesión oficial B: `zerotrust_sesion_20260609_130120` (G1 `(true, 22 s)`, E1–E3, G2–G3). Plantilla `tests/00_PLANTILLA_KPI_v2.md` §2/§3 rellenada. Wazuh `process-webapp` (2s) validado en laboratorio. Fix `logcapture_zerotrust.sh` CRLF + `.gitattributes` para scripts.
-- Avance de redacción principal: índice anotado enviado al tutor 06/06 (validación general positiva). `02_estado_arte.md` §2.1–§2.6 completados; §2.7 Trabajos relacionados sigue con `[TODO]`. Feedback tutor incorporado en ADR 06/06; pendiente aplicar en §1.2 Introducción.
-- Días hasta próximo hito crítico: **1 día** hasta el 09/06 (KPIs §2/§3 cerrados + Escenario B verificado).
+- Commits últimos 7 días: actividad 02/06–10/06. Línea técnica ZT+Wazuh cerrada (04/06); comparativa KPI A↔B cerrada (09/06); redacción memoria iniciada en serio (10/06).
+- Avance técnico principal: **comparativa KPI A↔B cerrada.** Sesión oficial B: `zerotrust_sesion_20260609_130120` (G1 `(true, 22 s)`, E1–E3, G2–G3). Plantilla `tests/00_PLANTILLA_KPI_v2.md` §2/§3 rellenada. Wazuh `process-webapp` (2s) validado. Sin trabajo de laboratorio pendiente salvo regresión.
+- Avance de redacción principal (10/06):
+  - **Cap. 6** `06_pruebas.md`: §6.1–§6.3 redactados [HUMANO] con datos de plantilla §2 y sesión `130120`.
+  - **Cap. 4** `04_diseno.md`: §4.1–§4.3 redactados (visión A/B, topología perimetral, principios ZT, 3 zonas, mTLS, Wazuh).
+  - **Cap. 2** `02_estado_arte.md`: §2.7 Trabajos relacionados **cerrado**; typos corregidos en bloques [HUMANO] §2.2–§2.6; posicionamiento con pregunta de investigación (ADR 06/06).
+  - **Bibliografía:** 4 TFG/TFM locales añadidos en `99_bibliografia.md` (literatura gris).
+- Pendiente redacción inmediata: §6.4 comparativa A vs B; Cap. 3; §4.4–4.5; §1.2 Introducción (pregunta de investigación, Bloque 4 HOY).
+- Días hasta próximo hito crítico: **4 días** hasta el 14/06 (Caps. 3–6 en borrador + email tutor 60–70%).
 
 ## 2. Alineación con ROADMAP v2 y Riesgos
 - Fase actual del ROADMAP_v2: **FASE 3 — SEMANA 3** (08/06–14/06), objetivo de la semana: comparativa KPI cerrada + 60% memoria redactada (Caps. 3–6 en borrador).
 - Delta respecto al plan: la línea técnica de implementación ZT+Wazuh va **adelantada** (Fase 2 cerrada el 04/06). **Pruebas A/B formales cerradas el 09/06** (sesión B `130120` + baseline A `20260523_175204`). Siguiente foco: redacción Caps. 3–6 con datos KPI ya capturados.
 - Riesgos activos con nivel (ALTO/MEDIO/BAJO):
-  - **MEDIO:** `redactar_eda_v0` con `[TODO]` en §2.7 Trabajos relacionados; no bloquea la línea técnica pero retrasa el paquete académico completo.
+  - **MEDIO:** volumen de redacción Caps. 3–6 pendiente para hito 14/06; §6.4 y Cap. 3 sin empezar.
   - **BAJO:** limitaciones metodológicas G1 documentadas (22 s, cobertura parcial 100101/100104) — honestas en §2.4 plantilla y diario §12.7.
-  - **BAJO:** feedback tutor sobre objetivos como pregunta de investigación — ADR registrado; aplicación en redacción prevista para Caps. 1 y 7 (15–16/06).
+  - **BAJO:** pregunta de investigación (ADR 06/06) aplicada en §2.7 EdA; **pendiente** en §1.2 Introducción y §7.1 Conclusiones (15–16/06).
 - ¿Es necesario activar algún fallback documentado en DECISIONS_LOG? **No.** Wazuh operativo; fallback Wazuh→Falco descartado definitivamente.
 
 ## 3. Bloqueos
-- **Sin bloqueo activo en pruebas A/B.** KPIs §2/§3 cerrados en `tests/00_PLANTILLA_KPI_v2.md`. Trazabilidad sesión B: `docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md` §12.
-- **Bloqueo potencial:** §2.7 EdA sin cerrar. Mitigación: redactar 2–3 párrafos hoy en paralelo o tras las pruebas (presupuesto 30 min según agenda 28/05).
-- Sin bloqueo técnico de infraestructura: el stack ZT + Wazuh levanta y está documentado en diarios 03–04/06.
+- **Sin bloqueo activo en pruebas A/B ni en laboratorio.** KPIs §2/§3 cerrados. Trazabilidad sesión B: `docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md` §12.
+- **Bloqueo activo:** memoria parcialmente redactada — foco en §6.4, Cap. 3 y cierre §4.4–4.5 antes del 14/06.
+- Sin bloqueo técnico de infraestructura: el stack ZT + Wazuh levanta y está documentado en diarios 03–09/06.
 
 ## 4. Tablero del Sprint Actual
 ### TODO
@@ -43,10 +48,12 @@ Capacidad efectiva restante:
 - [ ] **[HUMANO] `revision_final_entrega`** — Correcciones + depósito en plataforma el 21/06.
 
 ### DOING
-- [ ] **[HUMANO] `redactar_eda_v0`** — Redactar Estado del Arte v0: NIST 800-207, BeyondCorp, OWASP, microsegmentación, comparativa perimetral vs ZT. ⚠️ VENCIDO parcialmente. Pendiente solo §2.7 "Trabajos relacionados" (resto completado).
-- [ ] **[HUMANO] `redactar_cap_3_4_5`** — Caps. 3 Análisis del Problema, 4 Diseño, 5 Desarrollo e Implantación, 6 Pruebas (09-13/06).
+- [ ] **[HUMANO] `redactar_cap_3_4_5`** — Caps. 3–6 en borrador (09–13/06). **Avance 10/06:** Cap. 4 §4.1–4.3; Cap. 6 §6.1–6.3. Pendiente: Cap. 3, §4.4–4.5, §6.4, Cap. 5.
 
 ### DONE (Sprint Final — desde 24/05)
+- [x] **`redactar_eda_v0`** — Estado del Arte v0 cerrado: §2.2–§2.6 [HUMANO] + §2.7 Trabajos relacionados (4 TFG locales, posicionamiento pregunta de investigación). Typos §2.2–§2.6 corregidos. Refs en `99_bibliografia.md`. (2026-06-10)
+- [x] **`redactar_cap_6_parcial`** — `06_pruebas.md` §6.1–§6.3 redactados [HUMANO] con sesión `130120` y plantilla KPI v2. (2026-06-10)
+- [x] **`redactar_cap_4_parcial`** — `04_diseno.md` §4.1–§4.3 redactados (visión A/B, Escenario A, Escenario B core). (2026-06-10)
 - [x] **`ejecutar_pruebas_ab`** — Comparativa A↔B cerrada. Sesión oficial B `zerotrust_sesion_20260609_130120`; plantilla KPI v2 §2/§3; diario §12. (2026-06-09)
 - [x] **`registrar_adr_feedback_tutor`** — ADR 2026-06-06: objetivos reformulados como pregunta de investigación tras feedback tutor del 06/06. Registrado en `admin/DECISIONS_LOG.md`. (2026-06-08)
 - [x] **`email_tutor_31_05`** — Índice anotado enviado al tutor el 06/06/2026. Validación general positiva; feedback: objetivos como pregunta de investigación. Registrado en `docs/02_reuniones_tutor/` (timeline §17–§18). (2026-06-06)

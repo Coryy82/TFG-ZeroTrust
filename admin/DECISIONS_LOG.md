@@ -143,6 +143,7 @@
   - Actualizar `docs/03_memoria_tfg/Borradores y pretrabajos/Borrador_Indice_Anotado_HUMANO.md` §1.2 cuando se revise el borrador.
   - Alinear `docs/03_memoria_tfg/01_intro.md` y `07_conclusiones.md` con el hilo problema → pregunta → hipótesis → diseño → pruebas → respuesta.
   - El título oficial (*"Análisis comparativo de seguridad..."*) se mantiene; la palabra "comparativo" describe el método, no sustituye la pregunta de investigación.
+  - **Aplicado en redacción (10/06/2026):** `docs/03_memoria_tfg/02_estado_arte.md` §2.7 posiciona el TFG frente a cuatro trabajos relacionados (Jiménez, Pérez/G6508, Torregrosa, Vico) enmarcando la comparativa A/B como método para responder la pregunta de investigación, no como objetivo central.
 - **Próximo contacto acordado:** cita en despacho del tutor cuando haya contenido redactado sustancial (alineado con hito 14/06).
 - **Trazabilidad:** [`docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md`](../docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md) §17–§18; [`docs/02_reuniones_tutor/BITACORA_REUNIONES.md`](../docs/02_reuniones_tutor/BITACORA_REUNIONES.md) entrada 2026-06-06; [`docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md`](../docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md) §1 y §7.
 
