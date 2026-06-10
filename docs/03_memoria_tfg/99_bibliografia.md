@@ -25,7 +25,17 @@
 
 - [TODO: buscar paper IEEE/ACM sobre seguridad en redes Docker]
 - [TODO: buscar paper sobre microsegmentación en contenedores]
-- [TODO: buscar estudio comparativo seguridad modelo perimetral vs ZT]
+- **Nota:** La comparativa empírica perimetral vs Zero Trust con métricas operativas es aportación propia de este TFG (Cap. 6). La literatura revisada en `Investigacion_ZeroTrust.md` confirma la escasez de estudios con medición comparable.
+
+## Trabajos académicos relacionados (literatura gris)
+
+- **[Jiménez-2025]** Jiménez Díaz-Varela, M. de las M. (2025). *Implementación de un modelo Zero Trust en un entorno Cloud Híbrido Simulado*. Trabajo Fin de Grado, Escuela Técnica Superior de Ingenieros Informáticos, Universidad Politécnica de Madrid. Tutor: A. J. Díaz Honrubia.
+
+- **[Pérez-G6508]** Pérez Pérez, G. (s.f.). *Zero Trust como Concepto de Seguridad*. Trabajo Fin de Grado, Escuela de Ingeniería Informática, Mención en Tecnologías de la Información. Tutor: V. Cardeñoso Payo.
+
+- **[Torregrosa-2025]** Torregrosa Navarrete, C. (2025). *Problemática de la gestión del acceso local a redes corporativas y su resolución en base a sistemas NAC*. Trabajo Fin de Grado, Escuela Técnica Superior de Ingeniería Informática, Universitat Politècnica de València. Tutor: M. D. Serrat Olmos.
+
+- **[Vico-2025]** Vico Burruezo, M. (2025). *Implementación de un SIEM QRadar con la integración de Wazuh, Suricata y PFsense*. Trabajo Fin de Máster, Máster Universitario en Ciberseguridad y Ciberinteligencia, Universitat Politècnica de València. Tutor: J. E. López Patiño.
 
 ## Herramientas
 
