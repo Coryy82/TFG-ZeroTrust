@@ -16,22 +16,22 @@ todos:
     status: completed
   - id: redactar_eda_v0
     content: "[HUMANO] Redactar Estado del Arte v0 (25-30/05): mininimo 5-6 páginas con NIST 800-207, BeyondCorp, OWASP, microsegmentación, comparativa perimetral vs ZT, usando material de `docs/01_investigacion/` (5-6h)"
-    status: pending
+    status: completed
   - id: spec_escenario_b
     content: "[HUMANO] Redactar especificación del Escenario B reducido en `docs/01_investigacion/20260528_Prototipo_ZeroTrust.md`: 3 redes Docker, identidad de servicio, mTLS webapp↔backend, Wazuh mínimo con criterio fallback Falco (28-29/05, 2-3h)"
-    status: pending
+    status: completed
   - id: registrar_adr_alcance
     content: "[AGENTE] Registrar ADR en `admin/DECISIONS_LOG.md` con (a) cambio de deadline a 21/06, (b) reducción de alcance Escenario B, (c) criterio fallback Wazuh → Falco (hoy, 30 min)"
     status: completed
   - id: email_tutor_31_05
     content: "[HUMANO] Componer y enviar email al tutor el 31/05 con plan, EdA v0 adjunto en PDF, alcance Escenario B y pregunta de validación (31/05, 1h)"
-    status: pending
+    status: completed
   - id: implementar_escenario_b
     content: "[HUMANO] Implementar `infra/zero_trust/` con docker-compose, 3 redes, mTLS, Wazuh mínimo (02-05/06, ~48h con checkpoint Wazuh el 04/06 20:00)"
-    status: pending
+    status: completed
   - id: ejecutar_pruebas_ab
     content: "[HUMANO] Ejecutar pruebas A/B post-RCE replicando protocolo del 23/05, capturar logs en `tests/logs/zerotrust_sesion_*/` y cerrar plantilla KPI v2 §2 y §3 (06-08/06, ~36h)"
-    status: pending
+    status: completed
   - id: redactar_cap_3_4_5
     content: "[HUMANO] Redactar Cap. 3 Análisis del Problema, Cap. 4 Diseño, Cap. 5 Desarrollo e Implantación, Cap. 6 Pruebas (09-13/06, ~60h)"
     status: pending
