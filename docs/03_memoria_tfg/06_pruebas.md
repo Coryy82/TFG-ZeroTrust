@@ -1,7 +1,7 @@
 # Capítulo 6 — Pruebas y Resultados
 
-> **Estado:** ESQUELETO — redactar en semana 3 (10-11/06). CORAZÓN DEL TFG. Máxima nota.
-> Fuentes: `tests/00_PLANTILLA_KPI_v2.md §1 (A, ya completo) + §2 (B, completo) + §3 (comparativa, pendiente)`.
+> **Estado:** BORRADOR — §6.1–§6.4 redactados [HUMANO]. Pendiente: figuras `[FIG:]`, revisión final de estilo.
+> Fuentes: `tests/00_PLANTILLA_KPI_v2.md` §1 (A), §2 (B), §3 (comparativa) — cerradas.
 > Criterio del tutor (§4): métricas estrictamente comparables entre escenarios. Pruebas de post-explotación.
 > Objetivo de extensión: 12-16 páginas.
 
@@ -30,6 +30,7 @@
 **Cada sesión empieza con un entorno limpio (`docker compose up --build -d`). A continuación reproducimos la cadena de ataque previa a la ejecución de código remota, reconocimiento, filtrado de información, login y confirmación de SSTI— hasta conseguir una reverse shell en webapp. En el instante en que esta queda operativa marcamos el inicio de la ventana de medición.**
 
 **A partir de ahí medimos siempre los mismos cuatro hitos post-explotación: 
+
 - **Exfiltración de credenciales**
 - **Escaneo de la red interna**
 - **Acceso al back**
@@ -44,9 +45,10 @@ En cada paso guardamos el output de los comandos en logs; al terminar, el script
 #### Texto redactado [HUMANO]
 
 **Fijamos el inicio de la ventana de medición en el instante en que el atacante dispone de ejecución de código remota en webapp, con una reverse shell operativa. La fase previa al RCE sirve para narrar cómo se compromete el portal, pero no entra en el cuadro comparativo entre escenarios: el punto de entrada está fijado por diseño en ambos. A partir de este punto medimos:**
+
 - **Detección**
 - **Profundidad del ataque**
-- **Bloqueo de hitos**
+- **Bloqueo de comandos desde reverse shell**
 - **Superficie visible**
 - **Volumen exfiltrado**
 - **Integridad del tráfico interno.**
@@ -73,12 +75,12 @@ Sesión: `perimetral_sesion_20260523_175204`.
 
 
 
-| Hito post-RCE | Hora CEST | Δ desde T0 | Resultado |
-| ------------- | --------- | ---------- | --------- |
-| `env \| grep DB_` → creds.txt | ~17:58:20 | ~24 s | `DB_PASSWORD=supersecret`, `DB_HOST=db` visibles |
-| Nmap interno | ~18:02:00 | ~244 s | `backend:5000`, `db:5432`, `nginx:80` visibles |
-| `curl backend:5000/empleados` | ~18:02:00 | ~244 s | HTTP/JSON texto claro, 3 empleados |
-| `psql -h db` → dump.txt | ~18:02:30 | ~274 s | 3 filas completas de tabla `empleados` |
+| Hito post-RCE                 | Hora CEST | Δ desde T0 | Resultado                                        |
+| ----------------------------- | --------- | ---------- | ------------------------------------------------ |
+| `env | grep DB_` → creds.txt  | ~17:58:20 | ~24 s      | `DB_PASSWORD=supersecret`, `DB_HOST=db` visibles |
+| Nmap interno                  | ~18:02:00 | ~244 s     | `backend:5000`, `db:5432`, `nginx:80` visibles   |
+| `curl backend:5000/empleados` | ~18:02:00 | ~244 s     | HTTP/JSON texto claro, 3 empleados               |
+| `psql -h db` → dump.txt       | ~18:02:30 | ~274 s     | 3 filas completas de tabla `empleados`           |
 
 
 ---
@@ -132,15 +134,16 @@ Sesión oficial: `zerotrust_sesion_20260609_130120` (2026-06-09). Commit `271b38
 
 **Caracterización pre-RCE (§2.2.a):** omitida por diseño — mismo vector HTB que el Escenario A (§6.2.1 / plantilla §1.2.a). El RCE sigue siendo explotable; la comparativa A↔B se mide en la fase post-RCE. Evidencia de SSTI en `tests/logs/zerotrust_sesion_20260609_130120/nginx.log` (~11:13 UTC).
 
-**`T0_efectivo`:** `13:14:08 CEST`
+`**T0_efectivo`:** `13:14:08 CEST`
 
-| Hito post-RCE | Hora CEST | Δ desde T0 | Resultado | ¿Bloqueado por control ZT? |
-| ------------- | --------- | ---------- | --------- | --------------------------- |
-| **T0_efectivo** — shell post-RCE operativa en `webapp` | **13:14:08** | **0** | Reverse shell SSTI + `pty.spawn` | n/a |
-| Exfiltración creds — `env \| grep DB_` → `creds.txt` | 13:14:16 | 8 s | Sin variables DB en entorno; `creds.txt` vacío | Sí |
-| Captura tráfico — `tcpdump -c 100 host backend` | 13:14:50 | 42 s | Captura `lateral.pcap` | n/a |
-| Movimiento lateral — `curl :5000` y `https://backend/empleados` | 13:15:15 | 67 s | `:5000` connection refused; HTTPS → **400** sin certificado cliente | Sí |
-| Acceso DB — `psql -h db` / `nmap db:5432` | 13:16:18 | 130 s | `db` no resuelve por DNS; `psql` falla; 0 hosts escaneados | Sí |
+
+| Hito post-RCE                                                   | Hora CEST    | Δ desde T0 | Resultado                                                           | ¿Bloqueado por control ZT? |
+| --------------------------------------------------------------- | ------------ | ---------- | ------------------------------------------------------------------- | -------------------------- |
+| **T0_efectivo** — shell post-RCE operativa en `webapp`          | **13:14:08** | **0**      | Reverse shell SSTI + `pty.spawn`                                    | n/a                        |
+| Exfiltración creds — `env | grep DB`_ → `creds.txt`             | 13:14:16     | 8 s        | Sin variables DB en entorno; `creds.txt` vacío                      | Sí                         |
+| Captura tráfico — `tcpdump -c 100 host backend`                 | 13:14:50     | 42 s       | Captura `lateral.pcap`                                              | n/a                        |
+| Movimiento lateral — `curl :5000` y `https://backend/empleados` | 13:15:15     | 67 s       | `:5000` connection refused; HTTPS → **400** sin certificado cliente | Sí                         |
+| Acceso DB — `psql -h db` / `nmap db:5432`                       | 13:16:18     | 130 s      | `db` no resuelve por DNS; `psql` falla; 0 hosts escaneados          | Sí                         |
 
 
 El escaneo interno queda reflejado en `e1_scan.log`: `nginx:80` y `backend:443` visibles; `db` no resuelve; puerto `:5000` cerrado (conn-refused).
@@ -190,27 +193,77 @@ El tráfico hacia el backend va cifrado con TLS y, sin certificado de servicio, 
 
 ## 6.4 Comparativa A vs B
 
-> **Nota:** completar con los valores reales de §6.3.2.
+Sesiones oficiales: `perimetral_sesion_20260523_175204` (A) y `zerotrust_sesion_20260609_130120` (B). Cuadro consolidado en `tests/00_PLANTILLA_KPI_v2.md` §3.
 
 ### 6.4.1 Tabla comparativa final
 
-[TODO POST-PRUEBAS] Ver `tests/00_PLANTILLA_KPI_v2.md §3` — columnas A y B.
+
+| Indicador | Escenario A | Escenario B | Mejora observada |
+| --------- | ----------- | ----------- | ---------------- |
+| Detección (G1) | `(false, ∞)` | `(true, 22 s)` | Capacidad de detección inexistente → Wazuh regla 100100 (nmap) |
+| Profundidad del ataque (G2) | 3 nodos | 1 nodo | −67 % alcance lateral (2 nodos menos) |
+| Bloqueo de comandos desde reverse shell (G3) | `(false, 0 %)` | `(true, 100 %)` | Contención inexistente → comandos post-explotación bloqueados desde reverse shell |
+| Superficie visible (E1) | 3/3 servicios | 1/3 | −67 % superficie visible (`db` no resuelve; `:5000` cerrado) |
+| Volumen exfiltrado (E2) | ~766 B / 3 reg. + 1 cred. | 0 B / 0 reg. | Exfiltración anulada |
+| Integridad del tráfico interno (E3) | Texto claro (HTTP) | Cifrado + rechazado | mTLS + PEP (400 sin certificado cliente) |
 
 
-| Código | Escenario A            | Escenario B | Mejora observada |
-| ------ | ---------------------- | ----------- | ---------------- |
-| G1     | `(false, ∞)`           | [TODO]      | [TODO]           |
-| G2     | 3 nodos                | [TODO]      | [TODO]           |
-| G3     | `(false, 0%)`          | [TODO]      | [TODO]           |
-| E1     | 3/3 servicios          | [TODO]      | [TODO]           |
-| E2     | ~766B / 3 reg + 1 cred | [TODO]      | [TODO]           |
-| E3     | Texto claro            | [TODO]      | [TODO]           |
+---
 
+#### Texto redactado [HUMANO]
+
+La tabla anterior condensa lo medido en la fase post-explotación, a partir de los mismos cuatro hitos en ambos escenarios (véase §6.1.3). 
+
+Con estos seis indicadores respondemos, con datos reproducibles, en qué medida la arquitectura Zero Trust reduce el impacto frente al modelo perimetral en:
+
+- Detección
+- Profundidad del ataque
+- Bloqueo de comandos desde reverse shell
+- Superficie visible
+- Volumen exfiltrado
+- Integridad del tráfico interno
+
+En el escenario perimetral el atacante recorre los tres nodos de la red sin que ningún control lo detenga. En cambio, en Zero Trust el compromiso queda acotado a webapp y Wazuh registra actividad. 
+
+El desglose por dimensión y la atribución de cada mecanismo están en §6.4.2; los matices de interpretación, en §6.4.3.
+
+---
 
 ### 6.4.2 Análisis cuantitativo de la mejora
 
-[TODO POST-PRUEBAS] Párrafo por métrica: qué mejoró, cuánto mejoró, qué mecanismo Zero Trust lo explica. Este análisis es la tesis central del TFG y el párrafo más importante de todo el documento.
+---
 
-### 6.4.3 Casos donde Zero Trust no mejoró o degradó el resultado
+#### Texto redactado [HUMANO]
 
-[TODO POST-PRUEBAS] Honestidad intelectual: si alguna métrica no resultó como se esperaba, documentarlo y razonarlo. El tribunal valora más la reflexión crítica honesta que los resultados perfectos.
+En detección, el escenario perimetral no dispone de mecanismo activo: solo quedan logs pasivos de nginx y webapp, sin alertas. Zero Trust introduce Wazuh, que muestrea cada 2 segundos los procesos en webapp; la primera alerta llega asociada al escaneo nmap.
+
+La profundidad del ataque pasa de tres nodos a uno: una reducción del 67 % en alcance lateral. La microsegmentación en tres zonas impide que webapp alcance `db_zone`, Flask escucha solo en `127.0.0.1` dentro del backend y el atacante no consigue operar con utilidad en backend ni en la base de datos, aunque mantenga la reverse shell en webapp.
+
+El bloqueo de comandos desde reverse shell refleja el mismo contraste: en A ningún objetivo post-explotación falla al ejecutarse desde la shell. En B los tres quedan frustrados:
+
+1. Los secretos de base de datos viven solo en backend.
+2. El canal hacia la API exige certificado de servicio.
+3. La segmentación corta el acceso directo a la base de datos.
+
+La superficie visible interna se reduce de tres servicios accesibles a uno de tres: `db` no resuelve por DNS desde webapp y el puerto 5000 del backend aparece cerrado. El escaneo desde el nodo comprometido solo identifica nginx en el 80 y el backend en el 443, frente a la visibilidad total de la red interna en el escenario perimetral.
+
+En exfiltración, el volumen fugado cae de unos 766 bytes (tres registros de empleados, la contraseña de la base de datos y el JSON de la API) a cero. Sin credenciales en el entorno de webapp y sin respuesta útil del backend, los logs que evidencian el volumen de datos exfiltrados quedan vacíos en la sesión Zero Trust.
+
+En integridad del tráfico, el contraste es cualitativo pero contundente:
+
+1. En el escenario perimetral, el pcap muestra HTTP y JSON en claro.
+2. En Zero Trust, el tráfico hacia backend va cifrado con TLS y, sin certificado cliente, nginx devuelve error 400.
+
+El atacante no puede replicar la lectura pasiva del intercambio que sí logró en el escenario perimetral.
+
+En conjunto, estos resultados cuantifican un patrón que la literatura revisada en §2.7 apenas aborda con métricas comparables.
+
+---
+
+### 6.4.3 Matices de la interpretación
+
+---
+
+#### Texto redactado [HUMANO]
+
+En profundidad del ataque, bloqueo de comandos desde reverse shell, superficie visible, exfiltración e integridad del tráfico no observamos ningún empeoramiento respecto al perimetral: Zero Trust reduce o anula el impacto post-explotación en todas ellas. El matiz está solo en detección: en A no hay SIEM por diseño, así que comparar la latencia de la primera alerta en B no es un duelo equitativo, lo que aporta la tabla es que la capacidad de detección activa existe únicamente en Zero Trust.
