@@ -190,3 +190,17 @@
   - Futuros agentes: validar siempre la estructura de `docs/03_memoria_tfg/` contra esta referencia y registrar aquí cualquier desviación justificada (p. ej. la fusión Desarrollo+Implantación en el Cap. 5).
 - **Alternativa descartada:** Seguir usando solo el `Borrador_Indice_Anotado` como guía estructural. Se descarta porque es un artefacto de comunicación con el tutor, no un catálogo de criterios de prioridad; no permite detectar apartados obligatorios ausentes.
 - **Trazabilidad:** [`docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md`](../docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md); pauta narrativa relacionada en [`docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md`](../docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md) §1 y ADR 2026-06-06 de este mismo registro.
+
+---
+
+**2026-06-13 | `Recomendaciones-Escritura-TFG.md` como política editorial principal de la memoria**
+
+- **Decisión:** A partir de esta fecha, [`docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md`](../docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md) tiene **prioridad máxima** en cualquier decisión de redacción de la memoria (estilo, voz, lenguaje denotativo, tratamiento de código y figuras, ortografía y maquetación). Es el complemento editorial del ADR estructural de 2026-06-12 (`EstucturayContenidodeunTFG.md` manda en estructura; este documento manda en redacción).
+- **Motivo:** Es el documento oficial de pautas de escritura de la ETSINF-UPV. Antes no había una fuente única declarada para las decisiones de redacción, lo que abría la puerta a estilos inconsistentes entre capítulos (texto IA genérico frente a prosa del autor).
+- **Justificación adicional:** El público objetivo es el tribunal (profesional generalista, no especialista en el área). Mantener un único estándar de redacción refuerza la profesionalidad, la claridad y la capacidad de "vender la cabra" sin perder objetividad.
+- **Alcance:**
+  - Toda redacción o revisión de texto que vaya a la versión final (bloques "Texto redactado": HUMANO en Estado del Arte; `[IA]` en Cap. 4; `[HUMANO]` en Caps. 5-6) debe contrastarse contra esta guía mediante la checklist de 11 criterios recogida en `perfil_escritura_autor.md`.
+  - Se acompaña del perfil de escritura del autor [`docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/perfil_escritura_autor.md`](../docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/perfil_escritura_autor.md), que fija la voz a preservar y los rasgos a evitar.
+  - Regla operativa: los ficheros de `docs/03_memoria_tfg/` son esqueletos; solo pasa a la memoria final el contenido dentro de los bloques "Texto redactado". Las marcas de proceso (`[TODO]`, `[CITAR:]`, `[REVISAR]`, `[DONE]`, bloques `[IA]` duplicados) son anotaciones y no se eliminan en esta fase.
+- **Impacto:** Revisión de escritura aplicada el 2026-06-13: contraste sistemático de los bloques "Texto redactado" contra la guía, arreglos de formato y correcciones objetivas dentro del contenido final, y marcado `[REV-ESTILO]` (sin reescribir) de coloquialismos y frases largas para que el autor decida.
+- **Trazabilidad:** [`docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md`](../docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md); perfil del autor en la misma carpeta; ADR estructural 2026-06-12 de este mismo registro.

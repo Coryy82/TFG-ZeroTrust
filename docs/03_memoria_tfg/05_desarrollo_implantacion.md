@@ -5,6 +5,8 @@
 > Configuraciones completas (compose, reglas Wazuh, certificados) → Anexos.
 > Objetivo de extensión: 10-14 páginas.
 
+[REV-ESTILO: §5 (general) — alto volumen de bloques de comandos en el cuerpo. La guía editorial recomienda llevar lo extenso/prescindible a Anexos y dejar en el cuerpo solo los comandos de verificación mínimos. Sugerencia: mover los bloques más largos al anexo. Sin reescribir; decide el autor. Prioridad 2.]
+
 ---
 
 ## 5.1 Infraestructura como código (IaC)
@@ -54,6 +56,8 @@ curl -I http://localhost/
 
 ### 5.2.2 Punto de entrada: cadena hasta la ejecución remota
 
+[REV-ESTILO: §5.2.2 — tecnicismos sin glosa en primera mención (SSTI, CWE-xxxx) para un tribunal generalista. Sugerencia: nota breve o remitir al glosario. Sin reescribir; decide el autor. Prioridad 3.]
+
 #### Texto redactado [HUMANO]
 
 El diseño exige un atacante externo que, tras comprometer `webapp`, inicie la ventana de medición post-explotación. En la implementación materializamos ese acceso inicial con una cadena encadenada (no con un único endpoint vulnerable) que termina en ejecución remota vía SSTI en Jinja2 [CITAR: OWASP CWE-1336 — Server Side Template Injection]:
@@ -85,6 +89,8 @@ Al implantar el Escenario A tomamos dos decisiones que condicionaron el laborato
 
 ### 5.2.4 Protocolo de captura de evidencias
 
+[REV-ESTILO: §5.2.4 (y §5.2.3, línea con "tumbar el compose") — coloquialismo "tumbar el entorno/el compose"; la guía pide registro denotativo. Sugerencia: "detener/desmontar el entorno". Sin reescribir; decide el autor. Prioridad 3.]
+
 #### Texto redactado [HUMANO]
 
 El script de captura del Escenario A estructura el trabajo en cinco pasos:
@@ -104,6 +110,8 @@ El script de captura del Escenario A estructura el trabajo en cinco pasos:
 La implantación del Escenario B siguió el orden del diseño: primero segmentación, después separación de secretos, después mTLS y, por último, despliegue de Wazuh. Cada fase se validó antes de pasar a la siguiente.
 
 ### 5.3.1 Segmentación de redes
+
+[REV-ESTILO: §5.3.1 — "multihomed" es un tecnicismo sin glosa en primera mención. Sugerencia: aclaración breve ("conectado a varias redes") o glosario. Sin reescribir; decide el autor. Prioridad 3.]
 
 #### Texto redactado [HUMANO]
 

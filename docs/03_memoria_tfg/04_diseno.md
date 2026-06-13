@@ -307,19 +307,12 @@ Wazuh aporta detección host-based sobre esos procesos; Suricata es network-base
 
 
 | Componente    | Tecnología            | Versión       | Justificación                                        |
-
 |---------------|-----------------------|---------------|------------------------------------------------------|
-
 | Infraestructura | Docker Compose      | v2            | Despliegue reproducible con un solo comando           |
-
 | Aplicación web | Flask (Python)       | 3.x           | Stack ligero, SSTI Jinja2 como vector de ataque       |
-
 | Base de datos  | PostgreSQL           | 15            | BBDD relacional estándar                             |
-
 | Proxy web      | Nginx                | 1.25          | Reverse proxy, único punto de entrada externo         |
-
 | mTLS           | OpenSSL + Nginx       | —            | Certificados autofirmados, sin dependencia de PKI     |
-
 | SIEM/IDS       | Wazuh                | 4.x           | Host-based, agent Docker, reglas custom en YAML      |
 
 

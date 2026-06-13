@@ -13,11 +13,11 @@
 
 #### Texto redactado [HUMANO]
 
-**Para realizar pruebas sobre nuestras dos topologías de red, aprovechando la versatilidad y fácil despliegue de docker, hemos optado por crear un entorno de laboratorio simple. Para este entorno realmente el único requisito es tener una herramienta de virtualización a nivel de Sistema Operativo y que sea capaz de gestionar contenedores. En nuestro caso esta herramienta es Docker Desktop con Docker Compose v2, la cual ejecutamos encima de WSL2 en una máquina Windows.**
+Para realizar pruebas sobre nuestras dos topologías de red, aprovechando la versatilidad y fácil despliegue de docker, hemos optado por crear un entorno de laboratorio simple. Para este entorno realmente el único requisito es tener una herramienta de virtualización a nivel de Sistema Operativo y que sea capaz de gestionar contenedores. En nuestro caso esta herramienta es Docker Desktop con Docker Compose v2, la cual ejecutamos encima de WSL2 en una máquina Windows.
 
-**Cada escenario, perimetral y Zero Trust, se despliega como un stack de contenedores independiente con la misma aplicación web vulnerable, pero con una topología de red distinta. De este modo podemos repetir la misma cadena de ataque y comparar únicamente lo que ocurre una vez el atacante ya dispone de ejecución remota en webapp.**
+Cada escenario, perimetral y Zero Trust, se despliega como un stack de contenedores independiente con la misma aplicación web vulnerable, pero con una topología de red distinta. De este modo podemos repetir la misma cadena de ataque y comparar únicamente lo que ocurre una vez el atacante ya dispone de ejecución remota en webapp.
 
-**Para garantizar un despliegue replicable y facilitar la recogida de logs para su futuro estudio, hemos creado dos scripts (`logcapture_perimetral.sh` y `logcapture_zerotrust.sh`) que levantan el entorno correspondiente, recogen los logs de los contenedores y los copian a una carpeta de sesión en la máquina host. El detalle de su funcionamiento se incluye en el anexo.**
+Para garantizar un despliegue replicable y facilitar la recogida de logs para su futuro estudio, hemos creado dos scripts (`logcapture_perimetral.sh` y `logcapture_zerotrust.sh`) que levantan el entorno correspondiente, recogen los logs de los contenedores y los copian a una carpeta de sesión en la máquina host. El detalle de su funcionamiento se incluye en el anexo.
 
 ---
 
@@ -25,18 +25,18 @@
 
 #### Texto redactado [HUMANO]
 
-**El protocolo de ejecución es el mismo en ambos escenarios, con una única diferencia en el arranque: en el perimetral levantamos el stack docker y en Zero Trust además de esto, levantamos y comprobamos que el agente Wazuh esté activo.**
+El protocolo de ejecución es el mismo en ambos escenarios, con una única diferencia en el arranque: en el perimetral levantamos el stack docker y en Zero Trust además de esto, levantamos y comprobamos que el agente Wazuh esté activo.
 
-**Cada sesión empieza con un entorno limpio (`docker compose up --build -d`). A continuación reproducimos la cadena de ataque previa a la ejecución de código remota, reconocimiento, filtrado de información, login y confirmación de SSTI— hasta conseguir una reverse shell en webapp. En el instante en que esta queda operativa marcamos el inicio de la ventana de medición.**
+Cada sesión empieza con un entorno limpio (`docker compose up --build -d`). A continuación reproducimos la cadena de ataque previa a la ejecución de código remota, reconocimiento, filtrado de información, login y confirmación de SSTI— hasta conseguir una reverse shell en webapp. En el instante en que esta queda operativa marcamos el inicio de la ventana de medición.
 
-**A partir de ahí medimos siempre los mismos cuatro hitos post-explotación: 
+A partir de ahí medimos siempre los mismos cuatro hitos post-explotación:
 
-- **Exfiltración de credenciales**
-- **Escaneo de la red interna**
-- **Acceso al back**
-- **Volcado y exfiltración de información de la Base de 
-Datos**
-En cada paso guardamos el output de los comandos en logs; al terminar, el script de captura vuelca esos ficheros a una carpeta de la sesión actual para analizarlos después. Cuando acabamos, tumbamos el entorno (`docker compose down`).**
+- Exfiltración de credenciales
+- Escaneo de la red interna
+- Acceso al back
+- Volcado y exfiltración de información de la Base de Datos
+
+En cada paso guardamos el output de los comandos en logs; al terminar, el script de captura vuelca esos ficheros a una carpeta de la sesión actual para analizarlos después. Cuando acabamos, tumbamos el entorno (`docker compose down`).
 
 ---
 
@@ -44,14 +44,14 @@ En cada paso guardamos el output de los comandos en logs; al terminar, el script
 
 #### Texto redactado [HUMANO]
 
-**Fijamos el inicio de la ventana de medición en el instante en que el atacante dispone de ejecución de código remota en webapp, con una reverse shell operativa. La fase previa al RCE sirve para narrar cómo se compromete el portal, pero no entra en el cuadro comparativo entre escenarios: el punto de entrada está fijado por diseño en ambos. A partir de este punto medimos:**
+Fijamos el inicio de la ventana de medición en el instante en que el atacante dispone de ejecución de código remota en webapp, con una reverse shell operativa. La fase previa al RCE sirve para narrar cómo se compromete el portal, pero no entra en el cuadro comparativo entre escenarios: el punto de entrada está fijado por diseño en ambos. A partir de este punto medimos:
 
-- **Detección**
-- **Profundidad del ataque**
-- **Bloqueo de comandos desde reverse shell**
-- **Superficie visible**
-- **Volumen exfiltrado**
-- **Integridad del tráfico interno.**
+- Detección
+- Profundidad del ataque
+- Bloqueo de comandos desde reverse shell
+- Superficie visible
+- Volumen exfiltrado
+- Integridad del tráfico interno.
 
 ---
 
@@ -84,6 +84,8 @@ Sesión: `perimetral_sesion_20260523_175204`.
 
 
 ---
+
+[REV-ESTILO: §6.2.1 — anglicismos entrecomillados e inconsistentes ("Reverse Shell", "Assumed breach"). Sugerencia: minúsculas/consistencia y glosa en primera mención. Sin reescribir; decide el autor. Prioridad 3.]
 
 #### Texto Redactado [HUMANO]
 
@@ -134,7 +136,7 @@ Sesión oficial: `zerotrust_sesion_20260609_130120` (2026-06-09). Commit `271b38
 
 **Caracterización pre-RCE (§2.2.a):** omitida por diseño — mismo vector HTB que el Escenario A (§6.2.1 / plantilla §1.2.a). El RCE sigue siendo explotable; la comparativa A↔B se mide en la fase post-RCE. Evidencia de SSTI en `tests/logs/zerotrust_sesion_20260609_130120/nginx.log` (~11:13 UTC).
 
-`**T0_efectivo`:** `13:14:08 CEST`
+**T0_efectivo:** `13:14:08 CEST`
 
 
 | Hito post-RCE                                                   | Hora CEST    | Δ desde T0 | Resultado                                                           | ¿Bloqueado por control ZT? |
@@ -172,6 +174,8 @@ El escaneo interno queda reflejado en `e1_scan.log`: `nginx:80` y `backend:443` 
 - **Reproducibilidad:** `./tests/scripts/logcapture_zerotrust.sh` sobre commit `271b38d9`.
 
 ---
+
+[REV-ESTILO: §6.3 — "dan sus frutos" es un idiom; la guía pide lenguaje denotativo. Sugerencia: formulación neutra (p. ej. "se reflejan en los resultados"). Sin reescribir; decide el autor. Prioridad 2.]
 
 #### Texto redactado [HUMANO]
 
@@ -232,6 +236,8 @@ El desglose por dimensión y la atribución de cada mecanismo están en §6.4.2;
 ### 6.4.2 Análisis cuantitativo de la mejora
 
 ---
+
+[REV-ESTILO: §6.4.2 — la cifra "−67 %" procede de una sola sesión oficial (n=1). Sugerencia: enmarcar como "en la sesión oficial" y remitir a limitaciones (§7.2). Sin reescribir; decide el autor. Prioridad 2.]
 
 #### Texto redactado [HUMANO]
 

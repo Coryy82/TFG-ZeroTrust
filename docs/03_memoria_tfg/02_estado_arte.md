@@ -24,6 +24,8 @@ NO APLICA A ESTE TFG, DOCKER ES SIMPLEMENTE UNA HERRAMIENTA DE TRABAJO PARA DESP
 [CITAR: NIST SP 800-207 §1 — introducción al problema de la confianza implícita]
 [CITAR: IBM Security Cost of a Data Breach 2024/2025 — porcentaje de brechas con origen interno o post-compromiso]
 
+[REV-ESTILO: §2.2 (bloque HUMANO) — "favorece increíblemente" usa un intensificador subjetivo; la guía editorial pide lenguaje denotativo. Sugerencia: eliminar "increíblemente". Sin reescribir; decide el autor. Prioridad 2.]
+
 ### Texto redactado:
 
 > IA:
@@ -35,7 +37,7 @@ NO APLICA A ESTE TFG, DOCKER ES SIMPLEMENTE UNA HERRAMIENTA DE TRABAJO PARA DESP
 > HUMANO:
 > La seguridad perimetral ha constituido durante décadas el paradigma predominante para la protección de redes corporativas. Este modelo utiliza una frontera entre una red interna y la externa como elemento de seguridad, para ello utiliza mecanismos como firewalls, filtros y controles de acceso. A su vez, asume que los usuarios y dispositivos ubicados dentro del perímetro, dentro de la red, son entidades confiables.
 > Históricamente, este enfoque resultó eficaz en tiempos donde las organizaciones tenían infraestructuras centralizadas y límites de red claramente definidos, y en tiempos donde la principal amenaza procedía de actores externos. Sin embargo, con el paso de los años, se han ido observando limitaciones significativas cuando un atacante consigue superar los controles perimetrales. La confianza otorgada a los sistemas internos favorece increíblemente actividades de post-explotación, incluyendo movimiento lateral, escalada de privilegios y acceso no autorizado a recursos críticos. Asimismo, la supervisión del tráfico interno presenta dificultades que pueden retrasar la detección de comportamientos maliciosos.
-> Asimismo, la evidencia reciente refuerza estas limitaciones: en 2025 se identificó el abuso de credenciales y la explotación de vulnerabilidades entre los principales vectores de acceso y explotación inicial, mientras que casi un tercio de las brechas tuvo origen interno. Estos resultados evidencian que la protección exclusiva del perímetro resulta insuficiente frente a amenazas que operan desde dentro de la red o que consiguen superar los mecanismos de acceso inicial
+> Asimismo, la evidencia reciente refuerza estas limitaciones: en 2025 se identificó el abuso de credenciales y la explotación de vulnerabilidades entre los principales vectores de acceso y explotación inicial, mientras que casi un tercio de las brechas tuvo origen interno. Estos resultados evidencian que la protección exclusiva del perímetro resulta insuficiente frente a amenazas que operan desde dentro de la red o que consiguen superar los mecanismos de acceso inicial.
 
 ## 2.3 El modelo Zero Trust
 
@@ -43,6 +45,8 @@ NO APLICA A ESTE TFG, DOCKER ES SIMPLEMENTE UNA HERRAMIENTA DE TRABAJO PARA DESP
 
 [CITAR: NIST SP 800-207 §2 — principios Zero Trust Architecture]
 [CITAR: BeyondCorp: A New Approach to Enterprise Security (Google, 2014)]
+
+[REV-ESTILO: §2.3 (bloque HUMANO) — la frase final encadena cláusulas con comas (run-on / comma splice: "...estado de los dispositivos, esto contribuyó... lo que concluyó..."). Sugerencia: partir en dos o tres frases. Sin reescribir; decide el autor. Prioridad 2.]
 
 ### Texto redactado:
 
@@ -63,6 +67,8 @@ NO APLICA A ESTE TFG, DOCKER ES SIMPLEMENTE UNA HERRAMIENTA DE TRABAJO PARA DESP
 [CITAR: NIST SP 800-207 §3 — implementaciones de ZTA]
 [CITAR: paper IEEE / USENIX sobre microsegmentación en contenedores]
 
+[REV-ESTILO: §2.4 (bloque HUMANO) — respecto a la versión IA, se pierde la comparativa con Service Mesh (Istio/Envoy) y mTLS como alternativa de microsegmentación. Sugerencia: reincorporar una frase que la mencione. Sin reescribir; decide el autor. Prioridad 2.]
+
 ### Texto redactado:
 
 > IA:
@@ -71,7 +77,7 @@ NO APLICA A ESTE TFG, DOCKER ES SIMPLEMENTE UNA HERRAMIENTA DE TRABAJO PARA DESP
 ---
 
 > HUMANO:
-> Los principios de Zero Trust consisten en gran medida en técnicas de microsegmentación, cuyo objetivo es eliminar la confianza entre recursos internos y establecer controles de acceso sobre las comunicaciones de red. La microsegmentación permite restringir el acceso entre servicios y limitar la exposición de recursos, de esta forma se reduce la superficie de ataque y dificulta el movimiento lateral de un atacante tras una intrusión. En entornos contenerizados, como aquellos gestionados por Kubernetes (común en redes corporativas modernas), esta estrategia suele implementarse mediante la creación de redes virtuales independientes que agrupan servicios según su función (frontend, backend o bases de datos). Para ayudar a este fin, docker proporciona mecanismos de aislamiento de red que permiten definir explícitamente qué contenedores pueden comunicarse entre sí. Además de esto, las arquitecturas modernas incorporan mecanismos de identidad de servicio y autenticación mutua mediante certificados digitales para reforzar la confianza entre componentes distribuidos. A mayor escala, se utilizan Network Policies, que permiten controlar el tráfico de ingreso y salida entre pods mediante reglas declarativas y etiquetas.
+> Los principios de Zero Trust consisten en gran medida en técnicas de microsegmentación, cuyo objetivo es eliminar la confianza entre recursos internos y establecer controles de acceso sobre las comunicaciones de red. La microsegmentación permite restringir el acceso entre servicios y limitar la exposición de recursos, de esta forma se reduce la superficie de ataque y dificulta el movimiento lateral de un atacante tras una intrusión. En entornos contenerizados, como aquellos gestionados por Kubernetes (común en redes corporativas modernas), esta estrategia suele implementarse mediante la creación de redes virtuales independientes que agrupan servicios según su función (frontend, backend o bases de datos). Para ayudar a este fin, Docker proporciona mecanismos de aislamiento de red que permiten definir explícitamente qué contenedores pueden comunicarse entre sí. Además de esto, las arquitecturas modernas incorporan mecanismos de identidad de servicio y autenticación mutua mediante certificados digitales para reforzar la confianza entre componentes distribuidos. A mayor escala, se utilizan Network Policies, que permiten controlar el tráfico de ingreso y salida entre pods mediante reglas declarativas y etiquetas.
 
 ## 2.5 Sistemas de detección y observabilidad (SIEM/IDS)
 
