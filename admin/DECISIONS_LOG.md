@@ -177,3 +177,16 @@
 - **Latencia objetivo G1:** ≤5 s con agente estable y `process-webapp` activo.
 - **Diseño (Cap. 4/5):** flujo agente → socket Docker → `/proc` en webapp → reglas 530 → `alerts.json`; diagrama y limitaciones en diario §10.
 - **Trazabilidad:** [`docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md`](../docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md) (§10 mecanismo, §11 incidencias implantación).
+
+---
+
+**2026-06-12 | `EstucturayContenidodeunTFG.md` como referencia estructural principal de la memoria**
+
+- **Decisión:** A partir de esta fecha, [`docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md`](../docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md) es la **referencia principal** para cualquier decisión sobre la estructura de la memoria del TFG (qué apartados existen, su orden, su finalidad y su nivel de prioridad: Obligatorio / Muy recomendable / Recomendable / Opcional). Cualquier agente o revisor que evalúe o modifique la estructura debe contrastarla contra ese documento antes de actuar.
+- **Motivo:** Es el documento oficial de pautas de la ETSINF-UPV sobre estructura y contenidos de la memoria. Hasta ahora la estructura se guiaba por el `Borrador_Indice_Anotado` (validado "en general" por el tutor el 06/06) y por la convención ETSINF clásica de 8 capítulos, sin una fuente única explícita de criterios de prioridad. Fijar esta referencia evita decisiones estructurales ad-hoc y permite auditar coberturas obligatorias ausentes.
+- **Justificación adicional:** Alinea las decisiones de estructura con (a) los criterios formales de la escuela y (b) el feedback del tutor sobre "vender la cabra" (ADR 2026-06-06), que es una directriz narrativa que debe materializarse sobre la estructura recomendada.
+- **Impacto:**
+  - Revisión estructural aplicada el 2026-06-12 (alcance Crítico + Alto + Medio, modo esqueleto): se corrige el apartado **Obligatorio** ausente "Relación del trabajo con los estudios cursados" (§7.4), se reformulan objetivos/conclusiones como pregunta de investigación, se añade Abstract en inglés, se reordena la Introducción (Impacto esperado + Metodología), se hacen explícitas "Crítica al estado del arte" (§2.8) y "Propuesta" (§2.9), se consolidan las alternativas de diseño evaluadas, y se crean esqueletos de Glosario y Anexos.
+  - Futuros agentes: validar siempre la estructura de `docs/03_memoria_tfg/` contra esta referencia y registrar aquí cualquier desviación justificada (p. ej. la fusión Desarrollo+Implantación en el Cap. 5).
+- **Alternativa descartada:** Seguir usando solo el `Borrador_Indice_Anotado` como guía estructural. Se descarta porque es un artefacto de comunicación con el tutor, no un catálogo de criterios de prioridad; no permite detectar apartados obligatorios ausentes.
+- **Trazabilidad:** [`docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md`](../docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md); pauta narrativa relacionada en [`docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md`](../docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md) §1 y ADR 2026-06-06 de este mismo registro.

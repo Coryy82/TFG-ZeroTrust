@@ -324,6 +324,27 @@ Wazuh aporta detección host-based sobre esos procesos; Suricata es network-base
 
 
 
+### 4.4.1 Alternativas evaluadas y criterio de selección
+
+
+
+> **Estado:** ESQUELETO — apartado **Muy recomendable** ("Identificación y análisis de soluciones posibles", referencia línea 224). Transmite que se ha trabajado como ingeniero: se evaluaron alternativas y se eligió la solución justificada. No reabrir las decisiones; consolidar las ya tomadas remitiendo a los ADR.
+
+[TODO] Presentar de forma consolidada las alternativas evaluadas, sus pros/contras y el criterio que llevó a la opción elegida. No duplicar el detalle: remitir a las entradas de `admin/DECISIONS_LOG.md`.
+
+- **Detección: Wazuh (host-based) vs Suricata (network-based).** Elegido Wazuh por alinearse con el vector del modelo de amenazas (comandos dentro del contenedor tras RCE). Detalle en §4.3.5 y ADR 2026-05-24 ("Reducción de alcance técnico del Escenario B"). Suricata → trabajo futuro (§7.3).
+- **PEP mTLS: contenedor único `backend` (Nginx+Flask) vs sidecar.** Elegida la opción de contenedor único por fidelidad al prototipo documentado. ADR 2026-06-03 ("Arquitectura mTLS: Opción B").
+- **Despliegue Wazuh: agente en contenedor vs agente en host.** Elegido agente en contenedor por reproducibilidad y por las limitaciones de Docker Desktop + WSL2. ADR 2026-06-04.
+- **Plan de contingencia Wazuh → Falco.** Criterio de fallback definido y finalmente descartado (Wazuh operativo). ADR 2026-05-24 ("Criterio de fallback Wazuh → Falco").
+
+[TODO] Cerrar con una frase: el conjunto de decisiones responde a las restricciones del laboratorio (Docker Compose local, sprint acotado) y al modelo de amenazas, no a una elección arbitraria.
+
+
+
+---
+
+
+
 ## 4.5 Limitaciones del diseño
 
 
