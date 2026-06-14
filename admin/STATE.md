@@ -1,5 +1,5 @@
 # STATE - Seguimiento TFG Ciberseguridad
-Fecha de actualización: 2026-06-12
+Fecha de actualización: 2026-06-14
 
 ## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
 
@@ -18,32 +18,31 @@ Capacidad efectiva restante:
 - **05/06 → 21/06: ~144h restantes** (12h/día × 0.75 fatiga × 16 días)
 
 ## 1. Resumen Semanal
-- Commits últimos 7 días: **16+ entradas** (05/06–12/06). Infra ZT+Wazuh cerrada; KPI A↔B cerrada (09/06); redacción memoria acelerada (10–12/06: Caps. 3–6, EdA §2.7).
-- Avance técnico principal: **comparativa KPI A↔B cerrada.** Sesión oficial B: `zerotrust_sesion_20260609_130120` (G1 `(true, 22 s)`, E1–E3, G2–G3). Plantilla `tests/00_PLANTILLA_KPI_v2.md` §2/§3 rellenada. Mejoras Wazuh `process-webapp` (2 s) en commit 09/06. Sin trabajo de laboratorio pendiente salvo regresión.
-- Avance de redacción principal (12/06):
-  - **Cap. 3** `03_analisis_problema.md`: **§3.1–§3.4 redactados [HUMANO]** — problema formalizado, modelo de amenazas (5 puntos tutor), RF/RNF, tabla KPIs con operacionalización. Revisión humana 12/06: 4 hitos alineados con §4.2.3/§6.1, tupla SIEM condensada, gramática §3.2 corregida. Pendiente menor: alineación literal pregunta investigación con §1.2.
-  - **Cap. 5** `05_desarrollo_implantacion.md`: **§5.1–§5.5 redactados [HUMANO]** — IaC, Escenario A (HTB Academy + SSTI), Escenario B (3 zonas, mTLS, Wazuh), 4 casos de integración. Pendiente: figuras `[FIG:]` y anexos de configuración.
-  - **Cap. 6** `06_pruebas.md`: **§6.1–§6.4 redactados [HUMANO]** con datos de plantilla §2/§3 y sesión `130120`. §6.4 incluye tabla comparativa, análisis por dimensión y matices de interpretación (revisión editorial 11–12/06; G3 → «bloqueo de comandos desde reverse shell»). Pendiente: figuras `[FIG:]`.
-  - **Cap. 4** `04_diseno.md`: §4.1–§4.3 con prosa [IA/HUMANO] (visión A/B, topología perimetral, principios ZT, 3 zonas, mTLS, Wazuh); tabla §4.4 presente; §4.5 con texto [IA], esqueleto `[TODO]` residual.
-  - **Cap. 2** `02_estado_arte.md`: §2.7 Trabajos relacionados **cerrado**; typos corregidos en bloques [HUMANO] §2.2–§2.6; posicionamiento con pregunta de investigación (ADR 06/06).
-  - **Bibliografía:** 4 TFG/TFM locales añadidos en `99_bibliografia.md` (literatura gris).
-- Pendiente redacción inmediata: **§4.5** cierre limitaciones en `04_diseno.md`; figuras `[FIG:]` Caps. 5–6; **§1.2 Introducción** (pregunta de investigación); Overleaf (14/06).
-- Días hasta próximo hito crítico: **2 días** hasta el 14/06 (email tutor 60–70% — Caps. 3–6 en borrador casi completos).
+- Commits últimos 7 días: **21 entradas** (07/06–14/06). Sin commits nuevos en `infra/` o `tests/`; foco en redacción memoria, pautas ETSINF y ADRs editoriales (12–13/06).
+- Avance técnico principal: **sin cambios.** Comparativa KPI A↔B cerrada (09/06, sesión `zerotrust_sesion_20260609_130120`). Stack ZT + Wazuh operativo; solo regresión pendiente si se reabre laboratorio.
+- Avance de redacción principal (07–14/06):
+  - **Cap. 3** `03_analisis_problema.md`: §3.1–§3.4 redactados [HUMANO] (problema, modelo amenazas, RF/RNF, KPIs). Commit `381658a` (13/06).
+  - **Cap. 5** `05_desarrollo_implantacion.md`: §5.1–§5.5 redactados [HUMANO] (IaC, Escenarios A/B, integración). Commit `d7c30db` (13/06).
+  - **Cap. 4** `04_diseno.md`: §4.1–§4.5 redactados [HUMANO]; §4.4.1 alternativas y §4.5 limitaciones cerrados; `[TODO]` skeleton eliminados. Commit `3ff326b` (14/06).
+  - **Cap. 6** `06_pruebas.md`: §6.1–§6.4 redactados [HUMANO] con comparativa A↔B (commits 10–12/06).
+  - **Pautas y ADRs:** ADR estructural 12/06 + ADR editorial 13/06; skill redacción memoria; revisión estructural ETSINF (commits 13/06).
+- Pendiente inmediato (hito 14/06): figuras `[FIG:]` Caps. 4–6 (~24 marcadores); `setup_overleaf`; `envio_tutor_14_06` (email con PDF borrador).
+- Días hasta próximo hito crítico: **0 días** — 14/06 email tutor 60–70% (entregables Overleaf/email pendientes al cierre del día). Siguiente: **2 días** hasta 16/06 (Caps. 1 y 7).
 
 ## 2. Alineación con ROADMAP v2 y Riesgos
-- Fase actual del ROADMAP_v2: **FASE 3 — SEMANA 3** (08/06–14/06), objetivo de la semana: comparativa KPI cerrada + 60% memoria redactada (Caps. 3–6 en borrador).
-- Delta respecto al plan: la línea técnica va **adelantada** (Fase 2 cerrada 04/06; KPIs 09/06). Redacción **recuperó deuda del 11/06** el 12/06 (Cap. 3 y Cap. 5 en borrador [HUMANO]); queda §4.5 + figuras antes del email tutor.
+- Fase actual del ROADMAP_v2: **FASE 3 — SEMANA 3** (08/06–14/06), último día. Objetivo de la semana: comparativa KPI cerrada + 60% memoria redactada (Caps. 3–6 en borrador).
+- Delta respecto al plan: línea técnica **adelantada** (Fase 2 cerrada 04/06; KPIs 09/06). Redacción **recuperó deuda 11–13/06** (Caps. 3, 5 y cierre Cap. 4). Hito 14/06 **parcialmente cumplido**: texto Caps. 3–6 en borrador, pero figuras, Overleaf y email tutor sin evidencia en commits.
 - Riesgos activos con nivel (ALTO/MEDIO/BAJO):
-  - **MEDIO:** hito 14/06 en 2 días — texto Caps. 3–6 casi listo; pendiente §4.5, figuras y setup Overleaf el mismo día.
-  - **MEDIO:** setup Overleaf (`setup_overleaf`) aún no iniciado; coincide con el 14/06 según ROADMAP_v2.
-  - **BAJO:** limitaciones metodológicas G1 documentadas (22 s, cobertura parcial 100101/100104) — honestas en §2.4 plantilla, §6.4.3 y diario §12.7.
-  - **BAJO:** pregunta de investigación (ADR 06/06) aplicada en §2.7 EdA; **pendiente** en §1.2 Introducción y §7.1 Conclusiones (15–16/06).
+  - **ALTO:** hito 14/06 hoy sin email enviado ni Overleaf iniciado (commits no evidencian `envio_tutor_14_06` ni `setup_overleaf`).
+  - **MEDIO:** ~24 figuras `[FIG:]` sin insertar en Caps. 4–6; no bloquean borrador textual pero degradan PDF para tutor.
+  - **BAJO:** pregunta de investigación aplicada en EdA §2.7; pendiente en §1.2 Introducción y §7.1 Conclusiones (agenda 15–16/06).
+  - **BAJO:** limitaciones G1 (22 s, cobertura parcial 100101/100104) documentadas en §6.4.3 y diario §12.7.
 - ¿Es necesario activar algún fallback documentado en DECISIONS_LOG? **No.** Wazuh operativo; fallback Wazuh→Falco descartado definitivamente.
 
 ## 3. Bloqueos
-- **Sin bloqueo activo en pruebas A/B ni en laboratorio.** KPIs §2/§3 cerrados. Trazabilidad sesión B: `docs/04_diario_laboratorio/20260609_Sesion_PruebasAB_Wazuh_Deteccion.md` §12.
-- **Bloqueo potencial:** cadencia de redacción — §4.5 y figuras `[FIG:]` Caps. 5–6 sin resolver con 2 días al hito 14/06. Mitigación: cerrar §4.5 el 13/06; figuras mínimas o placeholders descriptivos; buffer repaso + Overleaf el 14/06.
-- Sin bloqueo técnico de infraestructura: el stack ZT + Wazuh levanta y está documentado en diarios 03–09/06.
+- **Bloqueo activo (gestión, no técnico):** entregables del hito 14/06 (`setup_overleaf` + `envio_tutor_14_06`) sin commits que evidencien envío. Impacto: retraso en feedback del tutor sobre el núcleo cuantitativo (Cap. 6 §6.4).
+- **Bloqueo potencial:** volumen de figuras `[FIG:]` (~24) sin resolver. Mitigación: insertar 3–4 capturas clave en Cap. 6; generar PDF con pandoc/export MD si Overleaf no compila hoy; enviar email con núcleo textual aunque queden placeholders.
+- Sin bloqueo técnico de infraestructura ni de laboratorio.
 
 ## 4. Tablero del Sprint Actual
 ### TODO
@@ -58,6 +57,7 @@ Capacidad efectiva restante:
 - [ ] **[HUMANO] `cerrar_cap_4_5_figuras`** — Cierre §4.5 limitaciones en `04_diseno.md`; figuras `[FIG:]` Caps. 5–6; repaso transversal Caps. 3–6 antes del email tutor (13–14/06).
 
 ### DONE (Sprint Final — desde 24/05)
+- [x] **`redactar_cap_4_completo`** — `04_diseno.md` §4.1–§4.5 redactados [HUMANO]: §4.4.1 alternativas evaluadas, §4.5 limitaciones; `[TODO]` skeleton eliminados; prosa [IA] migrada a [HUMANO]. Pendiente: 4 `[FIG:]` y cita Wazuh §4.3.5. Commit `3ff326b`. (2026-06-14)
 - [x] **`redactar_cap_3`** — `03_analisis_problema.md` §3.1–§3.4 redactados [HUMANO]: problema, modelo amenazas (5 puntos), RF/RNF, tabla KPIs con operacionalización y `T0_efectivo`. Revisión humana 12/06 (4 hitos, tupla SIEM, estilo). Commit `381658a`. (2026-06-12)
 - [x] **`redactar_cap_5`** — `05_desarrollo_implantacion.md` §5.1–§5.5 redactados [HUMANO]: IaC, Escenario A, Escenario B (3 zonas, mTLS, Wazuh), casos de integración. Pendiente figuras/anexos (no bloquea borrador texto). Commit `d7c30db`. (2026-06-12)
 - [x] **`redactar_cap_6`** — `06_pruebas.md` §6.1–§6.4 redactados [HUMANO] con sesión `130120`, plantilla KPI v2 §2/§3 y comparativa A↔B. Revisión editorial G3 y §6.4.3 (11–12/06). Diario: `docs/04_diario_laboratorio/20260611_Sesion_Redaccion_Cap6_Comparativa.md`. (2026-06-12)
@@ -96,7 +96,7 @@ Capacidad efectiva restante:
 | 06/06  | Borrador índice anotado enviado al tutor (recuperación 31/05) | ✅ Completado — validación general positiva; matizar objetivos |
 | 04/06  | Checkpoint Wazuh (20:00) — continuar o switch Falco        | ✅ Completado — Wazuh operativo, fallback descartado |
 | 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | ✅ Completado — sesión `130120`, plantilla KPI v2, cuadro §3 |
-| 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                | ⚠️ En riesgo medio — Cap. 3 ✅ Cap. 5 ✅ Cap. 6 ✅; pendiente §4.5 + figuras + Overleaf; 2 días restantes |
+| 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                | ⚠️ En progreso — texto Caps. 3–6 ✅; pendiente figuras, Overleaf y email (día del hito) |
 | 16/06  | Caps. 1 y 7 redactados                                     | Pendiente |
 | 19/06  | PDF compilado en Overleaf + email final al tutor           | Pendiente |
 | 21/06  | **ENTREGA** — PDF depositado en plataforma                 | Pendiente |
