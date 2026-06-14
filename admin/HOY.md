@@ -1,60 +1,85 @@
-# HOY — 2026-06-12 (viernes) · CAP. 5 + RECUPERAR CAP. 3
+# HOY — 2026-06-14 (domingo) · CHECKPOINT OVERLEAF + EMAIL TUTOR
 
-> **Situación:** Fase 3 — Semana 3. **Hito 09/06 ✅** · **Cap. 6 ✅** (§6.1–§6.4 redactados; commit `57c08d6`).
-> **Deuda del 11/06:** Cap. 3 sin empezar (agenda 11/06 lo pospuso tras §6.4). Figuras `[FIG:]` Cap. 6 pendientes.
-> **Bloqueo activo:** hito **14/06 en 2 días** — faltan Cap. 3, Cap. 5 y cierre §4.5 para email tutor 60–70%.
-> Plan IDs: `redactar_cap_3_4_5` (prioridad) → `setup_overleaf` + `envio_tutor_14_06` (14/06)
-> Fase: 3 de 4 · Semana 3 · **Próximo hito duro 14/06:** Caps. 3–6 en borrador + email tutor + Overleaf.
+> **Situación:** Fase 3 — Semana 3 · **Último día del hito 14/06.**
+> **Completado 12/06:** Cap. 3 ✅ · Cap. 5 ✅ · Cap. 6 texto ✅ (commits `381658a`, `d7c30db`, `57c08d6`).
+> **Deuda 13/06 (buffer no ejecutado):** §4.5 sin cerrar · 12 `[TODO]` residuales en Cap. 4 · figuras Caps. 5–6 sin insertar · repaso `[CITAR:]` / coherencia cruzada · `reporte_2026-06-12.md` sin crear.
+> **Bloqueo activo:** `setup_overleaf` y `envio_tutor_14_06` pendientes — **hoy es el día del hito.**
+> Plan IDs: `cerrar_cap_4_5_figuras` → `setup_overleaf` → `envio_tutor_14_06`
+> Fase: 3 de 4 · **Próximo hito duro 16/06:** Caps. 1 y 7 en borrador.
 
 ---
 
 ## OBJETIVO DEL DÍA
 
-1. **Agenda del 12/06:** redactar `05_desarrollo_implantacion.md` §5.1–§5.4 (IaC, Escenario A, Escenario B, problemas de integración).
-2. **Recuperar deuda del 11/06:** `03_analisis_problema.md` §3.1–§3.4 (modelo amenazas ya validado — expandir a prosa).
-3. **Cierre menor:** §4.5 limitaciones en `04_diseno.md` (quitar `[TODO]` del esqueleto; texto [IA] ya existe).
+1. **Cerrar deuda Cap. 4:** §4.5 limitaciones + eliminar `[TODO]` skeleton redundantes (la prosa [IA/HUMANO] ya cubre §4.1–4.3); cerrar §4.4.1 con frase de cierre.
+2. **Figuras mínimas:** insertar 3–4 capturas clave en Cap. 6 (nmap ZT, lateral 400, opcional tshark A) — el resto puede quedar `[FIG:]` para Fase 4.
+3. **Checkpoint ROADMAP:** crear proyecto Overleaf (plantilla ETSINF, compila con dummy) + generar PDF borrador Caps. 3–6.
+4. **Enviar email al tutor** con memoria ~60–70% y registrar en bitácora.
 
 ---
 
 ## SI SOLO HACES UNA COSA
 
-Redacta **§5.3 Escenario B** en `docs/03_memoria_tfg/05_desarrollo_implantacion.md`: sustituir `[TODO POST-IMPL]` por lo ya implementado (3 zonas, mTLS, Wazuh `process-webapp`, reglas 100100–100104). Fuentes: diarios `20260603`–`20260609`, `infra/zero_trust/`, ADR en `admin/DECISIONS_LOG.md`.
+**Envía el email al tutor** con un PDF que incluya Caps. 3, 4, 5 y 6 en borrador. Aunque falten figuras o queden `[TODO]` menores en Cap. 4, el núcleo cuantitativo (Cap. 6 §6.4) y el hilo problema→diseño→implantación→pruebas ya están redactados. Overleaf puede quedar en esbozo si el PDF se genera por otra vía (pandoc, export MD, etc.).
 
 ---
 
-## CONTEXTO: QUÉ CAMBIÓ DESDE EL 10/06
+## CONTEXTO: QUÉ CAMBIÓ DESDE EL 12/06
 
-| Tema | Estado 10/06 | Estado actual (12/06) |
+| Tema | Estado 12/06 | Estado actual (14/06) |
 |------|--------------|------------------------|
-| Cap. 6 §6.1–§6.3 | ✅ | ✅ Sin cambios |
-| Cap. 6 §6.4 | ❌ Pendiente | ✅ Cerrado + revisión autor (G3 → «bloqueo comandos desde reverse shell») |
-| EdA §2.7 | ✅ | ✅ |
-| Cap. 4 §4.1–4.3 | ✅ prosa [IA/HUMANO] | ✅; §4.5 texto [IA], esqueleto `[TODO]` |
-| Cap. 3 | Sin empezar | **Pendiente — deuda 11/06** |
-| Cap. 5 | Sin empezar | **Prioridad agenda hoy** |
-| Figuras Cap. 6 | — | `[FIG:]` sin resolver (no bloquea borrador texto) |
-| Hito 14/06 | 4 días | **2 días — en riesgo alto** |
+| Cap. 3 §3.1–§3.4 | ✅ [HUMANO] | ✅ Revisión humana hecha; pendiente alinear pregunta con §1.2 (Fase 4) |
+| Cap. 5 §5.1–§5.5 | ✅ [HUMANO] | ✅ Texto completo; 16 `[FIG:]` sin resolver (no bloquean envío) |
+| Cap. 6 §6.1–§6.4 | ✅ [HUMANO] | ✅ Texto completo; ~8 `[FIG:]` sin resolver |
+| Cap. 4 §4.1–§4.3 | Prosa [IA/HUMANO] | ⚠️ Prosa OK pero **12 `[TODO]` skeleton** sin borrar encima del texto |
+| Cap. 4 §4.4.1 | Bullets + 2 `[TODO]` | ⚠️ Falta frase de cierre |
+| Cap. 4 §4.5 | Texto [IA] + `[TODO]` esqueleto | ❌ **Pendiente — deuda 12/13/06** |
+| Buffer 13/06 | Planificado | ❌ No ejecutado (sin commits ni reporte) |
+| Overleaf | — | ❌ `setup_overleaf` sin iniciar |
+| Email tutor 14/06 | — | ❌ `envio_tutor_14_06` pendiente |
+| Cap. 1 §1.2 | Opcional 12/06 | ❌ Pendiente (agenda 15/06) |
+| Hito 14/06 | 2 días | **HOY** |
 
 **Commits recientes (referencia):**
 
-- `57c08d6` (12/06): Cap. 6 comparativa §6.4 + revisiones editoriales
-- `4bff085`–`05cb338` (10/06): Caps. 4 y 6 parciales, EdA §2.7, STATE/reporte
-- `f6be9c3` (09/06): Wazuh `process-webapp`, KPI sesión `130120`
+- `381658a` (12/06): Cap. 3 — modelo amenazas, RF/RNF, KPIs
+- `d7c30db` (12/06): Cap. 5 — IaC, escenarios A/B, integración
+- `57c08d6` (12/06): Cap. 6 §6.4 comparativa + revisiones editoriales
+- `0651569`: skill redactar-memoria-tfg
+- `3bfd789`: directrices editoriales + perfil autor
 
-**Diario de la sesión anterior:** `docs/04_diario_laboratorio/20260611_Sesion_Redaccion_Cap6_Comparativa.md`
+**Fuentes para figuras Cap. 6 (evidencias ya capturadas):**
 
-**Fuentes de verdad para Cap. 5 (no inventar):**
+- `tests/logs/perimetral_sesion_20260523_175204/` — nmap, lateral.pcap, creds, SQL
+- `tests/logs/zerotrust_sesion_20260609_130120/` — nmap ZT, lateral_attempt.log, alerts
+- Plantilla: `tests/00_PLANTILLA_KPI_v2.md` §1–§3 (rutas verificadas)
 
-- `docs/04_diario_laboratorio/` (perimetral, ZT, Wazuh, pruebas A/B)
-- `infra/perimetral/` y `infra/zero_trust/`
-- `tests/scripts/logcapture_*.sh`
-- `admin/DECISIONS_LOG.md` (ADR mTLS, Wazuh Docker, process-webapp)
+**Plantilla email tutor:** `docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md` §7 — breve, bullets: (1) qué entregas, (2) qué pides (revisión núcleo cuantitativo), (3) qué harás si no responde en 48h.
 
-**Fuentes para Cap. 3:**
+---
 
-- `docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md` §3 (modelo amenazas — 5 puntos)
-- Skeleton verbatim en `03_analisis_problema.md` §3.2 (validado tutor 09/04/2026)
-- Terminología KPI alineada con Cap. 6 (G3 = bloqueo comandos desde reverse shell)
+## PENDIENTES ARRASTRADOS (12–13/06)
+
+Prioridad antes del envío al tutor:
+
+| ID | Tarea | Origen | Tiempo est. |
+|----|-------|--------|-------------|
+| P1 | Cerrar §4.5: borrar `[TODO]` esqueleto; conservar texto [IA] (3 párrafos) | HOY 12/06 Bloque 3 | 20 min |
+| P2 | Limpiar Cap. 4: eliminar los 12 `[TODO]` de §4.1–4.3 donde ya hay prosa [IA] debajo | Agenda 13/06 | 45 min |
+| P3 | §4.4.1: redactar 1 frase de cierre; borrar `[TODO]` restantes | Agenda 13/06 | 15 min |
+| P4 | Figuras mínimas Cap. 6: nmap-perimetral, nmap-zerotrust, lateral 400, opcional tshark | HOY 12/06 Bloque 3 | 1h |
+| P5 | Repaso rápido: buscar `[TODO]`/`[TODO POST-IMPL]` en caps. 3–6 | Agenda 13/06 | 30 min |
+| P6 | Actualizar cabecera Cap. 4 (sigue «ESQUELETO»; debería ser BORRADOR) | Detectado 14/06 | 5 min |
+| P7 | Crear `admin/reportes/reporte_2026-06-14.md` al cierre | Admin | 15 min |
+
+**Puede esperar a Fase 4 (15–18/06):**
+
+- 16 `[FIG:]` restantes Cap. 5
+- Figuras Cap. 6 no insertadas hoy
+- `[CITAR:]` inline (21 en EdA; resto mínimo)
+- §1.2 Introducción con pregunta de investigación (15/06)
+- Transferencia masiva MD → Overleaf (17–18/06)
+- Anexos de configuración Cap. 5
 
 ---
 
@@ -62,84 +87,109 @@ Redacta **§5.3 Escenario B** en `docs/03_memoria_tfg/05_desarrollo_implantacion
 
 ### Bloque 0 — 15 min · Alineación
 
-- Leer `admin/STATE.md` (desactualizado respecto a §6.4 — actualizar al cierre del día)
+- Leer `admin/STATE.md` (fecha 12/06 — actualizar al cierre)
 - Confirmar: sin tareas de laboratorio pendientes
-- Crear `admin/reportes/reporte_2026-06-12.md` al cierre
+- Listar archivos a adjuntar: `03`, `04`, `05`, `06` (+ opcional `02` EdA como contexto)
 
 ---
 
-### Bloque 1 — 4h · Cap. 5 Desarrollo e Implantación (`redactar_cap_3_4_5`) — PRIORIDAD AGENDA
+### Bloque 1 — 1h30 · Cierre Cap. 4 (`cerrar_cap_4_5_figuras`) — PRIORIDAD
 
-**§5.1 Infraestructura como código (45 min)**
+**§4.5 Limitaciones (20 min)**
 
-- Docker Compose v2, Git, `docker compose up --build -d`
-- Scripts `logcapture_perimetral.sh` / `logcapture_zerotrust.sh`
+- Eliminar bloque `[TODO]` L345–355; conservar «Texto redactado [IA]» L361–369
+- Marcar §4.5 como [HUMANO] tras lectura rápida
 
-**§5.2 Escenario A (1h)**
+**Limpieza skeleton §4.1–4.3 (45 min)**
 
-- 4 servicios, vulnerabilidades intencionales (CWEs de la cadena HTB)
-- Sesión oficial `perimetral_sesion_20260523_175204`
+- Borrar cada `[TODO]` que duplica la prosa [IA] ya redactada debajo (12 ocurrencias)
+- Conservar líneas `[FIG:]` — son placeholders válidos para Overleaf
+- Actualizar cabecera del capítulo: BORRADOR §4.1–§4.5
 
-**§5.3 Escenario B (2h)** — corazón del bloque
+**§4.4.1 cierre (15 min)**
 
-- 3 zonas Docker, secretos por servicio, mTLS OpenSSL + Nginx PEP
-- Wazuh manager + agente, `process-webapp`, reglas post-RCE
-- Referencias a anexos para YAML/nginx largos — no pegar configs completas en cuerpo
+- Sustituir `[TODO]` L326 y L333 por prosa breve [HUMANO]: «Las decisiones respondieron a restricciones del laboratorio y al modelo de amenazas, no a elecciones arbitrarias» (adaptar tono)
+- Los bullets Wazuh/Suricata, PEP, agente host/contenedor ya están — no reescribir
 
-**§5.4 Problemas de integración (45 min)**
-
-- 3–5 casos reales desde diarios: CRLF scripts, Flask `127.0.0.1`, Wazuh poll 2 s, docker-desktop/WSL2, orden ZT→Wazuh en `logcapture_zerotrust.sh`
-
-**Hecho cuando:** Cap. 5 sin `[TODO]` / `[TODO POST-IMPL]` en §5.1–5.4.
+**Hecho cuando:** Cap. 4 sin `[TODO]` en cuerpo; §4.5 cerrado.
 
 ---
 
-### Bloque 2 — 3h · Cap. 3 Análisis del Problema — RECUPERACIÓN 11/06
+### Bloque 2 — 1h · Figuras mínimas Cap. 6
 
-**Insumos:** directrices tutor §3; skeleton §3.2 ya validado.
+Insertar solo las imprescindibles para que el PDF tutor sea legible:
 
-- §3.1 Descripción del problema (2 párrafos [HUMANO]): red plana post-RCE, pregunta de investigación (ADR 06/06)
-- §3.2 Modelo de amenazas: expandir skeleton a prosa (atacante, activos, superficie, alcance/fuera alcance)
-- §3.3 Requisitos: traducir amenazas en criterios verificables (diseño + pruebas)
-- §3.4 KPIs: **definición** de los 6 indicadores (aquí G/E; en Cap. 6 van los **resultados**)
+1. `[FIG: nmap-zerotrust]` — escaneo reducido Escenario B
+2. `[FIG: lateral_attempt.log — 400 sin certificado]` — bloqueo mTLS
+3. `[FIG: nmap-perimetral]` — contraste visibilidad red plana
+4. *(Opcional)* `[FIG: captura tshark lateral.pcap]` — E3 perimetral
 
-**Hecho cuando:** Cap. 3 sin `[TODO]` en §3.1–3.4.
+Ruta evidencias: sesiones oficiales en `tests/logs/`. No regenerar capturas en laboratorio.
 
----
-
-### Bloque 3 — 1h · Cierre Cap. 4 §4.5 + figuras Cap. 6 (mínimo)
-
-- §4.5: eliminar `[TODO]` del esqueleto; conservar texto [IA] (3 párrafos limitaciones)
-- Figuras Cap. 6: insertar **2–3 capturas clave** mínimas para PDF tutor (nmap ZT, lateral 400, opcional tshark A) — el resto puede quedar `[FIG:]` para Overleaf
+**Hecho cuando:** al menos 3 figuras referenciadas con imagen real o enlace relativo en el MD.
 
 ---
 
-### Bloque 4 (opcional, 1h) · Preparar hito 14/06
+### Bloque 3 — 2h · Overleaf + PDF borrador (`setup_overleaf`)
 
-- Borrador `01_intro.md` §1.2 con pregunta de investigación (sustituir «demostrar cuantitativamente»)
-- Lista de capítulos listos para adjuntar al email tutor
-- Esbozo proyecto Overleaf (cuenta + plantilla ETSINF — no transferir aún)
+- Crear cuenta/proyecto Overleaf con plantilla ETSINF UPV
+- Cargar texto dummy o primer capítulo; **verificar que compila**
+- Generar PDF borrador con Caps. 3–6 (pandoc, Overleaf parcial, o export manual — lo que sea más rápido hoy)
+- No intentar maquetar los 8 capítulos completos; eso es Fase 4 (17–18/06)
+
+**Hecho cuando:** tienes un PDF descargable con el núcleo de la memoria.
+
+---
+
+### Bloque 4 — 45 min · Email tutor (`envio_tutor_14_06`)
+
+**Contenido del correo (directriz §7):**
+
+1. **Qué entregas:** borrador Caps. 3–6 (~60–70% memoria): análisis del problema, diseño A/B, implantación, pruebas y comparativa KPI.
+2. **Qué pides:** revisión del núcleo cuantitativo (§6.4) y coherencia problema→controles→métricas; disponibilidad para cita en despacho si lo ve oportuno.
+3. **Qué harás por defecto:** avanzar Caps. 1 y 7 (15–16/06) y PDF completo Overleaf (19/06) con o sin feedback en 48h.
+
+**Acciones:**
+
+- Adjuntar PDF borrador
+- Registrar envío en `docs/02_reuniones_tutor/BITACORA_REUNIONES.md`
+- Commit de cierre del día si hay cambios en caps. 4–6
+
+**Hecho cuando:** email enviado + bitácora actualizada.
+
+---
+
+### Bloque 5 (opcional, 1h) · Repaso transversal
+
+Solo si los bloques 1–4 terminan antes de las 20:00:
+
+- Buscar `[TODO]` restantes en caps. 3–6
+- Verificar referencias cruzadas §3.2.4 ↔ §4.2.3 ↔ §6.1 (4 hitos)
+- Esbozo §1.2 en `01_intro.md` con pregunta de investigación (copiar literal de §3.1)
 
 ---
 
 ## NO HACER HOY
 
-- **No** repetir sesión de laboratorio (KPI y evidencias cerradas).
-- **No** redactar Cap. 7 Conclusiones (agenda 15–16/06).
-- **No** transferencia masiva a Overleaf (hito 14/06; hoy solo esbozo si hay tiempo).
-- **No** reabrir §6.4 salvo typo crítico.
-- **No** perfeccionar todas las figuras del Cap. 6 (priorizar texto Caps. 3 y 5).
+- **No** repetir sesión de laboratorio (KPI y evidencias cerradas 09/06).
+- **No** redactar Cap. 7 Conclusiones (agenda 16/06).
+- **No** redactar Cap. 1 completo (agenda 15/06; §1.2 solo si sobra tiempo).
+- **No** insertar las 16 figuras del Cap. 5 ni todas las del Cap. 6.
+- **No** transferencia masiva a Overleaf de todos los capítulos (17–18/06).
+- **No** reabrir §6.4 salvo typo crítico que invalide la comparativa.
+- **No** bloquear el envío esperando perfección editorial — el hito es **entregar**, no pulir.
 
 ---
 
 ## CRITERIO DE ÉXITO MÍNIMO DEL DÍA
 
-- `05_desarrollo_implantacion.md` §5.1–5.4 en borrador [HUMANO/IA]
-- `03_analisis_problema.md` §3.1–3.2 al menos (§3.3–3.4 si hay tiempo)
+- Email al tutor **enviado** con PDF borrador Caps. 3–6
+- Overleaf creado y **compila** (aunque sea con dummy)
+- §4.5 cerrado; Cap. 4 sin `[TODO]` skeleton
 
-**Mínimo absoluto (si el día se acorta):** solo §5.3 Escenario B + §3.1–3.2.
+**Mínimo absoluto (si el día se acorta):** PDF Caps. 3+6 (problema + pruebas) + email tutor. Cap. 4 y 5 como MD adjunto si no hay tiempo de PDF unificado.
 
-**Stretch (día completo 8h+):** Cap. 3 completo + §4.5 + 3 figuras Cap. 6 + borrador §1.2.
+**Stretch (día completo 6–8h):** todo lo anterior + 4 figuras Cap. 6 + §4.4.1 cerrado + repaso coherencia + borrador §1.2.
 
 ---
 
@@ -147,7 +197,8 @@ Redacta **§5.3 Escenario B** en `docs/03_memoria_tfg/05_desarrollo_implantacion
 
 Al terminar:
 
-1. Actualizar `admin/STATE.md`: Cap. 6 §6.4 → DONE; avance Cap. 3 y 5; hito 14/06 con días restantes.
-2. Ampliar o crear entrada en `docs/04_diario_laboratorio/` si hubo decisiones de redacción relevantes.
-3. **Mañana 13/06 (agenda):** buffer — repaso `[TODO]` en caps. 3–6, `[CITAR:]`, lista figuras Overleaf.
-4. Recordatorio: **14/06 en 2 días** — email tutor 60–70% + `setup_overleaf` + PDF borrador caps. 3–6.
+1. Actualizar `admin/STATE.md`: hito 14/06 → ✅ o ⚠️ parcial; mover `envio_tutor_14_06` y `setup_overleaf` a DONE si aplican; Fase 4 como DOING.
+2. Crear `admin/reportes/reporte_2026-06-14.md`.
+3. Commit: «docs: cierre hito 14/06 — Cap. 4 §4.5, figuras mínimas, email tutor» (si procede).
+4. **Mañana 15/06 (agenda):** Cap. 1 Introducción §1.1–§1.3 — pregunta de investigación en §1.2 (misma redacción literal que §3.1).
+5. Recordatorio: **19/06** — PDF completo Overleaf + email final tutor · **21/06** — entrega plataforma.
