@@ -10,7 +10,7 @@
 
 ## 2.1 Evolución hacia infraestructuras contenerizadas
 
-[REVISAR] De servidores monolíticos a microservicios. Docker como estándar de facto. Kubernetes para orquestación. La "comodidad" de las redes planas por defecto (`bridge` en Docker) y sus implicaciones de seguridad: visibilidad total entre contenedores de la misma red, sin control de flujo lateral.
+[DISREGARD] De servidores monolíticos a microservicios. Docker como estándar de facto. Kubernetes para orquestación. La "comodidad" de las redes planas por defecto (`bridge` en Docker) y sus implicaciones de seguridad: visibilidad total entre contenedores de la misma red, sin control de flujo lateral.
 
 [CITAR: Docker networking documentation / paper IEEE sobre contenedores y seguridad]
 
@@ -81,7 +81,7 @@ NO APLICA A ESTE TFG, DOCKER ES SIMPLEMENTE UNA HERRAMIENTA DE TRABAJO PARA DESP
 
 ## 2.5 Sistemas de detección y observabilidad (SIEM/IDS)
 
-[REVISAR] Papel del SIEM en un modelo Zero Trust: no solo detectar, sino correlacionar eventos de múltiples fuentes para identificar comportamiento anómalo. Wazuh como solución open-source para entornos Docker. Comparativa Wazuh vs Suricata: Wazuh orientado a host-based detection (logs, integridad de ficheros, reglas de correlación); Suricata orientado a network-based detection (captura de paquetes, firmas). Justificación de la elección para este TFG.
+[DISREGARD] Papel del SIEM en un modelo Zero Trust: no solo detectar, sino correlacionar eventos de múltiples fuentes para identificar comportamiento anómalo. Wazuh como solución open-source para entornos Docker. Comparativa Wazuh vs Suricata: Wazuh orientado a host-based detection (logs, integridad de ficheros, reglas de correlación); Suricata orientado a network-based detection (captura de paquetes, firmas). Justificación de la elección para este TFG.
 
 [CITAR: Wazuh documentation — agent deployment en Docker]
 [CITAR: Suricata documentation — network IDS/IPS]
@@ -121,20 +121,32 @@ No veo necesario cubrir esto en el estado del arte ya que no forma parte del enf
 
 ### Texto redactado [HUMANO]
 
-En los últimos años han proliferado trabajos académicos que abordan Zero Trust desde ángulos distintos: implementación en laboratorio, análisis conceptual, control de acceso a la red corporativa u observabilidad centralizada. Sin embargo, al revisar la literatura y los trabajos de fin de grado o máster más cercanos al ámbito de este proyecto, se observa un patrón recurrente: demuestran la viabilidad de un enfoque concreto, pero rara vez miden de forma cuantitativa qué ocurre **después** de un compromiso inicial en una infraestructura contenerizada. La evidencia que compara modelo perimetral y Zero Trust con métricas operativas reproducibles —tiempos de detección, profundidad alcanzada por el atacante, bloqueo de hitos post-explotación— sigue siendo escasa [CITAR: Investigacion_ZeroTrust §Resumen Ejecutivo].
-
 Jiménez [CITAR: Jiménez 2025 TFG UPM — implementación ZT laboratorio] diseña e implementa un entorno Zero Trust híbrido simulado con identidad federada, segmentación mediante firewall y aplicación web en Flask; valida autenticación y políticas de acceso de forma funcional, pero no ejecuta una cadena adversarial post-explotación ni contrasta el resultado con un escenario perimetral de referencia. Pérez [CITAR: Pérez TFG G6508 — Zero Trust como concepto] profundiza en el marco teórico —modelos frente a arquitecturas, visión de fabricantes, normalización NIST— y plantea un despliegue ZTNA a escala empresarial, sin experimento que cuantifique el impacto de un atacante ya presente en la red. Torregrosa [CITAR: Torregrosa 2025 TFG UPV — NAC y acceso corporativo] aborda el acceso local mediante NAC y segmentación dinámica alineada con Zero Trust, centrado en quién entra a la red corporativa, no en qué puede hacer un servicio comprometido en comunicaciones este-oeste entre microservicios. Vico [CITAR: Vico 2025 TFM UPV — SIEM Wazuh Suricata] integra Wazuh, Suricata y un SIEM corporativo para centralizar la detección; su aportación está en el pipeline de observabilidad y los casos de uso de alertas, no en comparar arquitecturas de red ni en medir la contención del movimiento lateral tras una ejecución remota.
-
-Este trabajo se sitúa en ese hueco. La pregunta que guía el estudio no es simplemente si dos despliegues son distintos, sino **en qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas**. Para responderla, desplegamos la misma aplicación vulnerable en dos topologías —perimetral y Zero Trust— y reproducimos el mismo protocolo de ataque a partir de una reverse shell en el servicio web, midiendo detección, profundidad del compromiso y bloqueo de los hitos descritos en las secciones anteriores. Docker Compose actúa como herramienta de laboratorio para simular la red corporativa, sin pretender replicar un clúster Kubernetes productivo. En conjunto, los trabajos revisados confirman que identidad, segmentación y observabilidad son piezas maduras por separado; este TFG las cruza en un experimento controlado que enlaza las limitaciones del perímetro (§2.2), las amenazas post-explotación (§2.6) y el diseño comparativo desarrollado en los capítulos siguientes.
 
 ## 2.8 Crítica al estado del arte
 
 > **Estado:** ESQUELETO — apartado **Muy recomendable** (referencia, línea 173). Hacer explícito el hueco que ya se argumenta al inicio de §2.7. No duplicar: condensar y dejar §2.7 como revisión y §2.8 como diagnóstico del hueco.
 
-[TODO] Sintetizar, a partir de la revisión de §2.7, el déficit detectado en la literatura y los trabajos ETSINF/UPV cercanos: se demuestra la viabilidad de enfoques Zero Trust (implementación, NAC, SIEM) pero **rara vez se mide de forma cuantitativa y comparable qué ocurre tras un compromiso inicial** (tiempos de detección, profundidad alcanzada, bloqueo de hitos post-explotación) en infraestructuras contenerizadas. Dejar claro, al terminar este punto, cuál es el espacio de conocimiento/tecnología que el TFG viene a rellenar.
+[DONE] Sintetizar, a partir de la revisión de §2.7, el déficit detectado en la literatura y los trabajos ETSINF/UPV cercanos: se demuestra la viabilidad de enfoques Zero Trust (implementación, NAC, SIEM) pero **rara vez se mide de forma cuantitativa y comparable qué ocurre tras un compromiso inicial** (tiempos de detección, profundidad alcanzada, bloqueo de hitos post-explotación) en infraestructuras contenerizadas. Dejar claro, al terminar este punto, cuál es el espacio de conocimiento/tecnología que el TFG viene a rellenar.
+
+---
+#### Texto redactado [HUMANO]
+La revisión de los apartados anteriores muestra: 
+Por un lado, que las limitaciones del modelo perimetral frente a las amenazas posteriores al compromiso están ampliamente documentadas (§2.2). 
+Por otro, que los mecanismos asociados a Zero Trust (microsegmentación, identidad de servicio y autenticación mutua) cuentan con viabilidad demostrada, tanto en la estandarización de NIST SP 800-207 como en implementaciones a gran escala como BeyondCorp (§2.3, §2.4). 
+Y finalmente, que las técnicas de post-explotación en entornos contenerizados están catalogadas en marcos como MITRE ATT&CK for Containers y la Kubernetes Threat Matrix (§2.6). 
+Sin embargo, estos tres cuerpos rara vez se articulan entre sí: la literatura técnica de referencia establece marcos y principios, pero no aporta métricas operativas que cuantifiquen en qué medida esos mecanismos contienen a un atacante ya presente en la red frente a un escenario perimetral de referencia.
+
+En los últimos años han proliferado trabajos académicos que abordan Zero Trust desde ángulos distintos: implementación en laboratorio, análisis conceptual, control de acceso a la red corporativa u observabilidad centralizada. Ahora bien, al revisar la literatura y los trabajos de fin de grado o máster más cercanos al ámbito de este proyecto, se observa un patrón recurrente: demuestran la viabilidad de un enfoque concreto, pero rara vez miden de forma cuantitativa qué ocurre después de un compromiso inicial en una infraestructura contenerizada. La evidencia que compara modelo perimetral y Zero Trust con métricas operativas reproducibles —tiempos de detección, profundidad alcanzada por el atacante, bloqueo de hitos post-explotación— sigue siendo escasa [CITAR: Investigacion_ZeroTrust §Resumen Ejecutivo].
+---
 
 ## 2.9 Propuesta
 
 > **Estado:** ESQUELETO — apartado **Muy recomendable** (referencia, línea 177). Es la formulación de la contribución; debe ser coherente con §1.2 (pregunta de investigación) y con la solución de los Cap. 4–6.
 
-[TODO] Resumir qué aporta este trabajo frente a lo existente: una **comparativa empírica y reproducible perimetral vs Zero Trust con métricas operativas** (G1–G3, E1–E3) sobre el mismo vector post-explotación. Aclarar que la aportación no es una tecnología nueva, sino la **combinación original y la medición controlada** de mecanismos maduros (microsegmentación + mTLS + observabilidad host-based) para responder la pregunta de §1.2. Enlazar con el diseño comparativo de los capítulos siguientes.
+[DONE] Resumir qué aporta este trabajo frente a lo existente: una **comparativa empírica y reproducible perimetral vs Zero Trust con métricas operativas** (G1–G3, E1–E3) sobre el mismo vector post-explotación. Aclarar que la aportación no es una tecnología nueva, sino la **combinación original y la medición controlada** de mecanismos maduros (microsegmentación + mTLS + observabilidad host-based) para responder la pregunta de §1.2. Enlazar con el diseño comparativo de los capítulos siguientes.
+
+---
+#### Texto redactado [HUMANO]
+Este trabajo se sitúa en ese hueco. Su aportación no es una tecnología nueva, sino la combinación original y la medición controlada de mecanismos ya existentes —microsegmentación, identidad de servicio con mTLS y observabilidad activa basada en host— para responder a la pregunta de investigación planteada en §1.2. Para ello desplegamos la misma aplicación vulnerable en dos topologías —perimetral y Zero Trust— y reproducimos el mismo protocolo de ataque a partir de una reverse shell en el servicio web, midiendo detección, profundidad del compromiso y bloqueo de los hitos descritos en las secciones anteriores. Docker Compose actúa como herramienta de laboratorio para simular la red corporativa, sin pretender replicar un clúster Kubernetes productivo. En conjunto, los trabajos revisados confirman que identidad, segmentación y observabilidad son piezas maduras por separado; este TFG las cruza en un experimento controlado que enlaza las limitaciones del perímetro (§2.2), las amenazas post-explotación (§2.6) y el diseño comparativo desarrollado en los capítulos siguientes.
+---

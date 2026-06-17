@@ -40,7 +40,7 @@ En cada paso guardamos el output de los comandos en logs; al terminar, el script
 
 ---
 
-### 6.1.3 Definición de T0_efectivo y ventana de medición
+### 6.1.3 Definición de la ventana de medición
 
 #### Texto redactado [HUMANO]
 

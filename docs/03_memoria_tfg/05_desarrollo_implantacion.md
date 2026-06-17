@@ -231,7 +231,7 @@ La salida debe listar al menos el proceso Python de la aplicaci√≥n. Si no es as√
 
 ---
 
-## 5.4 Puesta en marcha del laboratorio
+## 5.4 Puesta en marcha del laboratorio (primera vez)
 
 #### Texto redactado [HUMANO]
 
