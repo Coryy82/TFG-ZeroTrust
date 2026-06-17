@@ -1,0 +1,780 @@
+\UseRawInputEncoding
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       CARREGA DE LA CLASSE DE DOCUMENT                      %
+%                                                                             %
+% Les opcions admissibles son:                                                %
+%      12pt / 11pt            (cos dels tipus de lletra; no feu servir 10pt)  %
+%                                                                             %
+% catalan/spanish/english     (llengua principal del treball)                 %
+%                                                                             % 
+% french/italian/german...    (si necessiteu fer servir alguna altra llengua) %
+%                                                                             %
+% listoffigures               (El document inclou un Index de figures)        %
+% listoftables                (El document inclou un Index de taules)         %
+% listofquadres               (El document inclou un Index de quadres)        %
+% listofalgorithms            (El document inclou un Index d'algorismes)      %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,spanish,listoffigures,listoftables]{tfgetsinf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                     CODIFICACIO DEL FITXER FONT                             %
+%                                                                             %
+%    windows fa servir normalment 'ansinew'                                   %
+%    amb linux es possible que siga 'latin1' o 'latin9'                       %
+%    Pero el mes recomanable es fer servir utf8 (unicode 8)                   %
+%                                          (si el vostre editor ho permet)    % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+
+\lstset{
+    extendedchars=true,
+    % Format: {input_char}{{output_latex}} length
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+             {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{\textquestiondown}}1 {¡}{{\textexclamdown}}1
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Para conseguir que la tabla de contenido no salga en rojo
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{ colorlinks=true, linkcolor=black, urlcolor=cyan, }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        ALTRES PAQUETS I DEFINICIONS                         %
+%                                                                             %
+% Carregueu aci els paquets que necessiteu i declareu les comandes i entorns  %
+%                                          (aquesta seccio pot ser buida)     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        DADES DEL TREBALL                                    %
+%                                                                             %
+% titol, alumne, tutor i curs academic                                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Análisis comparativo de seguridad entre modelos de Defensa Perimetral y Zero Trust en infraestructuras contenerizadas}
+\author{Pau Pérez Marco}
+\tutor{Hector Marco Gisbert}
+\curs{4º}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                     PARAULES CLAU/PALABRAS CLAVE/KEY WORDS                  %
+%                                                                             %
+% Independentment de la llengua del treball, s'hi han d'incloure              %
+% les paraules clau i el resum en els tres idiomes                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\keywords{?????????, ????, ?????????????????} % Paraules clau 
+         {Ciberseguridad, Zero Trust, Micro-segmentación, Contenedores, Post-explotación}      % Palabras clave
+         {Cybersecurity, Zero Trust, Micro-segmentation, Containers, Post-exploitation}       % Key words
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              INICI DEL DOCUMENT                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%              RESUMS DEL TFG EN VALENCIA, CASTELLA I ANGLES                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}[spanish]
+Las nuevas arquitecturas basadas en microservicios y contenedores han servido para optimizar el despliegue de infraestructuras de red, pero frecuentemente, estos despliegues heredan configuraciones de red planas que amplían la superficie de ataque interno. En este contexto, las defensas perimetrales tradicionales resultan ineficaces cuando un atacante logra comprometer un servicio expuesto, facilitando la escalada de privilegios y el compromiso total del sistema. Este Trabajo de Fin de Grado presenta un análisis comparativo entre el modelo de seguridad perimetral tradicional y un modelo de arquitectura basada en principios Zero Trust mediante micro-segmentación. Para ello, se diseñan y despliegan dos infraestructuras funcionalmente idénticas. Ambas arquitecturas son sometidas a auditorías de seguridad focalizadas en escenarios de post-explotación y mediante la evaluación de métricas de contención y detección, el estudio cuantifica la eficacia de cada modelo de red. El trabajo busca demostrar que la implementación de una arquitectura Zero Trust bloquea eficazmente el movimiento lateral, mitiga el impacto de las intrusiones y resulta fundamental para garantizar la resiliencia en redes corporativas modernas.
+\end{abstract}
+
+\begin{abstract}[english]
+New microservices and container-based architectures have optimized the deployment of network infrastructures; however, these deployments frequently inherit flat network configurations that expand the internal attack surface. In this context, traditional perimeter defenses become ineffective once an attacker manages to compromise an exposed service, facilitating privilege escalation and the total compromise of the system. This Bachelor's Thesis presents a comparative analysis between the traditional perimeter security model and an architecture model based on Zero Trust principles through micro-segmentation. To this end, two functionally identical infrastructures are designed and deployed. Both architectures are subjected to security audits focused on post-exploitation scenarios. By evaluating containment and detection metrics, the study quantifies the effectiveness of each network model. The work seeks to demonstrate that the implementation of a Zero Trust architecture effectively blocks lateral movement, mitigates the impact of intrusions, and is fundamental to ensuring resilience in modern corporate networks.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              CONTINGUT DEL TREBALL                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                  INTRODUCCIO                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introducci\'on}
+
+
+    \section{Motivaci\'on}
+    
+    
+    \section{Objetivos}
+    
+    
+    \section{Impacto esperado}
+    
+    
+    \section{Metodología}
+    
+    
+    \section{Estructura de la mem\`oria}
+
+
+
+%\section{Notes bibliografiques} %%%%% Opcional
+
+%????? ????????????? ????????????? ????????????? ????????????? ?????????????
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         CAPITOLS (tants com calga)                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Estado del arte}
+    \section{El modelo de seguridad perimetral y sus limitaciones}
+    La seguridad perimetral ha constituido durante décadas el paradigma predominante para la protección de redes corporativas. Este modelo utiliza una frontera entre una red interna y la externa como elemento de seguridad, para ello utiliza mecanismos como firewalls, filtros y controles de acceso. A su vez, asume que los usuarios y dispositivos ubicados dentro del perímetro, dentro de la red, son entidades confiables.
+    
+    Históricamente, este enfoque resultó eficaz en tiempos en los que las organizaciones tenían infraestructuras centralizadas y límites de red claramente definidos, y donde la principal amenaza procedía de actores externos.
+    
+    Sin embargo, con el paso de los años, se han ido observando limitaciones significativas cuando un atacante consigue superar los controles perimetrales. La confianza otorgada a los sistemas internos favorece increíblemente actividades de post-explotación, incluyendo movimiento lateral, escalada de privilegios y acceso no autorizado a recursos críticos. Asimismo, la supervisión del tráfico interno presenta dificultades que pueden retrasar la detección de comportamientos maliciosos.
+    
+    Asimismo, la evidencia reciente refuerza estas limitaciones: en 2025 se identificó el abuso de credenciales y la explotación de vulnerabilidades entre los principales vectores de acceso y explotación inicial, mientras que casi un tercio de las brechas tuvo origen interno. Estos resultados evidencian que la protección exclusiva del perímetro resulta insuficiente frente a amenazas que operan desde dentro de la red o que consiguen superar los mecanismos de acceso inicial.
+
+    \section{El modelo Zero Trust}
+    El modelo Zero Trust apareció oficialmente en 2010 como respuesta a las limitaciones de los enfoques de seguridad basados en la confianza implícita dentro de las redes corporativas. Su propuesta se fundamenta en la premisa de que ningún usuario, dispositivo o sistema debe considerarse confiable por defecto, dando origen al principio "never trust, always verify".
+     
+    Con el tiempo, este planteamiento evolucionó hasta convertirse en un marco de referencia. La publicación NIST SP 800-207 \textbf{(citar)} consolidó esta evolución al definir una arquitectura Zero Trust basada en la verificación continua de identidades, la autorización dinámica, el acceso de mínimo privilegio y la evaluación contextual de usuarios, dispositivos y recursos. Debido al impacto que tuvo, la microsegmentación y la protección centrada en los recursos se establecieron como mecanismos esenciales para reducir la superficie de ataque.
+    
+    BeyondCorp, desarrollada por Google en 2014 \textbf{(citar)}, fue la primera iniciativa en trasladar los principios de Zero Trust a una infraestructura empresarial de gran escala, sustituyendo la confianza basada en la ubicación de red por reglas de acceso fundamentadas en la identidad del usuario y el estado de los dispositivos, esto contribuyó significativamente a la difusión del modelo y a la demostración de su viabilidad, lo que concluyó en su consolidación en la industria y la comunidad académica.
+
+    \section{Microsegmentación en entornos contenerizados}
+    Los principios de Zero Trust consisten en gran medida en técnicas de microsegmentación, cuyo objetivo es eliminar la confianza entre recursos internos y establecer controles de acceso sobre las comunicaciones de red. La microsegmentación permite restringir el acceso entre servicios y limitar la exposición de recursos, de esta forma se reduce la superficie de ataque y dificulta el movimiento lateral de un atacante tras una intrusión.
+    
+    En entornos contenerizados, como aquellos gestionados por Kubernetes (común en redes corporativas modernas), esta estrategia suele implementarse mediante la creación de redes virtuales independientes que agrupan servicios según su función. Para ayudar a este fin, Docker proporciona mecanismos de aislamiento de red que permiten definir explícitamente qué contenedores pueden comunicarse entre sí. Además de esto, las arquitecturas modernas incorporan mecanismos de identidad de servicio y autenticación mutua mediante certificados digitales para reforzar la confianza entre componentes distribuidos. A mayor escala, se utilizan Network Policies, que permiten controlar el tráfico de ingreso y salida entre pods mediante reglas declarativas y etiquetas.
+
+    \section{Amenazas en entornos post-explotación de contenedores}
+    A pesar de los mecanismos de protección proporcionados, la obtención de ejecución de código remota (RCE) dentro de una aplicación sigue constituyendo un punto de partida relevante para actividades de post-explotación. Un contenedor comprometido puede convertirse en una plataforma desde la que explorar recursos internos, acceder a servicios auxiliares y obtener información sensible dentro del entorno.
+    
+    En arquitecturas basadas en microservicios, un atacante puede aprovechar la conectividad existente entre componentes para descubrir endpoints, servicios o conexiones a bases de datos que no se encuentran expuestas.
+    
+    Diversos marcos de análisis de amenazas, como MITRE ATT\&CK for Containers y Kubernetes Threat Matrix, documentan técnicas de reconocimiento interno, abuso de credenciales y movimiento lateral utilizadas para ampliar progresivamente el alcance del compromiso. Asimismo, la presencia de secretos en variables de entorno, archivos de configuración, volúmenes compartidos o mecanismos de almacenamiento insuficientemente protegidos puede facilitar la exfiltración de credenciales y datos sensibles. Otro riesgo significativo está relacionado con las comunicaciones este-oeste entre servicios: cuando el tráfico interno no está cifrado, un atacante con presencia en el entorno puede capturar credenciales o información confidencial en tránsito.
+    
+    Estas amenazas adquieren especial relevancia en entornos cloud-native debido al elevado número de interacciones entre servicios y a la creciente complejidad de las dependencias internas, lo que incrementa las oportunidades de expansión del atacante una vez superada la fase inicial de acceso.
+
+    \section{Trabajos relacionados}
+    Jiménez 2025 TFG UPM — implementación ZT laboratorio \textbf{(citar)}diseña e implementa un entorno Zero Trust híbrido simulado con identidad federada, segmentación mediante firewall y aplicación web en Flask. Valida la autenticación y las políticas de acceso de forma funcional, pero no ejecuta una cadena adversarial post-explotación ni contrasta el resultado con un escenario perimetral de referencia.
+    
+    Pérez TFG G6508 — Zero Trust como concepto \textbf{(citar)} profundiza en el marco teórico, modelos frente a arquitecturas, visión de fabricantes, normalización NIST— y plantea un despliegue ZTNA a escala empresarial, sin experimento que cuantifique el impacto de un atacante.
+    
+    Torregrosa 2025 TFG UPV — NAC y acceso corporativo \textbf{(citar)}, aborda el acceso local mediante NAC y segmentación dinámica alineada con Zero Trust, centrado en quién entra a la red corporativa, no en qué puede hacer un servicio comprometido en comunicaciones este-oeste entre microservicios. 
+    
+    Vico 2025 TFM UPV — SIEM Wazuh Suricata \textbf{(citar)}, integra Wazuh, Suricata y un SIEM corporativo para centralizar la detección. Su aportación está en el pipeline de observabilidad y los casos de uso de alertas, no en comparar arquitecturas de red ni en medir la contención del movimiento lateral tras una ejecución remota.
+    
+    \section{Crítica al estado del arte}
+    La revisión de los apartados anteriores muestra: 
+    Por un lado, que las limitaciones del modelo perimetral frente a las amenazas posteriores al compromiso están ampliamente documentadas (2.1).
+    
+    Por otro, que los mecanismos asociados a Zero Trust (microsegmentación, identidad de servicio y autenticación mutua) cuentan con viabilidad demostrada, tanto en la estandarización de NIST SP 800-207 como en implementaciones a gran escala como BeyondCorp (2.2, 2.3).
+    
+    Y finalmente, que las técnicas de post-explotación en entornos contenerizados están catalogadas en marcos como MITRE ATT\&CK for Containers y la Kubernetes Threat Matrix (2.4). 
+    
+    Sin embargo, estos tres cuerpos rara vez se articulan entre sí: la literatura técnica de referencia establece marcos y principios, pero no aporta métricas operativas que cuantifiquen en qué medida esos mecanismos contienen a un atacante ya presente en la red frente a un escenario perimetral de referencia.
+    
+    A su vez, en los últimos años han proliferado trabajos académicos que abordan Zero Trust desde ángulos distintos: 
+    \begin{itemize}
+        \item implementación en laboratorio
+        \item análisis conceptual
+        \item control de acceso a la red corporativa
+        \item observabilidad centralizada
+    \end{itemize}
+    
+    Ahora bien, al revisar la literatura y los trabajos de fin de grado o máster más cercanos al ámbito de este proyecto, se observa un patrón recurrente: demuestran la viabilidad de un enfoque concreto, pero rara vez miden de forma cuantitativa qué ocurre después de un compromiso inicial en una infraestructura contenerizada. La evidencia que compara el modelo perimetral y Zero Trust con métricas operativas reproducibles (tiempos de detección, profundidad alcanzada por el atacante, bloqueo de diferentes ataques) sigue siendo escasa.
+    
+    \section{Propuesta}
+    Este trabajo se sitúa en ese hueco. Su aportación no es una tecnología nueva, sino la combinación original y la medición controlada de mecanismos ya existentes, microsegmentación, identidad de servicio con mTLS y observabilidad activa basada en host. Para ello desplegamos la misma aplicación vulnerable en dos topologías y reproducimos el mismo protocolo de ataque a partir de una reverse shell en el servicio web, midiendo detección, profundidad del compromiso y bloqueo de los hitos descritos en las secciones anteriores. Docker Compose actúa como herramienta de laboratorio para simular la red corporativa. 
+    
+    En conjunto, los trabajos revisados confirman que identidad, segmentación y observabilidad son piezas maduras por separado, este trabajo las cruza en un experimento controlado que enlaza las limitaciones del perímetro (2.1), las amenazas post-explotación (2.4) y el diseño comparativo desarrollado en los capítulos siguientes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Análisis del problema}
+ 
+    \section{Descripción del problema}
+    Las infraestructuras basadas en microservicios y contenedores facilitan el despliegue, pero a menudo heredan configuraciones de red en las que, una vez comprometido un servicio expuesto al exterior, el atacante puede desplazarse por la red interna, interceptar comunicaciones entre servicios y exfiltrar datos sin encontrar controles de contención ni mecanismos de detección activa. Ese patrón reproduce la limitación del modelo perimetral que ya hemos analizado en 2.2 y las amenazas post-explotación descritas en 2.6: el perímetro protege la entrada, no lo que ocurre después de una ejecución remota en la capa de aplicación.
+    
+    El objetivo de este trabajo no es comparar dos despliegues por el mero contraste arquitectónico, sino responder a la pregunta de investigación siguiente: ¿En qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas?
+    
+    La comparativa entre un escenario perimetral de referencia y un escenario Zero Trust es el método experimental con el que medimos esa reducción. En las secciones siguientes acotamos el modelo de amenazas, traducimos ese marco en requisitos verificables y definimos las métricas con las que cuantificaremos el impacto en el capítulo de pruebas.
+    
+    
+    \section{Modelo de amenazas}
+    El análisis del problema se centra en la fase post-explotación: asumimos que el atacante ya dispone de ejecución remota en el servicio web y medimos qué puede hacer a partir de ese punto dentro de la red de contenedores. Este acotamiento delimita el experimento frente a vectores de acceso inicial o ataques contra el host físico, los cuales quedan fuera del alcance de medición.
+
+    Los apartados 3.2.1 a 3.2.5 desarrollan las cinco dimensiones del modelo de amenazas que estructuran el resto de la memoria.
+    
+        \subsection{Asunciones sobre el atacante}
+        Consideramos un atacante externo y no privilegiado que ha explotado una vulnerabilidad en el servicio web y obtiene ejecución de código remota en el contenedor de la aplicación. No dispone de acceso físico al equipo anfitrión ni de credenciales de administración de la red corporativa. 
+
+        A partir de una reverse shell en \texttt{webapp} comienza la ventana de estudio: todo lo que se mide ocurre con el mismo nivel de privilegio dentro del namespace del contenedor comprometido.
+
+        \subsection{Activos a proteger}
+        Los activos prioritarios son: 
+            \begin{enumerate}
+                \item La base de datos PostgreSQL, que almacena los registros de empleados y las credenciales asociadas al entorno de prueba
+                \item El backend de la aplicación, que concentra el código de la API interna y las variables de entorno sensibles (incluidas las credenciales de acceso a la base de datos).
+            \end{enumerate}
+            Un movimiento lateral exitoso desde \texttt{webapp} comprometida puede alcanzar esos activos sin cruzar de nuevo el perímetro exterior, por eso el estudio evalúa controles que limiten ese alcance.
+            
+        \subsection{Superficie de estudio}
+        La superficie bajo análisis es la red interna de contenedores Docker y las comunicaciones este-oeste entre servicios: el flujo entre la aplicación web y el backend, y el flujo entre el backend y la base de datos. 
+
+        No evaluamos el host Windows ni la capa de orquestación fuera del experimento, el foco son los controles que cada arquitectura aplica entre contenedores una vez el atacante opera desde \texttt{webapp}.
+        
+        \subsection{Amenazas en alcance}
+        Dentro de ese marco consideramos tres amenazas principales:
+
+        Primero, el \textbf{movimiento lateral}: uso de la posición en \texttt{webapp} para alcanzar el backend o la base de datos sin pasar por el único punto de entrada externo.
+        
+        Segundo, la \textbf{interceptación del tráfico interno} entre servicios, en particular cuando las peticiones viajan en texto claro y pueden capturarse desde el contenedor comprometido. 
+        
+        Tercero, la \textbf{exfiltración de credenciales y datos almacenados}, incluido el volcado de tablas de la base de datos.
+        
+        En las pruebas materializamos esas amenazas mediante cuatro hitos post-explotación comunes tanto a la red perimetral como a la red Zero Trust (4.2.3): 
+        \begin{enumerate}
+            \item Exfiltración de credenciales del entorno del contenedor
+            \item Escaneo de la red interna
+            \item Acceso al backend
+            \item Volcado de la base de datos
+        \end{enumerate}
+        Esos hitos son el denominador comparativo entre el escenario perimetral y el escenario Zero Trust.
+        
+        \subsection{Amenazas fuera del alcance}
+        Quedan explícitamente fuera del alcance:
+        \begin{enumerate}
+            \item La ingeniería social y el phishing
+            \item La seguridad física del dispositivo donde se hospedan las redes
+            \item Las vulnerabilidades del kernel del sistema operativo subyacente
+            \item Los ataques de denegación de servicio
+            \item Cualquier vector cuya mitigación no depende directamente de la microsegmentación, la identidad de servicio o la detección host-based que implementamos en el escenario Zero Trust.
+        \end{enumerate}
+        Esta delimitación permite centrar el diseño y las pruebas en controles comparables entre arquitecturas sin dispersar el alcance del TFG.
+
+    \section{Especificación de requisitos}
+        \subsection{Requisitos funcionales}
+        FALTA TABLA
+        
+        Los requisitos funcionales traducen el modelo de amenazas y la pregunta de investigación en criterios que se deben cumplir:
+        \begin{itemize}
+            \item \textbf{Requisito-F 1} exige un acceso inicial reproducible hasta ejecución remota en `webapp`, de modo que el instante de inicio de la ventana post-explotación sea comparable en ambos escenarios.
+            \item \textbf{Requisito-F 2} impone que los seis indicadores definidos en §3.4 se midan con el mismo protocolo de ataque una vez obtenida la reverse shell.
+            \item \textbf{Requisito-F 3} vincula el escenario Zero Trust con el baseline perimetral: los cuatro hitos post-RCE alcanzables en el escenario A deben quedar bloqueados o, como mínimo, detectados en el escenario B.
+            \item \textbf{Requisito-F 4} garantiza trazabilidad académica mediante logs, capturas de tráfico y artefactos de sesión que respalden cada valor reportado en el capítulo de resultados.
+        \end{itemize}
+        
+        \subsection{Requisitos no funcionales}
+        FALTA TABLA
+        
+        Los requisitos no funcionales aseguran que el experimento sea repetible y suponen mejoras de calidad de vida para facilitar las pruebas:
+        \begin{itemize}
+            \item \textbf{Requisito-NF 1:} cada escenario se levanta con un único comando.
+            \item \textbf{Requisito-NF 2:} acota el laboratorio a una estación de trabajo con Docker Desktop, sin depender de servicios cloud, lo que hace viable la réplica del estudio en condiciones académicas.
+            \item \textbf{Requisito-NF 3:} exige que cada sesión de prueba deje una carpeta estructurada de evidencias, coherente con el protocolo de captura descrito en 5.2.4 y 5.4.
+            \item \textbf{Requisito-NF 4:} el código debe ser mantenible (compose legible, servicios separados, etc.)
+        \end{itemize}
+        En conjunto, estos requisitos se concretan en el diseño comparativo del capítulo 4 y se verifican en las sesiones documentadas en el capítulo 6.
+        
+    \section{Definición de métricas}            % -> 6.Pruebas
+    FALTA TABLA
+    
+    Fijamos el instante de inicio de registro de evidencias en el momento en que la reverse shell en `webapp` queda operativa bajo control del atacante. A partir de ese instante medimos los seis indicadores de la tabla anterior.
+
+    Para el tiempo de detección y el bloqueo de comandos desde reverse shell empleamos una tupla \texttt{(mecanismo\_existe, valor)}. En el escenario A no hay SIEM por diseño, la tupla registra la ausencia del mecanismo, en el escenario Zero Trust esperamos mecanismo activo y valor numérico medible.
+    
+    Los cuatro hitos post-explotación, numerados en 3.2.4, alimentan sobre todo los indicadores de bloqueo, superficie visible y volumen exfiltrado. La integridad del tráfico se evalúa con captura de las comunicaciones entre \texttt{webapp} y \texttt{backend} durante el intento de movimiento lateral. Los valores obtenidos en cada escenario y el análisis comparativo se recogen en §6.4.
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Diseño de la solución}
+    
+    \section{Visión general del sistema comparativo}
+    Hemos diseñado dos implementaciones Docker que sirven la misma aplicación web compuesta por:
+    \begin{itemize}
+        \item Portal Flask con panel de administración
+        \item API interna de empleados
+        \item Base de datos PostgreSQL detrás de Nginx. 
+    \end{itemize}
+    La aplicación es funcionalmente idéntica en ambos escenarios, lo que cambia es el modelo de red y los controles que aplicamos una vez el atacante ya tiene ejecución remota en webapp.
+    
+    El Escenario A reproduce el modelo perimetral clásico: protegemos el borde y asumimos confianza dentro de la red interna. 
+    
+    El Escenario B aplica Zero Trust mediante microsegmentación de la red en tres zonas, identidad de servicio con mTLS entre webapp y backend, y detección activa con Wazuh. 
+    
+    Así podemos medir de forma comparable qué ocurre tras el mismo punto de entrada en cada arquitectura.
+    
+    \section{Escenario A — Arquitectura Perimetral}
+        \subsection{Topología de red}
+            El Escenario A se organiza en dos redes docker: `net\_dmz` y `net\_interna`. Nginx es el único servicio con puerto expuesto al host (`:80`) y actúa como punto de entrada desde internet.
+            
+            La aplicación web vulnerable (`webapp`) está en `net\_dmz` y, además, en `net\_interna`: actúa como pivot porque puede comunicarse con ambos segmentos sin control adicional entre ellos. 
+            
+            En `net\_interna` residen el backend (API Flask) y PostgreSQL con los datos de prueba.
+        
+        \subsection{Decisiones de diseño}
+        Elegimos dos redes (`net\_dmz` y `net\_interna`) porque reproducen una práctica habitual: cortafuegos exterior, servidores web en una zona expuesta y datos en una red interna "protegida".
+        
+        La segmentación existe, pero se concentra en el perímetro: dentro de la red interna no hay verificación de identidad entre servicios ni monitorización del movimiento lateral. El argumento del trabajo no es que falte toda segmentación, sino que la confianza es implícita una vez que el tráfico ha cruzado el borde.
+        
+        Este escenario no pretende ser seguro; es la referencia contra la que medimos la mejora. A propósito dejamos `DB\_PASSWORD` en el entorno de `webapp` y el tráfico hacia el backend en HTTP plano por el puerto 5000, de modo que los cuatro hitos post-explotación del protocolo de pruebas sean alcanzables. Tampoco desplegamos mecanismos de detección o respuesta, ni sistema de gestión de eventos de seguridad (SIEM), ni cortafuegos de aplicación web (WAF), ni sistema de detección de intrusiones (IDS): la protección se limita al perímetro exterior.
+        
+        \subsection{Superficie inicial de comparación}
+        Una vez obtenida la reverse shell en `webapp`, el atacante ejecuta siempre la misma secuencia de cuatro hitos post-explotación, definida en 3.2.4: exfiltración de credenciales del entorno del contenedor, escaneo de la red interna, acceso al endpoint `/empleados` del backend y volcado de la tabla de empleados en PostgreSQL.
+        
+        Esta secuencia es el denominador común entre ambas arquitecturas. En el Escenario A los cuatro hitos son alcanzables por diseño, porque ningún control interno los impide; sirven así de baseline frente al que se mide el Escenario B. La ejecución concreta de cada hito y los valores observados se documentan en el capítulo de pruebas (6.2).
+
+    \section{Escenario B — Arquitectura Zero Trust}
+        \subsection{Principios aplicados}
+        El Escenario B parte del principio rector de Zero Trust: "nunca confíes, siempre verifica", y lo concreta en tres principios operativos, cada uno traducido a una medida sobre los hitos definidos en §4.2.3:
+        \begin{itemize}
+            \item \textbf{Verificación explícita}. Exigimos que cada flujo este-oeste se autentique antes de permitirse: el canal crítico `webapp → backend` usa autenticación mutua con certificados (mTLS), de modo que pertenecer a una red ya no equivale a confianza automática.
+            \item \textbf{Mínimo privilegio.} Segmentamos la estructura en tres zonas y solo habilitamos los puertos estrictamente necesarios entre zonas contiguas. Las credenciales de la base de datos residen solo en `backend` y `webapp` no recibe `DB\_PASSWORD` en su entorno, lo que corrige el punto débil del escenario perimetral.
+            \item \textbf{Asumir brecha.} Diseñamos como si `webapp` ya estuviera comprometida: la segmentación impide el salto directo a `db\_zone`, el mTLS rechaza las peticiones sin certificado de servicio y Wazuh observa los comandos que el atacante lanza desde la shell post-RCE, aunque los controles de red ya hayan frustrado parte del ataque.
+        \end{itemize}
+        Estos tres principios son la respuesta de diseño al\textit{ Requisito-F 3} (3.3.1): que el Escenario B bloquee o, como mínimo, detecte los cuatro hitos post-RCE alcanzables en el perimetral.
+        
+        \subsection{Topología de red}
+        La topología Zero Trust divide los contenedores en `web\_zone` (nginx y webapp), `backend\_zone` (webapp como cliente y backend como servidor) y `db\_zone` (backend y db). 
+        
+        Los flujos permitidos entre zonas son los siguientes:
+        \begin{itemize}
+            \item entrada externa únicamente a nginx (8080→80 en el host)
+            \item nginx → webapp en el puerto 5000
+            \item webapp → backend por HTTPS en el 443, con terminación mTLS en Nginx del contenedor backend
+            \item backend → PostgreSQL en el 5432. 
+        \end{itemize}
+        No existe ruta webapp → db porque ningún servicio tiene interfaz en `web\_zone` y `db\_zone` a la vez.
+        
+        Cualquier comunicación no enumerada se considera denegada por defecto.
+        
+        \subsection{mTLS entre webapp y backend}
+        En el Escenario A el tráfico de `webapp` a `backend` viaja en HTTP plano por el puerto 5000. En el Escenario B lo ciframos y autenticamos con mTLS, una variante de TLS en la que no solo el servidor presenta certificado, sino que también el cliente debe acreditar su identidad. Una autoridad de certificación (CA) local, generada con OpenSSL, firma un certificado de servidor para `backend` y un certificado de cliente para `webapp`.
+        
+        Nginx, desplegado en el contenedor `backend`, actúa como punto de aplicación de políticas (PEP): solo admite la conexión si el cliente presenta un certificado válido firmado por esa CA; en caso contrario, la rechaza. De este modo, el simple hecho de alcanzar la red del backend ya no basta para hablar con la API. Los detalles de configuración de Nginx y del montaje de certificados se documentan en §5.3.3.
+        
+        \subsection{Observabilidad activa — Wazuh}
+        Para la detección activa desplegamos Wazuh en dos contenedores, manager y agente. El agente monta el socket de Docker y observa los procesos que se ejecutan dentro de webapp.
+
+        Definimos reglas locales alineadas con los cuatro hitos: escaneo nmap, curl hacia backend, tcpdump, psql y grep de patrones de credenciales. La microsegmentación y el mTLS bloquean el impacto. Luego Wazuh registra el intento y permite medir tiempos. 
+
+    \section{Tecnología utilizada}
+    La iteración inicial del TFG contemplaba Suricata como sonda de red. Lo descartamos porque nuestro modelo de amenazas fija la ejecución de código remota en webapp y los hitos comparativos ocurren como comandos dentro del contenedor (nmap, curl, psql, grep), no solo como patrones de tráfico observables en la red.
+
+    Wazuh aporta detección host-based sobre esos procesos mientras que Suricata es network-based y no sustituye la visibilidad del cmdline en el namespace del contenedor comprometido. Para este alcance del TFG la elección es más relevante que combinar ambas capas. 
+    
+    Dejamos Suricata como línea futura de detección a nivel de red, actuaría junto a Wazuh, complementándolo y no sustituyéndolo.
+    
+    \section{Limitaciones del diseño}
+    Reconocemos varias limitaciones de este diseño en el entorno de laboratorio, entre ellas:
+
+    \begin{enumerate}
+        \item El mTLS solo cubre el canal webapp → backend mientras que los flujos nginx → webapp y backend → db siguen sin cifrado mutuo.
+        \item Los certificados son autofirmados. Además, mTLS verifica la identidad del servicio, pero no define qué operaciones puede ejecutar cada certificado una vez autenticado.
+        \item Wazuh se despliega sin Indexer ni dashboard: las alertas se vuelcan a un json manualmente y no disparan respuesta automática (no hay SOAR) y el agente usa muestreo cada 2 s mediante `process-webapp`, no trazado syscall en tiempo real.
+        \item El entorno de trabajo es Docker local en Windows/WSL2, no un clúster Kubernetes productivo: los resultados son representativos del contraste perimetral vs Zero Trust en contenedores, pero no se extrapolan directamente a despliegues cloud-native a escala.
+    \end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Desarrollo e implantación de la solución}
+    
+    \section{Infraestructura como código}
+    El capítulo de diseño fijó la topología, los controles y el protocolo de pruebas de cada escenario. En este capítulo describimos cómo trasladamos ese diseño a contenedores Docker ejecutables: qué servicios levantamos, qué comandos validamos en cada fase y qué decisiones tomamos cuando la implementación chocaba con el entorno de laboratorio.
+    
+    Hemos representado los dos escenarios comparativos como dos conjuntos de Docker Compose independientes. Cada servicio, red y variable de entorno queda definido en ficheros de configuración versionados, de modo que cualquier sesión puede reproducirse desde un estado conocido con:
+    
+    \begin{lstlisting} [language=Bash, aboveskip=10pt, belowskip=10pt]
+docker compose up --build -d
+    \end{lstlisting}
+    
+    Para no depender de copias manuales durante las pruebas, automatizamos la captura con dos scripts bash: uno para el escenario perimetral y otro para Zero Trust. Ambos levantan el entorno, dejan una pausa para ejecutar el ataque manual, copian los artefactos generados en `webapp` y vuelcan los logs de los contenedores a una carpeta de sesión en el host. El detalle línea a línea de cada script figura en el anexo.
+    
+    \section{Implementación de la red Perimetral}
+        \subsection{Estructura de la aplicación}
+        Trasladamos el diseño perimetral a un compose con cuatro servicios:
+        \begin{enumerate}
+            \item **Nginx** escucha en el puerto `:80` del host y es el único punto de entrada externo.
+            \item **La aplicación web** (`webapp`) corre Flask con plantillas Jinja2 y se conecta a dos redes Docker: `net\_dmz` y `net\_interna`, lo que la convierte en el pivot natural del ataque una vez obtenida ejecución remota.
+            \item **El backend** expone una API REST de empleados en `/empleados` sin autenticación adicional.
+            \item **PostgreSQL** almacena los datos de prueba.
+        \end{enumerate}
+        
+        La lógica de negocio es la misma que en el Escenario B, lo que cambia es la topología de red y la ausencia de controles post-compromiso. Para comprobar que el stack arranca correctamente ejecutamos:
+        
+        \begin{lstlisting}[language=Bash, aboveskip=10pt, belowskip=0pt]
+docker compose up --build -d
+docker compose ps
+curl -I http://localhost/
+        \end{lstlisting}
+        
+        \subsection{Punto de entrada: cadena hasta la ejecución remota}     % -> 6. Pruebas
+        El diseño exige un atacante externo que, tras comprometer `webapp`, inicie la ventana de medición post-explotación. En la implementación materializamos ese acceso inicial con una cadena encadenada (no con un único endpoint vulnerable) que termina en ejecución remota vía SSTI en Jinja2 [CITAR: OWASP CWE-1336 — Server Side Template Injection]:
+        \begin{enumerate}
+            \item Reconocimiento HTTP del portal.
+            \item Filtrado de rutas internas en `robots.txt` (CWE-200).
+            \item Recuperación de credenciales de administrador en `backup.txt` (CWE-522 / CWE-798).
+            \item Acceso al panel de administración sin segundo factor (CWE-306).
+            \item Confirmación de inyección de plantillas en `/admin/diagnostico?host=` y obtención de RCE (CWE-1336).
+        \end{enumerate}
+        
+        Esta cadena nos permite fijar de forma reproducible el instante en que el atacante dispone de reverse shell en `webapp`, que es el punto de partida común a ambos escenarios. El detalle de la cadena de ataque y sus resultados corresponde al capítulo de pruebas, aquí documentamos únicamente que la aplicación se implementó con esos endpoints deliberadamente débiles para habilitar el acceso inicial acordado en el diseño.
+        
+        \subsection{Decisiones de implementación}
+        Al implantar el Escenario A tomamos dos decisiones que condicionaron el laboratorio y no formaban parte del diseño en papel:
+        \begin{enumerate}
+            \item \textbf{Refactor del servicio web con SSTI en Jinja2.} La primera versión implementada usaba un único endpoint con ejecución de comandos. Lo sustituimos por la cadena documentada en §5.2.2 para fijar un acceso inicial reproducible sin cambiar el stack Flask ni añadir contenedores nuevos.
+            \item \textbf{Script de captura automatizado.} Los primeros ensayos copiaban artefactos a mano y se perdían al tumbar el compose. Automatizamos el flujo con un script que integra `docker compose cp` antes del volcado de logs y del posible `compose down`.
+        \end{enumerate}
+
+    \section{Implementación de la red Zero Trust}
+        \subsection{Segmentación de redes}
+        Sustituimos las dos redes del Escenario A por tres zonas aisladas en el compose de Zero Trust:
+        \begin{enumerate}
+            \item `web\_zone` $\rightarrow$ Nginx y `webapp`.
+            \item `backend\_zone` $\rightarrow$ `webapp` y `backend`.
+            \item `db\_zone` $\rightarrow$ `backend` y `db`.
+        \end{enumerate}
+        
+        `webapp` queda multihomed en `web\_zone` y `backend\_zone`, pero sin interfaz en `db\_zone`, porque la aplicación web no necesita hablar con PostgreSQL: toda la lógica de datos pasa por la API interna.
+        
+        Tras `docker compose up --build -d`, verificamos la segmentación desde `webapp`:
+        \begin{lstlisting}
+# Camino legítimo, debe responder
+docker exec <contenedor_webapp> curl -s http://backend:5000/health
+
+# Salto prohibido webapp a db, debe fallar la resolución DNS
+docker exec <contenedor_webapp> python -c "import socket; socket.create_connection(('db',5432), timeout=3)"
+        \end{lstlisting}
+        
+        El segundo comando devuelve `No address associated with hostname`: Docker no resuelve el nombre `db` fuera de `db\_zone`. La contención es de capa 3, no solo de una regla de firewall que pudiera omitirse por error de configuración.
+        
+        \subsection{Identidad de servicio y credenciales}
+        El diseño exigía que comprometer `webapp` no expusiera las credenciales de base de datos. En la implementación eliminamos `DB\_HOST` y `DB\_PASSWORD` del entorno de `webapp` y dejamos únicamente la URL del backend cifrado:
+        
+        \begin{lstlisting}
+BACKEND_URL=https://backend:443/empleados
+        \end{lstlisting}
+        
+        Las credenciales de PostgreSQL permanecen solo en `backend`, el único servicio con ruta hacia `db`. Comprobamos el aislamiento con:
+        
+        \begin{lstlisting}
+docker exec <contenedor_webapp> env | grep -iE "db_|pass"
+        \end{lstlisting}
+        
+        La salida debe quedar vacía. Este cambio no altera la funcionalidad del portal: `webapp` nunca consultaba la base de datos directamente, solo consumía la API interna.
+        
+        \subsection{Implementación de mTLS}
+        El diseño protege el canal `webapp $\rightarrow$ backend` con mTLS. La implantación siguió estos pasos:
+        \begin{enumerate}
+            \item \textbf{Generar CA y certificados con OpenSSL} — certificado de servidor con `subjectAltName=DNS:backend` y `serverAuth`; certificado de cliente con `clientAuth`.
+            \item \textbf{Montar los certificados en runtime} — los ficheros se inyectan como volúmenes al arrancar el contenedor, no se incluyen en la imagen Docker. Así podemos rotar material criptográfico sin reconstruir la imagen.
+            \item \textbf{Configurar Nginx como PEP dentro de `backend`} — escucha en el puerto 443, exige certificado de cliente (`ssl\_verify\_client on`) y reenvía al proceso Flask en `localhost:5000`.
+            \item \textbf{Configurar el cliente en `webapp`} — las peticiones a la API usan HTTPS presentando el certificado de cliente firmado por la CA local.
+        \end{enumerate}
+        
+        
+        En el contenedor `backend`, Nginx y Flask conviven según el diseño del Escenario B: Nginx termina TLS en el puerto 443 y reenvía al proceso Flask escuchando solo en la interfaz de loopback (`127.0.0.1:5000`).
+        
+        Verificación operativa:
+        \begin{lstlisting}
+# Con certificado de cliente, debe devolver HTTP 200
+docker exec <contenedor_webapp> curl -sk \
+--cert /ruta/client.crt --key /ruta/client.key \
+https://backend:443/empleados
+
+# Sin certificado, Nginx rechaza el handshake o devuelve error TLS
+docker exec <contenedor_webapp> curl -sk https://backend:443/empleados
+        \end{lstlisting}
+        
+        \subsection{Despliegue de Wazuh}
+        El montaje de Wazuh se realizó en un segundo compose, una vez levantado el stack de aplicación:
+        \begin{enumerate}
+            \item **Levantar manager y agente** como contenedores adicionales vinculados a las redes ya creadas por el Escenario B.
+            \item **Montar el socket de Docker en el agente** y arrancarlo con visibilidad de procesos del host (`--pid=host`), de modo que puede inspeccionar procesos dentro de `webapp`.
+            \item **Configurar el recolector** para ejecutar cada dos segundos un script que, vía API Docker, lee `/proc/*/cmdline` dentro de `webapp` (fuente `process-webapp`).
+            \item **Cargar las reglas locales** en el manager y reiniciar manager y agente para aplicar la configuración.
+            \item **Comprobar el enrollment** — el agente debe aparecer activo en el manager antes de iniciar la ventana post-RCE.
+        \end{enumerate}
+        
+        Sobre los eventos de `process-webapp` aplicamos reglas locales alineadas con los hitos de la cadena de ataque:
+
+        FALTA TABLA
+
+        Un muestreo de respaldo con `process-list` cada cinco segundos cubre procesos más duraderos. Antes de iniciar el ataque comprobamos que el agente ve procesos en `webapp`:
+
+        \begin{lstlisting}
+docker exec <contenedor_agente> bash /ruta/process-webapp.sh
+        \end{lstlisting}
+        
+        La salida debe listar al menos el proceso Python de la aplicación. Si no es así, esperamos unos segundos y repetimos: no iniciamos la ventana post-RCE sin telemetría operativa.
+
+    \section{Puesta en marcha del laboratorio}
+    
+    Pasamos de la implantación a un laboratorio operativo siguiendo un procedimiento común para ambos escenarios, con una variante en Zero Trust por la dependencia de Wazuh respecto a las redes del stack principal.
+    
+    \subsubsection{Requisitos del host}
+    \begin{enumerate}
+        \item Docker Desktop con motor Linux (en nuestro caso sobre WSL2 en Windows).
+        \item Docker Compose v2.
+        \item Herramientas de línea de comandos en el host: `curl`, `openssl`, cliente PostgreSQL opcional para depuración.
+    \end{enumerate}
+    
+    \subsubsection{Arranque del Escenario A (perimetral)}
+    \begin{enumerate}
+        \item Situarse en el directorio del compose perimetral.
+        \item Ejecutar `docker compose up --build -d`.
+        \item Comprobar con `docker compose ps` que Nginx, webapp, backend y `db` están levantados.
+        \item Verificar respuesta HTTP: `curl -I http://localhost/`.
+        \item Lanzar el script de captura o, si se trabaja manualmente, confirmar que los cuatro servicios aceptan tráfico antes de iniciar el ataque.
+    \end{enumerate}
+    
+    
+    \subsubsection{Arranque del Escenario B (Zero Trust)}
+    \begin{enumerate}
+        \item Levantar primero el compose de Zero Trust (`docker compose up --build -d` en el directorio del escenario B).
+        \item Comprobar healthchecks del contenedor: `curl` desde `webapp` a `backend`.
+        \item Levantar después el compose de Wazuh (manager + agente).
+        \item Esperar unos segundos a que el manager esté operativo.
+        \item Validar `process-webapp` (salida distinta de «no hay contenedor webapp»).
+    \end{enumerate}
+    
+    
+    \subsubsection{Checklist previo a las pruebas (Escenario B)}
+    \begin{enumerate}
+        \item Cuatro contenedores de aplicación en estado *Up*.
+    \item Agente Wazuh enrollado y conectado al manager.
+    \item `process-webapp` listando procesos de `webapp`.
+    \item Certificados montados y `curl` mTLS de prueba respondiendo 200.
+    \item Entorno limpio: sin sesiones previas que dejen artefactos en `/tmp/` de `webapp`.
+    \end{enumerate}
+    
+    \section{Problemas de integración encontrados}
+    Durante la implantación aparecieron incidencias que no estaban en el diseño inicial pero condicionaron el resultado final. Documentamos las que afectaron a la reproducibilidad o a la coherencia entre diseño y realidad.
+    
+    \subsubsection{Artefactos de sesión vacíos.} 
+    En una sesión de prueba temprana, algunos logs quedaron vacíos porque el entorno se destruyó antes de copiarlos desde el contenedor. Integramos la copia con `docker compose cp` como paso obligatorio del script, siempre anterior a un posible `compose down`.
+    
+    \subsubsection{Bypass del PEP por Flask en `0.0.0.0`.} 
+    Con Nginx terminando TLS en 443, Flask seguía escuchando en `0.0.0.0:5000` dentro de `backend\_zone`, de modo que \texttt{curl http://backend:5000/empleados} devolvía JSON sin pasar por mTLS. Corregimos enlazando Flask solo a `127.0.0.1`. Las sesiones de prueba realizadas antes de ese cambio no son comparables en integridad del tráfico.
+    
+    \subsubsection{Detección Wazuh y orden de despliegue.}
+    En una sesión intermedia los controles de segmentación y mTLS funcionaron, pero no se generaron alertas en la ventana post-RCE: el muestreo cada quince segundos no capturaba procesos efímeros como `nmap` o `curl`, y levantar el compose de Zero Trust recreaba redes que desestabilizaban el agente si Wazuh arrancaba antes. La solución combinó `process-webapp` a la escucha cada dos segundos, reglas acopladas a esa fuente y el protocolo de arranque ZT → Wazuh → validación descrito en §5.4.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Pruebas y resultados}
+
+    \section{Metodología de pruebas}
+        \subsection{Entorno de pruebas}
+
+        Cada escenario, perimetral y Zero Trust, se despliega como un stack de contenedores independiente con la misma aplicación web vulnerable, pero con una topología de red distinta. De este modo podemos repetir la misma cadena de ataque y comparar únicamente lo que ocurre una vez el atacante ya dispone de ejecución remota en webapp.
+        
+        Para garantizar un despliegue replicable y facilitar la recogida de logs para su futuro estudio, hemos creado dos scripts (`logcapture\_perimetral.sh` y `logcapture\_zerotrust.sh`) que levantan el entorno correspondiente, recogen los logs de los contenedores y los copian a una carpeta de sesión en la máquina host. El detalle de su funcionamiento se incluye en el anexo.
+        
+        \subsection{Protocolo de ejecución}
+        El protocolo de ejecución es el mismo en ambos escenarios, con una única diferencia en el arranque: en el perimetral levantamos el stack docker y en Zero Trust además de esto, levantamos y comprobamos que el agente Wazuh esté activo.
+
+        Cada sesión empieza con un entorno limpio (`docker compose up --build -d`). A continuación reproducimos la cadena de ataque previa a la ejecución de código remota, reconocimiento, filtrado de información, login y confirmación de SSTI— hasta conseguir una reverse shell en webapp. En el instante en que esta queda operativa marcamos el inicio de la ventana de medición.
+        
+        A partir de ahí medimos siempre los mismos cuatro hitos post-explotación:
+        \begin{itemize}
+            \item Exfiltración de credenciales
+            \item Escaneo de la red interna
+            \item Acceso al back
+            \item Volcado y exfiltración de información de la Base de Datos
+        \end{itemize}
+        
+        En cada paso guardamos el output de los comandos en logs; al terminar, el script de captura vuelca esos ficheros a una carpeta de la sesión actual para analizarlos después. Cuando acabamos, tumbamos el entorno (`docker compose down`).
+        
+        \subsection{Definición de la ventana de medición}
+        Fijamos el inicio de la ventana de medición en el instante en que el atacante dispone de ejecución de código remota en webapp, con una reverse shell operativa. La fase previa al RCE sirve para narrar cómo se compromete el portal, pero no entra en el cuadro comparativo entre escenarios: el punto de entrada está fijado por diseño en ambos. A partir de este punto medimos:
+        \begin{itemize}
+            \item Detección
+            \item Profundidad del ataque
+            \item Bloqueo de comandos desde reverse shell
+            \item Superficie visible
+            \item Volumen exfiltrado
+            \item Integridad del tráfico interno
+        \end{itemize}
+        
+    \section{Resultados — Escenario A (Perimetral)}
+        \subsection{Cronología de la sesión oficial}
+        FALTA TABLA
+
+        En esta tabla podemos observar el proceso mediante el cual el atacante obtiene primero acceso como admin al dashboard de la app web, consigue RCE y por último acceso al nodo 'webapp'. Mediante técnicas de escaneo descubre rutas comunes poco protegidas y consigue hacerse con credenciales en texto plano, las cuales usa para acceder y encontrar una vulnerabilidad que le permite conseguir una "Reverse Shell" en la que poder ejecutar código remoto. En este punto consideramos la "Assumed breach" y es desde donde empezaremos a medir las diferencias entre el escenario Perimetral y Zero Trust.
+        
+        \subsection{Métricas KPI — Escenario A}
+        FALTA TABLA
+
+        En el escenario perimetral no hay ningún sistema de detección activo: los accesos quedan solo en logs pasivos de nginx y webapp, sin alertas ni correlación de eventos.
+
+        Una vez dentro de webapp, el atacante consigue proyectarse hasta el backend y la base de datos: la brecha alcanza los tres nodos del stack sin que ningún control de segmentación lo impida.
+        
+        Ningún mecanismo de bloqueo actúa sobre el movimiento lateral: la exfiltración de credenciales, las peticiones al API interno y la consulta SQL terminan con éxito.
+        
+        Desde webapp el escaneo interno muestra los tres servicios, backend en el puerto 5000, la base de datos en el 5432 y nginx en el 80, con total visibilidad de la red plana. [FIG: nmap-perimetral]
+        
+        La exfiltración es efectiva: obtiene la contraseña de la BD del entorno del contenedor, descarga el JSON de tres empleados desde `/empleados` y vuelca la tabla completa, unos 766 bytes entre credenciales y datos. [FIG: peticion /empleados] y [FIG: consulta SQL]
+        
+        Como el tráfico entre contenedores no va cifrado, puede capturar el intercambio HTTP con tcpdump y leer el JSON en claro en el pcap. [FIG: tcpdump, etc.]
+
+        
+    \section{Resultados — Escenario B (Zero Trust)}
+        \subsection{Cronología de la sesión oficial}
+        FALTA TABLA
+        
+        \subsection{Métricas KPI — Escenario B}
+        FALTA TABLA
+        
+        \subsection{Observaciones de la sesión}
+        Con Zero Trust podemos observar como cambian los resultados y como los ajustes realizados en la red para aplicar dicha metodología dan sus frutos.
+
+        Wazuh detecta la actividad post-explotación: la primera alerta llega a los 22 segundos desde el inicio de la ventana de medición, asociada al escaneo nmap desde webapp. La detección existe, aunque no es inmediata.
+        
+        Como en el caso anterior, el atacante obtiene RCE en webapp y crea una brecha en la red, pero no consigue avanzar más allá de ese nodo: no alcanza el backend ni la base de datos de forma útil para el ataque.
+        
+        Los controles de bloqueo impiden completar los hitos post-explotación: no hay credenciales en el entorno del contenedor, la petición a la API interna no devuelve datos y la consulta a PostgreSQL falla por completo.
+        
+        El escaneo interno solo identifica nginx en el puerto 80 y el backend en el 443; la base de datos no resuelve por DNS y el puerto 5000 del backend aparece cerrado. [FIG: nmap-zerotrust]
+        
+        No se exfiltra ningún dato: los logs recuperados (`creds.txt` y `lateral.json`) quedan vacíos, sin contraseñas ni registros de empleados.
+        
+        El tráfico hacia el backend va cifrado con TLS y, sin certificado de servicio, nginx responde con error 400; tampoco puede leer peticiones en claro como en el escenario perimetral. [FIG: lateral\_attempt.log — 400 sin certificado]
+
+    \section{Comparativa Perimetral vs Zero Trust}
+        \subsection{Tabla comparativa final}
+        FALTA TABLA
+
+        La tabla anterior condensa lo medido en la fase post-explotación, a partir de los mismos cuatro hitos en ambos escenarios (véase §6.1.3). 
+
+        Con estos seis indicadores respondemos, con datos reproducibles, en qué medida la arquitectura Zero Trust reduce el impacto frente al modelo perimetral en:
+        \begin{itemize}
+            \item Detección
+            \item Profundidad del ataque
+            \item Bloqueo de comandos desde reverse shell
+            \item Superficie visible
+            \item Volumen exfiltrado
+            \item Integridad del tráfico interno
+        \end{itemize}
+        
+        En el escenario perimetral el atacante recorre los tres nodos de la red sin que ningún control lo detenga. En cambio, en Zero Trust el compromiso queda acotado a webapp y Wazuh registra actividad. 
+        
+        El desglose por dimensión y la atribución de cada mecanismo están en 6.4.2; los matices de interpretación, en 6.4.3.
+        
+        \subsection{Análisis de la mejora}
+
+        En detección, el escenario perimetral no dispone de mecanismo activo: solo quedan logs pasivos de nginx y webapp, sin alertas. Zero Trust introduce Wazuh, que muestrea cada 2 segundos los procesos en webapp; la primera alerta llega asociada al escaneo nmap.
+
+        La profundidad del ataque pasa de tres nodos a uno: una reducción del 67\% en alcance lateral. La microsegmentación en tres zonas impide que webapp alcance `db\_zone`, Flask escucha solo en `127.0.0.1` dentro del backend y el atacante no consigue operar con utilidad en backend ni en la base de datos, aunque mantenga la reverse shell en webapp.
+        
+        El bloqueo de comandos desde reverse shell refleja el mismo contraste: en A ningún objetivo post-explotación falla al ejecutarse desde la shell. En B los tres quedan frustrados:
+        \begin{enumerate}
+            \item Los secretos de base de datos viven solo en backend.
+            \item El canal hacia la API exige certificado de servicio.
+            \item La segmentación corta el acceso directo a la base de datos.
+        \end{enumerate}
+        
+        La superficie visible interna se reduce de tres servicios accesibles a uno de tres: `db` no resuelve por DNS desde webapp y el puerto 5000 del backend aparece cerrado. El escaneo desde el nodo comprometido solo identifica nginx en el 80 y el backend en el 443, frente a la visibilidad total de la red interna en el escenario perimetral.
+        
+        En exfiltración, el volumen fugado cae de unos 766 bytes (tres registros de empleados, la contraseña de la base de datos y el JSON de la API) a cero. Sin credenciales en el entorno de webapp y sin respuesta útil del backend, los logs que evidencian el volumen de datos exfiltrados quedan vacíos en la sesión Zero Trust.
+        
+        En integridad del tráfico, el contraste es cualitativo pero contundente:
+        \begin{enumerate}
+            \item En el escenario perimetral, el pcap muestra HTTP y JSON en claro.
+            \item En Zero Trust, el tráfico hacia backend va cifrado con TLS y, sin certificado cliente, nginx devuelve error 400.
+        \end{enumerate}
+        
+        El atacante no puede replicar la lectura pasiva del intercambio que sí logró en el escenario perimetral.
+        
+        En conjunto, estos resultados cuantifican un patrón que la literatura revisada en 2.7 apenas aborda con métricas comparables.
+
+        \subsection{Matices de la interpretación}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                 CONCLUSIONS                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Conclusiones}
+
+????? ????????????? ????????????? ????????????? ????????????? ????????????? 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                BIBLIOGRAFIA                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{10}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MODEL D'ARTICLE                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibitem{light}
+   Jennifer~S. Light.
+   \newblock When computers were women.
+   \newblock \textit{Technology and Culture}, 40:3:455--483, juliol, 1999.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MODEL DE LLIBRE                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibitem{ifrah}
+   Georges Ifrah.
+   \newblock \textit{Historia universal de las cifras}.
+   \newblock Espasa Calpe, S.A., Madrid, sisena edició, 2008.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MODEL D'URL                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibitem{WAR}
+   Comunicat de premsa del Departament de la Guerra, 
+   emés el 16 de febrer de 1946. 
+   \newblock Consultat a 
+   \url{http://americanhistory.si.edu/comphist/pr1.pdf}.
+
+\end{thebibliography}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           APÈNDIXS  (Si n'hi ha!)                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\APPENDIX
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         LA CONFIGURACIO DEL SISTEMA                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Configuració del sistema}
+
+????? ????????????? ????????????? ????????????? ????????????? ?????????????
+
+\section{Fase d'inicialització}
+
+????? ????????????? ????????????? ????????????? ????????????? ?????????????
+
+\section{Identificació de dispositius}
+
+????? ????????????? ????????????? ????????????? ????????????? ?????????????
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                               ALTRES  APÈNDIXS                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\chapter{??? ???????????? ????}
+
+????? ????????????? ????????????? ????????????? ????????????? ????????????? 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              FI DEL DOCUMENT                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
