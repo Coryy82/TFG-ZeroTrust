@@ -150,6 +150,11 @@ Sesión oficial: `zerotrust_sesion_20260609_130120` (2026-06-09). Commit `271b38
 
 El escaneo interno queda reflejado en `e1_scan.log`: `nginx:80` y `backend:443` visibles; `db` no resuelve; puerto `:5000` cerrado (conn-refused).
 
+---
+Texto redactado
+
+---
+
 ### 6.3.2 Métricas KPI — Escenario B
 
 
@@ -164,6 +169,12 @@ El escaneo interno queda reflejado en `e1_scan.log`: `nginx:80` y `backend:443` 
 
 
 [FIG: captura `lateral_attempt.log` o `backend.log` mostrando HTTP 400 «No required SSL certificate was sent»]
+
+---
+Texto redactado
+
+---
+
 
 ### 6.3.3 Observaciones de la sesión
 
