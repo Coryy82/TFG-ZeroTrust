@@ -1,6 +1,6 @@
 # Timeline de Correos con el Tutor (Héctor)
 
-> **Propósito:** Material primario inmutable. Recoge los correos verbatim entre Pau Pérez Marco y el tutor Héctor entre noviembre de 2025 y abril de 2026 hasta la aprobación oficial del TFG.
+> **Propósito:** Material primario inmutable. Recoge los correos verbatim entre Pau Pérez Marco y el tutor Héctor desde noviembre de 2025 hasta la entrega del TFG.
 > **Uso recomendado:** Fuente de verdad para reconstruir decisiones, validar interpretaciones del feedback del tutor y citar literalmente en la memoria si fuera necesario.
 > **Documentos relacionados:**
 > - [`00_DIRECTRICES_TUTOR.md`](00_DIRECTRICES_TUTOR.md) — síntesis normativa de las directrices destiladas de estos correos.
@@ -358,6 +358,24 @@
 
 ---
 
+## 19. 2026-06-16 — Pau → Héctor (borrador caps. 2–6 + solicitud de cita)
+
+> Buenas tardes Hector,
+>
+> Gracias por las recomendaciones, dediqué un tiempo a ver otros trabajos y además enfoqué un poco más la redacción a responder a la pregunta de por qué Zero Trust era mejor que lo tradicional.
+>
+> Te adjunto lo que he redactado del trabajo (caps 2-6), a excepción de la Introducción y las Conclusiones. Está copiado directamente del borrador a la plantilla del TFG de la ETSINF, por lo que falta adaptarlo del todo a Latex y meter las figuras y tablas.
+> Aún tengo dudas sobre donde poner x contenido porque hay partes que empecé a redactar hace tiempo que me parece que no acaban de ajustarse del todo al capítulo (Por ejemplo, la sección 5.4 no sé si debería ir al capítulo de pruebas)
+>
+> Lo siguiente que haré será acabar de redactar los últimos capítulos que me faltan y meter figuras y tablas donde hagan falta.
+>
+> Si lo ves bien, tengo disponibilidad para acercarme a repasarlo.
+>
+> Gracias de antemano,
+> Pau.
+
+---
+
 ## Estado al cierre del timeline
 
 - **Propuesta:** APROBADA por el tutor el 2026-04-09 y oficializada en EBRON entre el 2026-04-19 y el 2026-04-27.
@@ -367,3 +385,4 @@
 - **Metodología de trabajo:** acordada en el correo 2026-04-20 (origen normativo del [`00_DIRECTRICES_TUTOR.md §5–§6`](00_DIRECTRICES_TUTOR.md)).
 - **Convocatoria objetivo:** **julio 2026**. Deadline de entrega: **21/06/2026**. Luz verde del tutor tras borrador "razonablemente decente" enviado el **2026-06-06** (§17–§18). Ver [`00_DIRECTRICES_TUTOR.md §7`](00_DIRECTRICES_TUTOR.md).
 - **Borrador índice anotado:** ENVIADO 2026-06-06. Validación general positiva; matizar redacción de objetivos (pregunta de investigación, no solo "comparar"). Próximo paso acordado: cita en despacho cuando haya contenido redactado.
+- **Borrador memoria caps. 2–6:** ENVIADO 2026-06-16 (§19). Incluye reorientación hacia la pregunta de investigación (Zero Trust vs. tradicional). Sin Introducción ni Conclusiones en el adjunto. Plantilla ETSINF/LaTeX sin figuras ni tablas definitivas. Duda editorial pendiente: ubicación de §5.4. Solicitud de cita presencial. **Respuesta del tutor:** pendiente a **2026-06-18**.

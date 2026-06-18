@@ -45,3 +45,15 @@
   3. **Próximo contacto:** solicitar cita en despacho cuando haya borrador sustancial (caps. 3–6 o memoria ~60–70%, alineado con hito 14/06).
 - **Artefacto enviado:** `docs/03_memoria_tfg/Borradores y pretrabajos/Borrador_Indice_Anotado_HUMANO.md`
 - **ESTADO:** 🟢 Hito `email_tutor_31_05` recuperado y validado en línea general. Sprint Final desbloqueado para redacción y pruebas formales.
+
+## 2026-06-16 — Envío borrador caps. 2–6 y solicitud de cita presencial
+
+- **Evento:** Correo de Pau al tutor con borrador sustancial de la memoria (caps. 2–6), cumpliendo el acuerdo del 06/06 de contactar cuando hubiera contenido redactado.
+- **Correo Pau → Héctor (16/06/2026):** Agradece las recomendaciones del correo anterior. Revisó otros TFGs y reorientó la redacción hacia la pregunta de investigación (*por qué Zero Trust es mejor que lo tradicional*). Adjunto: caps. 2–6 (sin Introducción ni Conclusiones), transferidos del borrador a la plantilla LaTeX ETSINF — pendiente adaptación completa a LaTeX, figuras y tablas. Duda editorial: contenido redactado con anterioridad que no encaja del todo en su capítulo (ej. §5.4, ¿debería ir al capítulo de pruebas?). Próximos pasos: acabar Intro y Conclusiones; insertar figuras y tablas. Ofrece disponibilidad para cita en despacho.
+- **Respuesta Héctor:** Sin respuesta a **18/06/2026**.
+- **Artefacto enviado:** Plantilla `borradorplantillatfgoverleaf.tex` con caps. 2–6 (fuentes MD en `docs/03_memoria_tfg/`).
+- **Acciones derivadas:**
+  1. Esperar feedback del tutor sobre estructura y núcleo cuantitativo.
+  2. Resolver duda §5.4 con respuesta del tutor o decisión editorial.
+  3. Completar Intro y Conclusiones, figuras y tablas antes del PDF final (hito 19/06).
+- **ESTADO:** 🟡 Borrador sustancial enviado. Pendiente respuesta del tutor.

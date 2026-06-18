@@ -1,84 +1,84 @@
-# HOY — 2026-06-14 (domingo) · CHECKPOINT OVERLEAF + EMAIL TUTOR
+# HOY — 2026-06-18 (jueves) · OVERLEAF COMPLETO + FIGURAS
 
-> **Situación:** Fase 3 — Semana 3 · **Último día del hito 14/06.**
-> **Completado 12/06:** Cap. 3 ✅ · Cap. 5 ✅ · Cap. 6 texto ✅ (commits `381658a`, `d7c30db`, `57c08d6`).
-> **Deuda 13/06 (buffer no ejecutado):** §4.5 sin cerrar · 12 `[TODO]` residuales en Cap. 4 · figuras Caps. 5–6 sin insertar · repaso `[CITAR:]` / coherencia cruzada · `reporte_2026-06-12.md` sin crear.
-> **Bloqueo activo:** `setup_overleaf` y `envio_tutor_14_06` pendientes — **hoy es el día del hito.**
-> Plan IDs: `cerrar_cap_4_5_figuras` → `setup_overleaf` → `envio_tutor_14_06`
-> Fase: 3 de 4 · **Próximo hito duro 16/06:** Caps. 1 y 7 en borrador.
+> **Situación:** Fase 4 — Semana 4 · **Penúltimo día antes del hito 19/06.**
+> **Completado 16–17/06:** email tutor ✅ (caps. 2–6) · Cap. 1 ✅ · Cap. 7 ✅ · plantilla `.tex` local ✅ (commit `aa1d73c`).
+> **Deuda arrastrada:** `setup_overleaf` online sin iniciar · transferencia MD→Overleaf incompleta · ~32 `[FIG:]` sin resolver · PDF no compilado.
+> **Bloqueo activo:** respuesta del tutor pendiente (email 16/06; 48h+ vencidas). **No bloquear el día esperando feedback.**
+> Plan IDs: `setup_overleaf` → `transferir_a_overleaf` → `cerrar_cap_4_5_figuras`
+> Fase: 4 de 4 · **Próximo hito duro mañana 19/06:** PDF compilado + email final al tutor.
 
 ---
 
 ## OBJETIVO DEL DÍA
 
-1. **Cerrar deuda Cap. 4:** §4.5 limitaciones + eliminar `[TODO]` skeleton redundantes (la prosa [IA/HUMANO] ya cubre §4.1–4.3); cerrar §4.4.1 con frase de cierre.
-2. **Figuras mínimas:** insertar 3–4 capturas clave en Cap. 6 (nmap ZT, lateral 400, opcional tshark A) — el resto puede quedar `[FIG:]` para Fase 4.
-3. **Checkpoint ROADMAP:** crear proyecto Overleaf (plantilla ETSINF, compila con dummy) + generar PDF borrador Caps. 3–6.
-4. **Enviar email al tutor** con memoria ~60–70% y registrar en bitácora.
+1. **Crear proyecto Overleaf online** con plantilla ETSINF y verificar que compila (arrancar desde `borradorplantillatfgoverleaf.tex` si acelera).
+2. **Transferir memoria completa:** Caps. 1–7 + resumen/abstract + BibTeX desde `99_bibliografia.md`.
+3. **Figuras mínimas:** insertar 4–6 capturas clave (Cap. 6 prioritario; resto placeholder o anexo).
+4. **Generar PDF descargable** listo para revisión final mañana y envío al tutor el 19/06.
 
 ---
 
 ## SI SOLO HACES UNA COSA
 
-**Envía el email al tutor** con un PDF que incluya Caps. 3, 4, 5 y 6 en borrador. Aunque falten figuras o queden `[TODO]` menores en Cap. 4, el núcleo cuantitativo (Cap. 6 §6.4) y el hilo problema→diseño→implantación→pruebas ya están redactados. Overleaf puede quedar en esbozo si el PDF se genera por otra vía (pandoc, export MD, etc.).
+**Consigue un PDF que compile en Overleaf con los 7 capítulos**, aunque falten figuras secundarias o queden placeholders. Mañana toca revisión ortográfica + email final; hoy el cuello de botella es la compilación, no la perfección editorial.
 
 ---
 
-## CONTEXTO: QUÉ CAMBIÓ DESDE EL 12/06
+## CONTEXTO: QUÉ CAMBIÓ DESDE EL 14/06
 
-| Tema | Estado 12/06 | Estado actual (14/06) |
+| Tema | Estado 14/06 | Estado actual (18/06) |
 |------|--------------|------------------------|
-| Cap. 3 §3.1–§3.4 | ✅ [HUMANO] | ✅ Revisión humana hecha; pendiente alinear pregunta con §1.2 (Fase 4) |
-| Cap. 5 §5.1–§5.5 | ✅ [HUMANO] | ✅ Texto completo; 16 `[FIG:]` sin resolver (no bloquean envío) |
-| Cap. 6 §6.1–§6.4 | ✅ [HUMANO] | ✅ Texto completo; ~8 `[FIG:]` sin resolver |
-| Cap. 4 §4.1–§4.3 | Prosa [IA/HUMANO] | ⚠️ Prosa OK pero **12 `[TODO]` skeleton** sin borrar encima del texto |
-| Cap. 4 §4.4.1 | Bullets + 2 `[TODO]` | ⚠️ Falta frase de cierre |
-| Cap. 4 §4.5 | Texto [IA] + `[TODO]` esqueleto | ❌ **Pendiente — deuda 12/13/06** |
-| Buffer 13/06 | Planificado | ❌ No ejecutado (sin commits ni reporte) |
-| Overleaf | — | ❌ `setup_overleaf` sin iniciar |
-| Email tutor 14/06 | — | ❌ `envio_tutor_14_06` pendiente |
-| Cap. 1 §1.2 | Opcional 12/06 | ❌ Pendiente (agenda 15/06) |
-| Hito 14/06 | 2 días | **HOY** |
+| Cap. 3–6 texto | ✅ [HUMANO] | ✅ Sin cambios sustanciales |
+| Cap. 4 §4.5 + skeleton | ❌ Pendiente | ✅ Cerrado (commit `3ff326b`) |
+| Cap. 1 §1.1–§1.5 | ❌ Pendiente | ✅ Borrador [HUMANO] (17/06; commits `3d65bc0`, `684a809`) |
+| Cap. 7 §7.1–§7.4 | ❌ Pendiente (agenda 16/06) | ✅ Borrador [HUMANO] (17/06); pendiente revisión estilo §7 |
+| Email tutor caps. 2–6 | ❌ Pendiente | ✅ Enviado **16/06** (timeline §19, bitácora) |
+| Respuesta tutor | — | ❌ Sin respuesta a 18/06 (duda §5.4 sin resolver) |
+| Plantilla LaTeX local | ❌ | ✅ `borradorplantillatfgoverleaf.tex` ~780 líneas (`aa1d73c`) |
+| Overleaf online | ❌ | ❌ `setup_overleaf` sin iniciar |
+| PDF compilado | ❌ | ❌ Pendiente |
+| Figuras `[FIG:]` | ~32 sin resolver | ~32 sin resolver (Cap. 5: 16 · Cap. 6: 10 · Cap. 4: 5) |
+| Hito 19/06 | 5 días | **MAÑANA** |
 
 **Commits recientes (referencia):**
 
-- `381658a` (12/06): Cap. 3 — modelo amenazas, RF/RNF, KPIs
-- `d7c30db` (12/06): Cap. 5 — IaC, escenarios A/B, integración
-- `57c08d6` (12/06): Cap. 6 §6.4 comparativa + revisiones editoriales
-- `0651569`: skill redactar-memoria-tfg
-- `3bfd789`: directrices editoriales + perfil autor
+- `3ff326b` (14/06): Cap. 4 §4.4.1–§4.5 cerrados; skeleton eliminado
+- `aa1d73c` (17/06): plantilla Overleaf local ETSINF con caps. 2–6
+- `3d65bc0`, `684a809` (17/06): Caps. 1 y 7 en borrador
+- `735133a` (17/06): refinamiento Cap. 6 §6
 
-**Fuentes para figuras Cap. 6 (evidencias ya capturadas):**
+**Artefacto base Overleaf:** `docs/03_memoria_tfg/Borradores y pretrabajos/borradorplantillatfgoverleaf.tex`
+
+**Fuentes para figuras prioritarias (evidencias ya capturadas):**
 
 - `tests/logs/perimetral_sesion_20260523_175204/` — nmap, lateral.pcap, creds, SQL
 - `tests/logs/zerotrust_sesion_20260609_130120/` — nmap ZT, lateral_attempt.log, alerts
-- Plantilla: `tests/00_PLANTILLA_KPI_v2.md` §1–§3 (rutas verificadas)
+- Plantilla KPI: `tests/00_PLANTILLA_KPI_v2.md` §1–§3
 
-**Plantilla email tutor:** `docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md` §7 — breve, bullets: (1) qué entregas, (2) qué pides (revisión núcleo cuantitativo), (3) qué harás si no responde en 48h.
+**Plan B si el tutor no responde hoy:** avanzar con PDF completo mañana 19/06; incorporar feedback solo si llega antes del depósito del 21/06.
 
 ---
 
-## PENDIENTES ARRASTRADOS (12–13/06)
+## PENDIENTES ARRASTRADOS (14–17/06)
 
-Prioridad antes del envío al tutor:
+Prioridad antes del PDF de mañana:
 
 | ID | Tarea | Origen | Tiempo est. |
 |----|-------|--------|-------------|
-| P1 | Cerrar §4.5: borrar `[TODO]` esqueleto; conservar texto [IA] (3 párrafos) | HOY 12/06 Bloque 3 | 20 min |
-| P2 | Limpiar Cap. 4: eliminar los 12 `[TODO]` de §4.1–4.3 donde ya hay prosa [IA] debajo | Agenda 13/06 | 45 min |
-| P3 | §4.4.1: redactar 1 frase de cierre; borrar `[TODO]` restantes | Agenda 13/06 | 15 min |
-| P4 | Figuras mínimas Cap. 6: nmap-perimetral, nmap-zerotrust, lateral 400, opcional tshark | HOY 12/06 Bloque 3 | 1h |
-| P5 | Repaso rápido: buscar `[TODO]`/`[TODO POST-IMPL]` en caps. 3–6 | Agenda 13/06 | 30 min |
-| P6 | Actualizar cabecera Cap. 4 (sigue «ESQUELETO»; debería ser BORRADOR) | Detectado 14/06 | 5 min |
-| P7 | Crear `admin/reportes/reporte_2026-06-14.md` al cierre | Admin | 15 min |
+| P1 | Crear proyecto Overleaf online + verificar compilación dummy | Agenda 14/06, STATE | 1h |
+| P2 | Subir/integrar `borradorplantillatfgoverleaf.tex` + Caps. 1 y 7 (no iban en email 16/06) | Agenda 17–18/06 | 2h |
+| P3 | BibTeX desde `99_bibliografia.md` | Agenda 17/06 | 1h30 |
+| P4 | Figuras clave Cap. 6: nmap-perimetral, nmap-zerotrust, lateral 400, alertas Wazuh | Agenda 18/06 | 1h30 |
+| P5 | Resolver errores LaTeX hasta PDF descargable | Agenda 18/06 | 2h |
+| P6 | Verificar portada, índice, paginación, resumen | Agenda 18/06 | 45 min |
+| P7 | Crear `admin/reportes/reporte_2026-06-18.md` al cierre | Admin | 15 min |
 
-**Puede esperar a Fase 4 (15–18/06):**
+**Puede esperar al 19/06 (revisión final):**
 
-- 16 `[FIG:]` restantes Cap. 5
-- Figuras Cap. 6 no insertadas hoy
-- `[CITAR:]` inline (21 en EdA; resto mínimo)
-- §1.2 Introducción con pregunta de investigación (15/06)
-- Transferencia masiva MD → Overleaf (17–18/06)
+- 16 `[FIG:]` restantes Cap. 5 (salvo 1–2 de arquitectura si sobra tiempo)
+- Revisión estilo Cap. 7 `[IA - REVISAR]`
+- Conversión masiva `[CITAR:]` → BibTeX inline
+- Decisión editorial §5.4 (esperar tutor; si no responde, mantener en Cap. 5 con nota o mover a anexo)
 - Anexos de configuración Cap. 5
 
 ---
@@ -87,109 +87,106 @@ Prioridad antes del envío al tutor:
 
 ### Bloque 0 — 15 min · Alineación
 
-- Leer `admin/STATE.md` (fecha 12/06 — actualizar al cierre)
+- Leer `admin/STATE.md` (actualizado 18/06)
 - Confirmar: sin tareas de laboratorio pendientes
-- Listar archivos a adjuntar: `03`, `04`, `05`, `06` (+ opcional `02` EdA como contexto)
+- Decisión del día: **Overleaf online es la prioridad absoluta** — el `.tex` local es punto de partida, no sustituto de compilación verificada
 
 ---
 
-### Bloque 1 — 1h30 · Cierre Cap. 4 (`cerrar_cap_4_5_figuras`) — PRIORIDAD
+### Bloque 1 — 1h · Setup Overleaf (`setup_overleaf`) — PRIORIDAD
 
-**§4.5 Limitaciones (20 min)**
+- Crear proyecto Overleaf con plantilla ETSINF UPV
+- Subir `borradorplantillatfgoverleaf.tex` como base (ya contiene caps. 2–6)
+- Verificar compilación con texto dummy o primer capítulo
+- Resolver errores de clase/paquetes antes de seguir
 
-- Eliminar bloque `[TODO]` L345–355; conservar «Texto redactado [IA]» L361–369
-- Marcar §4.5 como [HUMANO] tras lectura rápida
-
-**Limpieza skeleton §4.1–4.3 (45 min)**
-
-- Borrar cada `[TODO]` que duplica la prosa [IA] ya redactada debajo (12 ocurrencias)
-- Conservar líneas `[FIG:]` — son placeholders válidos para Overleaf
-- Actualizar cabecera del capítulo: BORRADOR §4.1–§4.5
-
-**§4.4.1 cierre (15 min)**
-
-- Sustituir `[TODO]` L326 y L333 por prosa breve [HUMANO]: «Las decisiones respondieron a restricciones del laboratorio y al modelo de amenazas, no a elecciones arbitrarias» (adaptar tono)
-- Los bullets Wazuh/Suricata, PEP, agente host/contenedor ya están — no reescribir
-
-**Hecho cuando:** Cap. 4 sin `[TODO]` en cuerpo; §4.5 cerrado.
+**Hecho cuando:** proyecto online compila sin error fatal.
 
 ---
 
-### Bloque 2 — 1h · Figuras mínimas Cap. 6
+### Bloque 2 — 3h · Transferencia completa (`transferir_a_overleaf`)
 
-Insertar solo las imprescindibles para que el PDF tutor sea legible:
+**Caps. pendientes respecto al email del 16/06:**
+
+- Cap. 1 (`01_intro.md`) — no iba en el adjunto
+- Cap. 7 (`07_conclusiones.md`) — redactado el 17/06
+- `00_resumen.md` — abstract/resumen
+
+**Revisión de caps. ya en plantilla:**
+
+- Cap. 2 EdA — verificar contra `02_estado_arte.md`
+- Caps. 3–6 — sincronizar con MD fuente por si hubo commits posteriores (`735133a`, `3ff326b`)
+
+**BibTeX:**
+
+- Crear entradas desde `99_bibliografia.md`
+- Sustituir referencias críticas inline (mínimo las del Cap. 6 §6.4)
+
+**Hecho cuando:** los 7 capítulos + resumen están en Overleaf y el documento compila (aunque con warnings).
+
+---
+
+### Bloque 3 — 2h · Figuras mínimas (`cerrar_cap_4_5_figuras`)
+
+Insertar solo las imprescindibles para que el PDF sea legible y demuestre resultados:
 
 1. `[FIG: nmap-zerotrust]` — escaneo reducido Escenario B
 2. `[FIG: lateral_attempt.log — 400 sin certificado]` — bloqueo mTLS
 3. `[FIG: nmap-perimetral]` — contraste visibilidad red plana
-4. *(Opcional)* `[FIG: captura tshark lateral.pcap]` — E3 perimetral
+4. Tabla comparativa KPI §6.4 (si no está ya maquetada)
+5. *(Opcional)* alerta Wazuh T1046/T1552.004
+6. *(Opcional)* 1 diagrama arquitectura A/B del Cap. 4
 
-Ruta evidencias: sesiones oficiales en `tests/logs/`. No regenerar capturas en laboratorio.
+El resto de `[FIG:]` puede quedar como placeholder `[Figura pendiente — Anexo X]` sin bloquear compilación.
 
-**Hecho cuando:** al menos 3 figuras referenciadas con imagen real o enlace relativo en el MD.
-
----
-
-### Bloque 3 — 2h · Overleaf + PDF borrador (`setup_overleaf`)
-
-- Crear cuenta/proyecto Overleaf con plantilla ETSINF UPV
-- Cargar texto dummy o primer capítulo; **verificar que compila**
-- Generar PDF borrador con Caps. 3–6 (pandoc, Overleaf parcial, o export manual — lo que sea más rápido hoy)
-- No intentar maquetar los 8 capítulos completos; eso es Fase 4 (17–18/06)
-
-**Hecho cuando:** tienes un PDF descargable con el núcleo de la memoria.
+**Hecho cuando:** al menos 4 figuras reales insertadas; PDF visualmente coherente en Cap. 6.
 
 ---
 
-### Bloque 4 — 45 min · Email tutor (`envio_tutor_14_06`)
+### Bloque 4 — 2h · Compilación y pulido LaTeX
 
-**Contenido del correo (directriz §7):**
+- Resolver errores LaTeX uno a uno (timebox 20 min/error; si supera → simplificar)
+- Maquetar tablas KPI y bloques de código críticos
+- Verificar índice generado, numeración de secciones, portada ETSINF
+- Generar y **descargar PDF**
+- Lectura visual rápida: saltos de página groseros, títulos huérfanos, referencias rotas
 
-1. **Qué entregas:** borrador Caps. 3–6 (~60–70% memoria): análisis del problema, diseño A/B, implantación, pruebas y comparativa KPI.
-2. **Qué pides:** revisión del núcleo cuantitativo (§6.4) y coherencia problema→controles→métricas; disponibilidad para cita en despacho si lo ve oportuno.
-3. **Qué harás por defecto:** avanzar Caps. 1 y 7 (15–16/06) y PDF completo Overleaf (19/06) con o sin feedback en 48h.
-
-**Acciones:**
-
-- Adjuntar PDF borrador
-- Registrar envío en `docs/02_reuniones_tutor/BITACORA_REUNIONES.md`
-- Commit de cierre del día si hay cambios en caps. 4–6
-
-**Hecho cuando:** email enviado + bitácora actualizada.
+**Hecho cuando:** PDF descargable con memoria completa caps. 1–7.
 
 ---
 
-### Bloque 5 (opcional, 1h) · Repaso transversal
+### Bloque 5 — 45 min · Preparación hito 19/06
 
 Solo si los bloques 1–4 terminan antes de las 20:00:
 
-- Buscar `[TODO]` restantes en caps. 3–6
-- Verificar referencias cruzadas §3.2.4 ↔ §4.2.3 ↔ §6.1 (4 hitos)
-- Esbozo §1.2 en `01_intro.md` con pregunta de investigación (copiar literal de §3.1)
+- Esbozar email final al tutor (`envio_tutor_19_06`) — plantilla `docs/02_reuniones_tutor/00_DIRECTRICES_TUTOR.md` §7
+- Lista de `[CITAR:]` / typos detectados en la lectura visual → backlog revisión mañana
+- Si llega respuesta del tutor hoy: anotar feedback en bitácora; aplicar solo cambios rápidos (<30 min)
+
+**Hecho cuando:** PDF guardado localmente + borrador mental del email de mañana.
 
 ---
 
 ## NO HACER HOY
 
 - **No** repetir sesión de laboratorio (KPI y evidencias cerradas 09/06).
-- **No** redactar Cap. 7 Conclusiones (agenda 16/06).
-- **No** redactar Cap. 1 completo (agenda 15/06; §1.2 solo si sobra tiempo).
-- **No** insertar las 16 figuras del Cap. 5 ni todas las del Cap. 6.
-- **No** transferencia masiva a Overleaf de todos los capítulos (17–18/06).
-- **No** reabrir §6.4 salvo typo crítico que invalide la comparativa.
-- **No** bloquear el envío esperando perfección editorial — el hito es **entregar**, no pulir.
+- **No** reabrir texto de caps. 1–7 salvo error que impida compilar (typos LaTeX, no reescritura editorial).
+- **No** insertar las 32 figuras — priorizar 4–6 clave.
+- **No** bloquear el día esperando respuesta del tutor (48h+ ya vencidas).
+- **No** perseguir perfección BibTeX — citas críticas primero; resto mañana.
+- **No** reabrir §6.4 salvo typo que invalide la comparativa cuantitativa.
 
 ---
 
 ## CRITERIO DE ÉXITO MÍNIMO DEL DÍA
 
-- Email al tutor **enviado** con PDF borrador Caps. 3–6
-- Overleaf creado y **compila** (aunque sea con dummy)
-- §4.5 cerrado; Cap. 4 sin `[TODO]` skeleton
+- Proyecto Overleaf online **compila**
+- PDF descargable con **caps. 1–7 + resumen**
+- Al menos **4 figuras reales** en Cap. 6 (o mix Cap. 4/6)
 
-**Mínimo absoluto (si el día se acorta):** PDF Caps. 3+6 (problema + pruebas) + email tutor. Cap. 4 y 5 como MD adjunto si no hay tiempo de PDF unificado.
+**Mínimo absoluto (si el día se acorta):** Overleaf compila + PDF con caps. 1–7 aunque falten la mayoría de figuras. La revisión ortográfica y el email son tarea del **19/06**.
 
-**Stretch (día completo 6–8h):** todo lo anterior + 4 figuras Cap. 6 + §4.4.1 cerrado + repaso coherencia + borrador §1.2.
+**Stretch (día completo 8–10h):** todo lo anterior + BibTeX mayoritario + 6 figuras + portada/índice verificados + borrador email tutor listo.
 
 ---
 
@@ -197,8 +194,8 @@ Solo si los bloques 1–4 terminan antes de las 20:00:
 
 Al terminar:
 
-1. Actualizar `admin/STATE.md`: hito 14/06 → ✅ o ⚠️ parcial; mover `envio_tutor_14_06` y `setup_overleaf` a DONE si aplican; Fase 4 como DOING.
-2. Crear `admin/reportes/reporte_2026-06-14.md`.
-3. Commit: «docs: cierre hito 14/06 — Cap. 4 §4.5, figuras mínimas, email tutor» (si procede).
-4. **Mañana 15/06 (agenda):** Cap. 1 Introducción §1.1–§1.3 — pregunta de investigación en §1.2 (misma redacción literal que §3.1).
-5. Recordatorio: **19/06** — PDF completo Overleaf + email final tutor · **21/06** — entrega plataforma.
+1. Actualizar `admin/STATE.md`: mover `setup_overleaf` y avance de `transferir_a_overleaf` a DONE si aplica; actualizar riesgo hito 19/06.
+2. Crear `admin/reportes/reporte_2026-06-18.md`.
+3. Commit si hay cambios en `.tex`, figuras o caps.: «docs: Overleaf caps. 1–7 + figuras mínimas Cap. 6» (si procede).
+4. **Mañana 19/06 (agenda):** revisión ortográfica + coherencia + `[CITAR:]` críticos → **ENVIAR PDF final al tutor** → registrar en bitácora.
+5. Recordatorio: **21/06** — depósito en plataforma · margen correcciones tutor: 48h desde email del 19/06.
