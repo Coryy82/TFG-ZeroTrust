@@ -134,6 +134,8 @@ Sesión oficial: `zerotrust_sesion_20260609_130120` (2026-06-09). Commit `271b38
 
 ### 6.3.1 Cronología de la sesión oficial
 
+> **[OMITIR EN OVERLEAF — nota de trabajo, no pasa a la memoria final]**
+
 **Caracterización pre-RCE (§2.2.a):** omitida por diseño — mismo vector HTB que el Escenario A (§6.2.1 / plantilla §1.2.a). El RCE sigue siendo explotable; la comparativa A↔B se mide en la fase post-RCE. Evidencia de SSTI en `tests/logs/zerotrust_sesion_20260609_130120/nginx.log` (~11:13 UTC).
 
 **T0_efectivo:** `13:14:08 CEST`
@@ -151,7 +153,18 @@ Sesión oficial: `zerotrust_sesion_20260609_130120` (2026-06-09). Commit `271b38
 El escaneo interno queda reflejado en `e1_scan.log`: `nginx:80` y `backend:443` visibles; `db` no resuelve; puerto `:5000` cerrado (conn-refused).
 
 ---
-Texto redactado
+
+#### Texto redactado [IA - REVISAR]
+
+La cronología post-explotación del Escenario B reproduce los mismos cuatro hitos que el perimetral (§6.2.1), pero el resultado de cada uno se invierte: la brecha existe, aunque deja de progresar. Más que enumerar los eventos de la tabla, interesa interpretar qué persigue el atacante en cada hito, qué control interviene y qué efecto tiene sobre el avance del ataque.
+
+El primer movimiento, ocho segundos después de `T0_efectivo`, busca las credenciales de la base de datos en el entorno del contenedor, la misma acción que en el Escenario A devolvió la contraseña en claro. En Zero Trust el fichero `creds.txt` queda vacío: `webapp` no recibe las variables de base de datos en su entorno, porque el principio de mínimo privilegio mantiene los secretos únicamente en `backend`. El intento no se frustra por un bloqueo activo, sino porque no hay nada que capturar; el dato que en el perimetral abría el resto de la cadena no está presente en el nodo comprometido. Desde el punto de vista de la superficie de exposición, esto elimina el punto de partida del ataque antes de que el atacante pueda aprovecharlo.
+
+A los 67 segundos el atacante intenta emplear `webapp` como pivote hacia la API interna del backend. El intento se salda con dos respuestas complementarias: el puerto 5000, la vía HTTP en claro que en el perimetral servía el JSON de empleados, rechaza la conexión (*connection refused*), porque Flask solo escucha en `127.0.0.1` dentro del backend; y la petición `https://backend/empleados` recibe un HTTP 400 «No required SSL certificate was sent». Este último error es el que tiene significado: nginx actúa como punto de aplicación de políticas y solo admite la conexión si el cliente presenta un certificado válido firmado por la autoridad de certificación del laboratorio (mTLS). La petición del atacante, lanzada desde una `webapp` comprometida pero sin esa identidad acreditada, no lo presenta y se descarta. Alcanzar la red del backend deja de bastar para hablar con su API, de modo que el backend no puede utilizarse como punto de salto.
+
+A los 130 segundos la acción se dirige contra el activo final, la base de datos. Tanto `psql -h db` como el sondeo `nmap db:5432` fallan en un punto anterior a cualquier autenticación: el nombre `db` no se resuelve por DNS desde `webapp`. La microsegmentación sitúa la base de datos en una zona inaccesible desde el nodo comprometido, así que el atacante no puede ni siquiera resolver el destino, y menos aún conectarse. La diferencia con el perimetral es cualitativa: donde la red plana del Escenario A permitía llegar a `db:5432` y volcar la tabla, aquí el activo es invisible e inalcanzable y el control opera antes de que exista un servicio al que atacar.
+
+En conjunto, la progresión del ataque no avanza más allá del nodo de entrada. Cada hito tropieza con un control de naturaleza distinta —ausencia de secretos en el entorno, autenticación mutua en el punto de aplicación de políticas y segmentación de red—, de manera que el compromiso de `webapp`, que es real y persiste durante toda la ventana de medición, no se traduce en movimiento lateral ni en acceso a los activos protegidos. Frente al recorrido por los tres nodos que el atacante completaba en el perimetral, en Zero Trust la misma secuencia se detiene en el primero. Este comportamiento materializa el principio de asumir la brecha (§4.3.1): el diseño parte de una `webapp` ya comprometida y, aun así, acota el impacto sobre las tres amenazas del modelo (§3.2.4). El intento de interceptar el tráfico interno (captura `lateral.pcap`) tampoco prospera, pues solo recoge comunicaciones cifradas, como se detalla en §6.3.2 (E3); en paralelo, mientras los controles de red frustran los hitos, el agente de detección registra la actividad post-RCE, analizada en §6.3.2 (G1) y §6.3.3.
 
 ---
 
@@ -171,38 +184,40 @@ Texto redactado
 [FIG: captura `lateral_attempt.log` o `backend.log` mostrando HTTP 400 «No required SSL certificate was sent»]
 
 ---
-Texto redactado
+
+#### Texto redactado [IA - REVISAR]
+
+Los seis indicadores traducen la cronología anterior a magnitudes comparables (§3.4).
+
+La primera alerta de Wazuh (G1) llega 22 segundos después de `T0_efectivo`, asociada al escaneo nmap de reconocimiento interno. Que la detección se produzca antes del intento de movimiento lateral (67 s) y del acceso a la base de datos (130 s) es lo que la hace relevante: existe un margen de respuesta cuando el ataque todavía no ha alcanzado los activos. La cobertura es, no obstante, parcial: el agente registra los comandos de mayor duración —nmap, tcpdump, psql—, pero no el `curl` ni el `grep` de un solo disparo, pues el muestreo de procesos cada 2 segundos no alcanza a capturar los comandos más efímeros (limitación desarrollada en §7.2).
+
+La profundidad del ataque (G2) se reduce a un nodo, `webapp`: ni el backend ni la base de datos llegan a ser operativos para el ataque, porque el primero rechaza las peticiones sin certificado de cliente y la segunda no es siquiera alcanzable. La brecha persiste en el nodo de entrada pero no se propaga: el atacante conserva la reverse shell, sin convertir esa posición en alcance sobre la infraestructura.
+
+La tasa de bloqueo (G3) cubre los tres hitos post-explotación dirigidos contra activos protegidos: exfiltración de credenciales, acceso a la API del backend y volcado de la base de datos. Los tres quedan frustrados, cada uno por un control distinto —aislamiento de secretos, autenticación mutua y segmentación—, lo que muestra que la contención no descansa en una única barrera. El único hito que devuelve información al atacante es el escaneo interno, que no constituye acceso a un activo y solo confirma la superficie reducida que mide E1.
+
+El escaneo interno (E1) identifica con utilidad únicamente nginx en el puerto 80; la base de datos no resuelve por DNS y el puerto 5000 del backend aparece cerrado. El backend responde en el 443, pero ese puerto está protegido por mTLS y no es superficie aprovechable. El activo principal desaparece del mapa que el atacante puede construir desde el nodo comprometido. [FIG: nmap-zerotrust]
+
+Los ficheros de evidencia de exfiltración (E2), `creds.txt` y `lateral.json`, quedan vacíos: cero registros y cero bytes. Pese a mantenerse la ejecución remota en `webapp`, la intrusión no produce pérdida de información sobre los activos protegidos.
+
+La captura de tráfico generada por el propio atacante (E3), `lateral.pcap` (26 paquetes, 8386 bytes), contiene tráfico TLS. La petición HTTPS recibe un 400 por falta de certificado de cliente y el puerto 5000 rechaza la conexión. El mTLS opera en dos planos: cifra el canal `webapp ↔ backend`, de modo que la interceptación no recupera contenido útil, y exige identidad mutua, de modo que la petición sin certificado se rechaza en el punto de aplicación de políticas (`backend.log` registra `GET /empleados` → 400).
 
 ---
 
-
 ### 6.3.3 Observaciones de la sesión
 
+> **[OMITIR EN OVERLEAF — notas de trazabilidad de laboratorio, no pasan a la memoria final]**
+
 - **Alertas Wazuh:** además de **100100** (nmap), dispararon **100102** (tcpdump, `11:14:50 UTC`) y **100103** (psql, `11:16:47 UTC`). No hubo **100101** (`curl` efímero vs poll 2 s); **100104** (`grep` creds) no apareció.
-- **Controles ZT verificados:** microsegmentación (`db` invisible desde `webapp`), Flask backend solo en `127.0.0.1` (`:5000` refused), mTLS en PEP (400 sin certificado de servicio), sin secretos en variables de entorno de `webapp`.
+- **Controles ZT verificados:** microsegmentación (`db` invisible desde `webapp`), Flask backend solo en `127.0.0.1` (`:5000` refused), mTLS en PEP (400 sin certificado de cliente), sin secretos en variables de entorno de `webapp`.
 - **Correlación:** `backend.log` L17 registra `GET /empleados` → 400 a `11:15:32 UTC` (= `13:15:32 CEST`), coherente con `lateral_attempt.log`.
 - **Canal post-RCE:** reverse shell SSTI + `pty.spawn`; `nc` no instalado en `webapp` (sustituido por `nmap` para probe 5432).
 - **Reproducibilidad:** `./tests/scripts/logcapture_zerotrust.sh` sobre commit `271b38d9`.
 
 ---
 
-[REV-ESTILO: §6.3 — "dan sus frutos" es un idiom; la guía pide lenguaje denotativo. Sugerencia: formulación neutra (p. ej. "se reflejan en los resultados"). Sin reescribir; decide el autor. Prioridad 2.]
+#### Texto redactado [IA - REVISAR]
 
-#### Texto redactado [HUMANO]
-
-Con Zero Trust podemos observar como cambian los resultados y como los ajustes realizados en la red para aplicar dicha metodología dan sus frutos.
-
-Wazuh detecta la actividad post-explotación: la primera alerta llega a los 22 segundos desde el inicio de la ventana de medición, asociada al escaneo nmap desde webapp. La detección existe, aunque no es inmediata.
-
-Como en el caso anterior, el atacante obtiene RCE en webapp y crea una brecha en la red, pero no consigue avanzar más allá de ese nodo: no alcanza el backend ni la base de datos de forma útil para el ataque.
-
-Los controles de bloqueo impiden completar los hitos post-explotación: no hay credenciales en el entorno del contenedor, la petición a la API interna no devuelve datos y la consulta a PostgreSQL falla por completo.
-
-El escaneo interno solo identifica nginx en el puerto 80 y el backend en el 443; la base de datos no resuelve por DNS y el puerto 5000 del backend aparece cerrado. [FIG: nmap-zerotrust]
-
-No se exfiltra ningún dato: los logs recuperados (`creds.txt` y `lateral.json`) quedan vacíos, sin contraseñas ni registros de empleados.
-
-El tráfico hacia el backend va cifrado con TLS y, sin certificado de servicio, nginx responde con error 400; tampoco puede leer peticiones en claro como en el escenario perimetral. [FIG: lateral_attempt.log — 400 sin certificado]
+La observación más relevante de la sesión afecta a la cobertura de la detección. Como recoge la relación anterior, el agente Wazuh alertó sobre los comandos de mayor duración o repetición —el escaneo nmap, el bucle de captura con tcpdump y los reintentos de `psql`—, pero no sobre el `curl` de un solo disparo hacia el backend ni sobre la búsqueda de credenciales con `grep`. Esta ausencia no responde a un fallo de los controles, que ya habían frustrado ambas acciones por otras vías, sino al método de muestreo del agente, que inspecciona los procesos cada dos segundos y no llega a registrar los comandos más efímeros. La detección es, por tanto, real pero parcial: un matiz que se retoma entre las limitaciones del estudio (§7.2) y que conviene tener presente al interpretar el indicador G1.
 
 ---
 
@@ -259,7 +274,7 @@ La profundidad del ataque pasa de tres nodos a uno: una reducción del 67 % en a
 El bloqueo de comandos desde reverse shell refleja el mismo contraste: en A ningún objetivo post-explotación falla al ejecutarse desde la shell. En B los tres quedan frustrados:
 
 1. Los secretos de base de datos viven solo en backend.
-2. El canal hacia la API exige certificado de servicio.
+2. El canal hacia la API exige certificado de cliente.
 3. La segmentación corta el acceso directo a la base de datos.
 
 La superficie visible interna se reduce de tres servicios accesibles a uno de tres: `db` no resuelve por DNS desde webapp y el puerto 5000 del backend aparece cerrado. El escaneo desde el nodo comprometido solo identifica nginx en el 80 y el backend en el 443, frente a la visibilidad total de la red interna en el escenario perimetral.

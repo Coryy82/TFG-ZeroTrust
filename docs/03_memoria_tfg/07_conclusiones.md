@@ -8,26 +8,32 @@
 
 ## 7.1 Conclusiones del estudio
 
-[TODO POST-PRUEBAS] Párrafo de apertura: **responder explícitamente a la pregunta de investigación formulada en §1.2** (en qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas) y confirmar o matizar la hipótesis con los datos reales de §6.4. Mantener correspondencia 1:1 con los objetivos específicos enumerados en §1.2 (cada objetivo → resultado alcanzado).
+[DONE] Párrafo de apertura: **responder explícitamente a la pregunta de investigación formulada en §1.2** (en qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas) y confirmar o matizar la hipótesis con los datos reales de §6.4. Mantener correspondencia 1:1 con los objetivos específicos enumerados en §1.2 (cada objetivo → resultado alcanzado).
 
-[TODO] Para cada métrica donde ZT mejoró: cuantificar y atribuir el mecanismo. Para cada métrica donde no mejoró: razonar por qué y qué implicaría en un entorno real.
+[DONE] Para cada métrica donde ZT mejoró: cuantificar y atribuir el mecanismo. Para cada métrica donde no mejoró: razonar por qué y qué implicaría en un entorno real.
 
-[TODO] Conclusión general: ¿confirma el estudio que la microsegmentación Zero Trust reduce materialmente el impacto de una intrusión post-explotación en infraestructuras contenerizadas?
+[DONE] Conclusión general: ¿confirma el estudio que la microsegmentación Zero Trust reduce materialmente el impacto de una intrusión post-explotación en infraestructuras contenerizadas?
 
 ---
 #### Texto redactado
 
-[IA - REVISAR]
+[HUMANO]
 
-Este trabajo se planteó para responder a una pregunta concreta: en qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de los ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas. A partir de la evidencia recogida en la sesión oficial de cada escenario (§6.4), la respuesta es que la reducción es sustancial en casi todas las dimensiones medidas: partiendo del mismo compromiso inicial —una ejecución remota de código en el servicio web—, el modelo perimetral permitió al atacante alcanzar los tres nodos de la red y extraer información, mientras que el modelo Zero Trust confinó el compromiso al nodo de entrada e impidió que los hitos post-explotación prosperaran.
+Este trabajo se planteó para responder a una pregunta concreta: ¿en qué medida una arquitectura Zero Trust con microsegmentación e identidad de servicio reduce el impacto de los ataques post-explotación frente a un modelo perimetral en infraestructuras contenerizadas?. 
 
-La hipótesis de partida (§1.2) se confirma en lo esencial, aunque con un matiz importante. Los tres efectos previstos —menor profundidad del compromiso, menor volumen de datos exfiltrados y mayor protección del tráfico interno— se observan con claridad: la profundidad del ataque se redujo de tres nodos a uno, la exfiltración pasó de varios cientos de bytes a cero y el tráfico interno dejó de ser legible al exigirse autenticación mutua. El cuarto efecto, el tiempo de detección, requiere una lectura más prudente: el escenario perimetral no incorpora ningún mecanismo de detección por diseño, de modo que la comparación de latencias no es simétrica. Lo que la evidencia sostiene no es que Zero Trust detecte más rápido, sino que la capacidad de detección activa existe únicamente en él (§6.4.3).
+A partir de la evidencia recogida en la sesión oficial de cada escenario (§6.4), la respuesta es que la reducción es sustancial en casi todas las dimensiones medidas: partiendo del mismo compromiso inicial, una ejecución remota de código en el servicio web, el modelo perimetral permitió al atacante alcanzar los tres nodos de la red y extraer información, mientras que el modelo Zero Trust confinó el compromiso al nodo de entrada e impidió que los hitos post-explotación prosperaran.
+
+La hipótesis de partida (§1.2) se confirma en lo esencial, aunque con un matiz importante. Los tres efectos previstos, menor profundidad del compromiso, menor volumen de datos exfiltrados y mayor protección del tráfico interno, se observan con claridad: la profundidad del ataque se redujo de tres nodos a uno, la exfiltración pasó de varios cientos de bytes a cero y el tráfico interno dejó de ser legible al exigirse autenticación mutua.
+
+Más allá de esos tres efectos, el modelo Zero Trust aporta una capacidad de detección activa inexistente en el perímetro. No se trata de detectar más rápido, la latencia no es comparable, porque el modelo perimetral carece de mecanismo de detección por diseño, sino de disponer de una observabilidad de la que el escenario perimetral no dispone en absoluto (§6.4.3).
 
 En cuanto a los objetivos específicos planteados en §1.2, los cuatro se alcanzaron. Se diseñaron y desplegaron dos infraestructuras funcionalmente idénticas que solo difieren en su modelo de red (objetivo primero, desarrollado en §4). Se definió y midió un conjunto de métricas de contención y detección estrictamente comparables entre ambos escenarios (objetivo segundo, §3.4 y §6). Se ejecutó el mismo protocolo de ataque post-explotación de forma reproducible en los dos entornos (objetivo tercero, §6.1). Y se cuantificó el impacto de la microsegmentación y la observabilidad sobre la capacidad de contención (objetivo cuarto), con la salvedad de que la observabilidad demostró su valor de forma parcial.
 
-El análisis por indicadores permite atribuir cada mejora a un mecanismo concreto. La reducción de la profundidad del ataque y de la superficie interna visible es consecuencia directa de la microsegmentación en tres zonas y de la decisión de que el backend escuche solo en su interfaz de loopback: el atacante conserva la shell en el nodo de entrada, pero no encuentra rutas útiles hacia la base de datos. El bloqueo de los comandos post-explotación combina tres controles —la separación de secretos por servicio, la autenticación mutua en el canal hacia el backend y la propia segmentación—, de modo que ninguno de los objetivos del atacante sobre los activos protegidos llega a completarse; de ahí se derivan también la anulación de la exfiltración y la protección del tráfico. La detección es donde el resultado es más matizado: aunque ningún hito prosperó, el agente de observabilidad no registró todos los comandos del atacante, pues algunas acciones efímeras no llegaron a generar alerta, por lo que la cobertura de detección fue parcial.
+El análisis por indicadores permite atribuir cada mejora a un mecanismo concreto. 
+- La reducción de la profundidad del ataque y de la superficie interna visible es consecuencia directa de la microsegmentación en tres zonas y de la decisión de que el backend escuche solo en su interfaz de loopback: el atacante conserva la shell en el nodo de entrada, pero no encuentra rutas útiles hacia la base de datos. 
+- El bloqueo de los comandos post-explotación combina tres controles: la separación de secretos por servicio, la autenticación mutua en el canal hacia el backend y la propia segmentación, de modo que ninguno de los objetivos del atacante sobre los activos protegidos llega a completarse. De ahí se derivan también la anulación de la exfiltración y la protección del tráfico.
 
-En conjunto, el estudio respalda que una arquitectura Zero Trust basada en microsegmentación e identidad de servicio reduce de forma material el impacto de una intrusión post-explotación en una infraestructura contenerizada. Conviene enmarcar esta conclusión en las condiciones del experimento: los valores proceden de una sola sesión oficial por escenario en un laboratorio local (§7.2), por lo que describen el comportamiento de los controles más que una estimación estadística. Aun así, el contraste es lo bastante nítido, y los mecanismos que lo producen lo bastante claros, como para sostener la conclusión con confianza dentro de ese alcance.
+En conjunto, el estudio respalda que una arquitectura Zero Trust basada en microsegmentación e identidad de servicio reduce de forma significativa el impacto de una intrusión post-explotación en una infraestructura contenerizada. Conviene enmarcar esta conclusión en las condiciones del experimento: los valores proceden de una sola sesión oficial por escenario en un laboratorio local (§7.2), por lo que describen el comportamiento de los controles más que una estimación estadística. Aun así, el contraste es lo bastante nítido, y los mecanismos que lo producen lo bastante claros, como para sostener la conclusión con confianza dentro de ese alcance.
 
 ---
 
@@ -58,7 +64,7 @@ Por último, la cobertura de detección resultó parcial. El bloqueo de los hito
 
 ## 7.3 Trabajo futuro
 
-[TODO] Lista concreta y realista de las líneas de mejora más relevantes:
+[DONE] Lista concreta y realista de las líneas de mejora más relevantes:
 
 - **Escalado a Kubernetes:** implementar las mismas políticas de red con NetworkPolicies de Kubernetes y un Service Mesh (Istio/Envoy). Los resultados serían directamente aplicables a entornos cloud.
 - **mTLS completo en toda la malla de servicios:** extender mTLS al canal `backend ↔ db`. Añadir rotación automática de certificados (cert-manager).
@@ -70,7 +76,7 @@ Por último, la cobertura de detección resultó parcial. El bloqueo de los hito
 ---
 #### Texto redactado
 
-[IA - REVISAR]
+[HUMANO]
 
 Las limitaciones anteriores señalan de forma natural las líneas de trabajo futuro más relevantes.
 
@@ -82,7 +88,7 @@ La cobertura de detección parcial justifica añadir una capa de detección a ni
 
 El carácter pasivo de las alertas invita a incorporar respuesta automatizada (SOAR): vincular la detección de un hito post-explotación con una acción de contención —aislar el contenedor o cortar la conexión— cerraría el ciclo entre detectar y responder.
 
-Por último, sería valioso ampliar el repertorio de ataques —envenenamiento de DNS interno, escalada de privilegios en el host o denegación de servicio interna— y repetir el estudio con varias sesiones por escenario, lo que daría soporte estadístico a las cifras y reduciría la principal limitación del trabajo actual.
+Por último, sería valioso ampliar el repertorio de ataques: envenenamiento de DNS interno, escalada de privilegios en el host o denegación de servicio interna, y repetir el estudio con varias sesiones por escenario, lo que daría soporte estadístico a las cifras y reduciría la principal limitación del trabajo actual.
 
 ---
 
@@ -93,22 +99,24 @@ Por último, sería valioso ampliar el repertorio de ataques —envenenamiento d
 
 ### 7.4.1 Relación con los estudios cursados
 
-[TODO] Justificar que el contenido del TFG es conforme a los estudios cursados. Vincular con asignaturas y áreas concretas de la titulación:
+[DONE] Justificar que el contenido del TFG es conforme a los estudios cursados. Vincular con asignaturas y áreas concretas de la titulación:
 - Redes y Seguridad (modelo perimetral vs Zero Trust, microsegmentación, mTLS).
 - Sistemas Distribuidos / Infraestructuras (contenedores Docker, arquitectura de servicios).
 - Administración de sistemas / Sistemas Operativos (WSL2, namespaces, procesos, sockets).
 - Ingeniería del Software (requisitos, diseño, IaC, reproducibilidad).
 
-[TODO] Indicar qué conocimientos o tecnologías NO se vieron en la carrera (o se vieron de forma insuficiente) y que hubo que aprender para este TFG (Wazuh/SIEM, OpenSSL/mTLS, SSTI Jinja2, MITRE ATT&CK), y el grado de dominio alcanzado.
+[DONE] Indicar qué conocimientos o tecnologías NO se vieron en la carrera (o se vieron de forma insuficiente) y que hubo que aprender para este TFG (Wazuh/SIEM, OpenSSL/mTLS, SSTI Jinja2, MITRE ATT&CK), y el grado de dominio alcanzado.
 
-[TODO] Competencias transversales puestas en práctica (p. ej. análisis crítico, comunicación escrita, planificación y gestión del tiempo del sprint) y en qué grado.
+[DONE] Competencias transversales puestas en práctica (p. ej. análisis crítico, comunicación escrita, planificación y gestión del tiempo del sprint) y en qué grado.
 
 ---
 #### Texto redactado
 
-[IA - REVISAR]
+[HUMANO]
 
-El desarrollo de este trabajo puso en juego buena parte de los conocimientos adquiridos durante el Grado, integrados en torno a un problema concreto. Los fundamentos de redes y seguridad fueron el eje: la contraposición entre el modelo perimetral y Zero Trust, la microsegmentación y la autenticación mutua con certificados parten directamente de esos contenidos. El diseño del laboratorio se apoyó en lo aprendido sobre sistemas distribuidos e infraestructuras, al estructurar la aplicación en servicios contenerizados que se comunican entre sí. La puesta en marcha exigió nociones de administración de sistemas y de sistemas operativos —espacios de nombres, procesos, sockets y la ejecución sobre WSL2—, y todo el trabajo se ordenó con prácticas de ingeniería del software: especificación de requisitos, diseño previo, infraestructura como código y reproducibilidad.
+El desarrollo de este trabajo puso en juego buena parte de los conocimientos adquiridos durante el Grado, integrados en torno a un problema concreto. 
+
+Los fundamentos de redes y seguridad fueron el eje: la contraposición entre el modelo perimetral y Zero Trust, la microsegmentación y la autenticación mutua con certificados parten directamente de esos contenidos. El diseño del laboratorio se apoyó en lo aprendido sobre sistemas distribuidos e infraestructuras, al estructurar la aplicación en servicios contenerizados que se comunican entre sí. La puesta en marcha exigió nociones de administración de sistemas y de sistemas operativos, espacios de nombres, procesos, sockets y la ejecución sobre WSL2, y todo el trabajo se ordenó con prácticas de ingeniería del software: especificación de requisitos, diseño previo, infraestructura como código y reproducibilidad.
 
 Junto a lo anterior, el trabajo obligó a aprender tecnologías y conceptos que no forman parte del plan de estudios, o que solo se tratan de forma tangencial. Hubo que familiarizarse con un sistema de detección basado en host (Wazuh) y la escritura de sus reglas, con la generación y el uso de certificados para mTLS mediante OpenSSL, con la explotación de inyección de plantillas del lado del servidor (SSTI) como vector de acceso inicial y con los marcos de clasificación de amenazas como MITRE ATT&CK. El grado de dominio alcanzado fue suficiente para diseñar, desplegar y validar los controles, si bien cada una de estas tecnologías admite una profundización que excede el alcance del trabajo.
 
@@ -118,7 +126,7 @@ Por último, el trabajo desarrolló competencias transversales relevantes: el an
 
 ### 7.4.2 Impacto y relación con los ODS
 
-[TODO] Explicar las ventajas/mejoras que aporta el trabajo (contención de intrusiones, resiliencia de redes corporativas contenerizadas) e identificar usuarios beneficiados. Relacionar con los ODS:
+[DONE] Explicar las ventajas/mejoras que aporta el trabajo (contención de intrusiones, resiliencia de redes corporativas contenerizadas) e identificar usuarios beneficiados. Relacionar con los ODS:
 - ODS 9 (Industria, innovación e infraestructura): infraestructuras digitales más resilientes.
 - ODS 16 (Paz, justicia e instituciones sólidas): reducción del impacto de la ciberdelincuencia.
 
@@ -127,11 +135,11 @@ Por último, el trabajo desarrolló competencias transversales relevantes: el an
 ---
 #### Texto redactado
 
-[IA - REVISAR]
+[HUMANO]
 
 Más allá del ejercicio académico, el trabajo aporta un criterio cuantitativo allí donde suele haber recomendaciones genéricas. Para los equipos de plataforma y de seguridad operativa, mostrar con datos cuánto se reduce el alcance de una intrusión al introducir microsegmentación e identidad de servicio ofrece un argumento concreto con el que priorizar esas inversiones. Para las organizaciones que mantienen despliegues contenerizados sobre redes planas heredadas, el estudio evidencia el riesgo real al que se exponen una vez comprometido un servicio y el grado de contención que pueden alcanzar con controles asumibles.
 
-Esta aportación conecta con dos Objetivos de Desarrollo Sostenible [CITAR: ODS — https://www.un.org/sustainabledevelopment/es/objetivos-de-desarrollo-sostenible/]. Con el ODS 9, en tanto que contribuye a infraestructuras digitales más resilientes frente a incidentes: una red que contiene el movimiento lateral se degrada de forma controlada en lugar de comprometerse por completo. Y con el ODS 16, porque reducir el impacto de las intrusiones —el volumen de datos expuestos y el alcance del compromiso— limita el daño que la ciberdelincuencia causa sobre ciudadanos e instituciones.
+Esta aportación conecta con dos Objetivos de Desarrollo Sostenible [CITAR: ODS — https://www.un.org/sustainabledevelopment/es/objetivos-de-desarrollo-sostenible/]. Con el ODS 9, en tanto que contribuye a infraestructuras digitales más resilientes frente a incidentes: una red que contiene el movimiento lateral se degrada de forma controlada en lugar de comprometerse por completo. Y con el ODS 16, porque reducir el impacto de las intrusiones, el volumen de datos expuestos y el alcance del compromiso, limita el daño que la ciberdelincuencia causa sobre ciudadanos e instituciones.
 
 ---
 
