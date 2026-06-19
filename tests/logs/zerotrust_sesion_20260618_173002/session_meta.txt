@@ -1,0 +1,3 @@
+6994867109bb619b570be77a21ae9ef00a838214
+compose_file=/mnt/c/Users/coryy/TFG/TFG-ZeroTrust/infra/zero_trust/docker-compose.yaml
+2026-06-18T17:30:02+02:00

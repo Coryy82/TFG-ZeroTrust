@@ -1,0 +1,7 @@
+T0_efectivo PS1=17:31:05
+=== 17:31:09 T_exfil_creds ===
+=== 17:31:20 E1 nmap ===
+=== 17:31:39 T_e3_pcap start ===
+=== 17:33:42 T_lateral http:5000 ===
+=== 17:34:11 T_e3 https sin cert ===
+=== 17:35:04 T_objetivo ===

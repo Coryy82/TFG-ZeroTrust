@@ -1,0 +1,76 @@
+* Host backend:5000 was resolved.
+* IPv6: (none)
+* IPv4: 172.20.0.2
+*   Trying 172.20.0.2:5000...
+* connect to 172.20.0.2 port 5000 from 172.20.0.3 port 43228 failed: Connection refused
+* Failed to connect to backend port 5000 after 1 ms: Could not connect to server
+* closing connection #0
+* Host backend:443 was resolved.
+* IPv6: (none)
+* IPv4: 172.20.0.2
+*   Trying 172.20.0.2:443...
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [1562 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [1210 bytes data]
+* TLSv1.3 (IN), TLS change cipher, Change cipher spec (1):
+{ [1 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [25 bytes data]
+* TLSv1.3 (IN), TLS handshake, Request CERT (13):
+{ [99 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [1335 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [520 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Certificate (11):
+} [8 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519MLKEM768 / RSASSA-PSS
+* ALPN: server accepted http/1.1
+* Server certificate:
+*  subject: CN=backend
+*  start date: Jun  3 15:13:35 2026 GMT
+*  expire date: Jun  3 15:13:35 2027 GMT
+*  issuer: CN=ZeroTrust-Lab-CA
+*  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+*   Certificate level 0: Public key type RSA (4096/152 Bits/secBits), signed using sha256WithRSAEncryption
+* Connected to backend (172.20.0.2) port 443
+* using HTTP/1.x
+} [5 bytes data]
+> GET /empleados HTTP/1.1
+> Host: backend
+> User-Agent: curl/8.14.1
+> Accept: */*
+> 
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [265 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [265 bytes data]
+< HTTP/1.1 400 Bad Request
+< Server: nginx/1.26.3
+< Date: Thu, 18 Jun 2026 15:34:20 GMT
+< Content-Type: text/html
+< Content-Length: 237
+< Connection: close
+< 
+{ [237 bytes data]
+* we are done reading and this is set to close, stop send
+* abort upload
+* shutting down connection #0
+<html>
+<head><title>400 No required SSL certificate was sent</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>No required SSL certificate was sent</center>
+<hr><center>nginx/1.26.3</center>
+</body>
+</html>
