@@ -57,3 +57,32 @@
   2. Resolver duda §5.4 con respuesta del tutor o decisión editorial.
   3. Completar Intro y Conclusiones, figuras y tablas antes del PDF final (hito 19/06).
 - **ESTADO:** 🟡 Borrador sustancial enviado. Pendiente respuesta del tutor.
+
+## 2026-06-19 — Envío PDF casi final (caps. 1–3 y 6–7 pulidos; 4–5 pendientes de repaso)
+
+- **Evento:** Correo de Pau al tutor con PDF compilado desde `Borrador1.2.tex` (Overleaf), cumpliendo el hito duro del sprint (envío antes del depósito en plataforma el 21/06).
+- **Correo Pau → Héctor (19/06/2026):**
+  > Hola de nuevo Héctor,
+  > He realizado algunos cambios en la redacción en los capítulos 1-3 y 6-7, mañana acabaré con el repaso y redactaré mejor los capitulos 4-5 de diseño y desarrollo, pero de momento, salvo esos dos caps que te digo, sería la versión final (y a excepción de tablas y figuras que lo voy a dejar para el final)
+  >
+  > Gracias de antemano,
+  > Pau
+- **Respuesta Héctor:** Pendiente.
+- **Artefacto enviado:** PDF generado desde `docs/03_memoria_tfg/Borradores y pretrabajos/Overleaf/Borrador1.2.tex`.
+- **Alcance declarado en el correo:**
+  - **Revisados / más pulidos:** caps. 1–3 (Introducción, EdA, Análisis del problema) y 6–7 (Pruebas, Conclusiones).
+  - **Pendiente de repaso redaccional:** caps. 4–5 (Diseño de la solución, Desarrollo e implantación) — previsto para el 20/06.
+  - **Pendiente global:** tablas y figuras (placeholders / `FALTA TABLA` / `[FIG:]`).
+- **Evaluación de la decisión de priorizar caps. 4–5 (frente al contexto del proyecto):**
+  - **Acierto — cumplir el hito sin bloquearse:** El tutor no había respondido al envío del 16/06; la directriz §6 y §7 del sprint exigen avanzar sin esperar feedback. Enviar hoy un PDF “casi final” cierra el hito 19/06 y deja margen para el depósito del 21/06.
+  - **Acierto — orden narrativo para el tutor:** Héctor pidió explícitamente (06/06) la pregunta de investigación y el hilo problema → evidencia → conclusiones. Pulir primero 1–3 y 6–7 presenta al tutor el **mensaje** (motivación, marco, métricas, resultados KPI, conclusiones) antes de perfeccionar el “cómo se montó el laboratorio”.
+  - **Acierto — transparencia:** El correo deja claro que 4–5 y las tablas/figuras no son la versión definitiva. Evita que el tutor interprete el PDF como cerrado en diseño/implementación.
+  - **Riesgo acotado — caps. 4–5 como eslabón:** Son el vínculo entre requisitos/métricas (cap. 3) y la evidencia (cap. 6). Si el tutor lee en diagonal, puede notar menor homogeneidad de estilo entre el bloque 1–3/6–7 y el 4–5. Mitigación: repaso del 20/06 antes del depósito.
+  - **Riesgo acotado — directriz “seguridad, no manual de Docker”:** Los caps. 4–5 son los más propensos a leerse como despliegue/infraestructura (directriz tutor §1–§2). El repaso del 20/06 debe **condensar y justificar decisiones**, no ampliar detalle de montaje.
+  - **Riesgo acotado — tablas al final:** El cap. 6 depende de tablas KPI comparativas; dejarlas para el final es razonable en el sprint, pero el tutor podría comentar huecos en el núcleo cuantitativo hasta que estén insertadas.
+  - **Conclusión:** Priorizar 4–5 **después** del envío de hoy es coherente con el calendario, con las directrices del tutor y con el estado del borrador; el envío no debería haberse retrasado por esperar ese repaso.
+- **Próximos pasos:**
+  1. Repaso redaccional caps. 4–5 (20/06).
+  2. Tablas y figuras (placeholders mínimos viables si hace falta para depósito).
+  3. Depósito en plataforma (21/06).
+- **ESTADO:** 🟢 PDF enviado al tutor (hito 19/06). 🟡 Pendiente respuesta Héctor. Caps. 4–5 y maquetación visual en curso para depósito.

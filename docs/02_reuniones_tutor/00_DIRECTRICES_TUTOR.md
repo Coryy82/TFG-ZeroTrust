@@ -53,7 +53,7 @@ Derivada del correo §16 del timeline (`00_TIMELINE_CORREOS.md`). La luz verde d
   |--------|---------------------------------------------------------------------|------------------------------------------------------|--------|
   | ~~31/05~~ **06/06** | Índice anotado del TFG (`Borrador_Indice_Anotado_HUMANO.md`) | Validación "razonablemente decente" / luz verde | ✅ Enviado; OK general |
   | 14/06  | Memoria ~60-70% (caps 3, 4, 5, 6 en borrador)                      | Revisión del núcleo cuantitativo (pruebas, KPIs)    | Pendiente |
-  | 19/06  | PDF compilado completo en Overleaf                                  | Correcciones de última pasada (plazo: 48h)           | Pendiente |
+  | ~~19/06~~ **19/06** | PDF compilado completo en Overleaf                                  | Correcciones de última pasada (plazo: 48h)           | ✅ Enviado (§20); caps. 4–5 y figuras/tablas pendientes |
 
 - **Regla de no-bloqueo:** si el tutor no responde en 48h tras cualquier envío, se avanza igualmente. Su feedback se incorpora como ajuste puntual, nunca como rediseño. Ver §6 (cadencia 1-3 semanas).
 - **Señal de alarma:** si el tutor responde con "esto no llega" o feedback crítico estructural antes del 15/06, ese es el último día para activar la convocatoria de septiembre como Plan C sin quemar tiempo inútilmente.

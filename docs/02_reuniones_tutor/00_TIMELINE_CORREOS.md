@@ -376,6 +376,17 @@
 
 ---
 
+## 20. 2026-06-19 — Pau → Héctor (PDF casi final: caps. 1–3 y 6–7 pulidos; 4–5 pendientes)
+
+> Hola de nuevo Héctor,
+>
+> He realizado algunos cambios en la redacción en los capítulos 1-3 y 6-7, mañana acabaré con el repaso y redactaré mejor los capitulos 4-5 de diseño y desarrollo, pero de momento, salvo esos dos caps que te digo, sería la versión final (y a excepción de tablas y figuras que lo voy a dejar para el final)
+>
+> Gracias de antemano,
+> Pau
+
+---
+
 ## Estado al cierre del timeline
 
 - **Propuesta:** APROBADA por el tutor el 2026-04-09 y oficializada en EBRON entre el 2026-04-19 y el 2026-04-27.
@@ -386,3 +397,4 @@
 - **Convocatoria objetivo:** **julio 2026**. Deadline de entrega: **21/06/2026**. Luz verde del tutor tras borrador "razonablemente decente" enviado el **2026-06-06** (§17–§18). Ver [`00_DIRECTRICES_TUTOR.md §7`](00_DIRECTRICES_TUTOR.md).
 - **Borrador índice anotado:** ENVIADO 2026-06-06. Validación general positiva; matizar redacción de objetivos (pregunta de investigación, no solo "comparar"). Próximo paso acordado: cita en despacho cuando haya contenido redactado.
 - **Borrador memoria caps. 2–6:** ENVIADO 2026-06-16 (§19). Incluye reorientación hacia la pregunta de investigación (Zero Trust vs. tradicional). Sin Introducción ni Conclusiones en el adjunto. Plantilla ETSINF/LaTeX sin figuras ni tablas definitivas. Duda editorial pendiente: ubicación de §5.4. Solicitud de cita presencial. **Respuesta del tutor:** pendiente a **2026-06-18**.
+- **PDF casi final (Borrador1.2.tex):** ENVIADO 2026-06-19 (§20). Caps. 1–3 y 6–7 con repaso de redacción; caps. 4–5 pendientes de pulir (previsto 20/06); tablas y figuras al final. **Respuesta del tutor:** pendiente.
