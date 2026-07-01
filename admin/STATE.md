@@ -1,5 +1,5 @@
 # STATE - Seguimiento TFG Ciberseguridad
-Fecha de actualización: 2026-06-19 (tarde)
+Fecha de actualización: 2026-07-01
 
 ## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
 
@@ -18,34 +18,27 @@ Capacidad efectiva restante:
 - **05/06 → 21/06: ~144h restantes** (12h/día × 0.75 fatiga × 16 días) — en uso; **2 días hasta depósito**
 
 ## 1. Resumen Semanal
-- Commits últimos 7 días: actividad centrada en redacción final, paso a Overleaf y maquetación LaTeX.
-- Avance técnico principal: **sin cambios.** Comparativa KPI A↔B cerrada (09/06). Stack ZT + Wazuh operativo; laboratorio estable.
-- Avance de redacción/Overleaf (19/06):
-  - **Caps. 1–7 en Overleaf** (`Borrador1.2.tex`). ✅
-  - **Referencias internas** (`\label` / `\cref`): sustituidos marcadores `[SUSTITUIR REFERENCIA LATEX]` y `[SUSTITUIR POR REFERENCIAS LATEX]` en `Borrador1.2.tex`; labels solo en secciones referenciadas. ✅
-  - **Estado redaccional por capítulo:**
-    - **Pulidos (enviados como “casi final”):** caps. 1–3 (Intro, EdA, Análisis) y 6–7 (Pruebas, Conclusiones).
-    - **Pendiente repaso redaccional (previsto 20/06):** caps. 4–5 (Diseño, Desarrollo e implantación).
-    - **Pendiente global:** tablas (`FALTA TABLA`), figuras (`[FIG:]`), bibliografía (`[CITAR:]`).
-- Comunicación con tutor:
-  - **19/06:** PDF compilado desde `Borrador1.2.tex` enviado a Héctor. Correo declara caps. 1–3 y 6–7 revisados; caps. 4–5 y tablas/figuras pendientes. Registrado en bitácora y timeline §20.
-  - **16/06:** email caps. 2–6 — **sin respuesta a 19/06.**
-- Días hasta próximo hito crítico: **2** — 21/06 depósito en plataforma.
+- Commits últimos 7 días: **0 entradas** (24/06–01/07). Última actividad git: **20/06** (`085b983`, `6f2a252`, `fa452ff`).
+- Avance técnico principal: **sin cambios.** Laboratorio ZT + Wazuh estable; sin commits en `infra/` ni `tests/` desde el 18/06.
+- Avance de redacción/Overleaf: `Borrador1.2.tex` sin actualizaciones desde el 20/06. Marcadores abiertos verificados: **8× `FALTA TABLA`**, **4× `[FIG:]`**, **3× `[CITAR:]`**.
+- Comunicación con tutor: PDF enviado 19/06 ✅. Sin respuesta a emails 16/06 ni 19/06. Sin entrada en bitácora posterior al 19/06.
+- Días hasta próximo hito crítico: **deadline 21/06 vencido hace 10 días** — hito `revision_final_entrega` (depósito plataforma) **sin evidencia en repositorio**.
 
 ## 2. Alineación con ROADMAP v2 y Riesgos
-- Fase actual del ROADMAP_v2: **FASE 4 — SEMANA 4** (15/06–21/06), día 19/06. Hito PDF al tutor **completado**.
-- Delta respecto al plan: texto caps. 1–7 en Overleaf ✅; referencias internas en borrador principal ✅; figuras y BibTeX pendientes; repaso caps. 4–5 planificado 20/06.
+- Fase actual del ROADMAP_v2: **FASE 4 — SEMANA 4** (15/06–21/06), **cerrada en calendario** (01/07). Objetivo de fase: memoria depositada — **no confirmado en repositorio**.
+- Delta respecto al plan: hito 19/06 (PDF tutor) ✅; hitos 20/06 (repaso caps. 4–5) y 21/06 (depósito) **sin evidencia en commits ni bitácora** — **retrasado ≥10 días** respecto al plan.
 - Riesgos activos con nivel (ALTO/MEDIO/BAJO):
-  - **ALTO:** depósito en plataforma el **21/06** con tablas KPI y figuras mínimas viables (placeholders aceptables).
-  - **MEDIO:** caps. 4–5 menos pulidos que el resto en el PDF enviado; repaso 20/06 debe condensar narrativa (seguridad, no manual Docker — directriz tutor §1–§2).
-  - **MEDIO:** sin feedback del tutor (emails 16/06 y 19/06 sin respuesta). Avanzar hacia depósito sin bloquearse.
-  - **BAJO:** labels de anexos (`anexo:protocolo_ejecucion`, `anexo:scripts_captura`) referenciados en texto pero anexos aún placeholder en LaTeX.
-- ¿Es necesario activar algún fallback? **No.** Laboratorio estable, Wazuh operativo.
+  - **ALTO:** convocatoria julio en riesgo — depósito del 21/06 sin trazabilidad en repo ni bitácora.
+  - **ALTO:** inactividad git **11 días** (20/06→01/07); imposible inferir trabajo offline o depósito fuera del repositorio.
+  - **MEDIO:** maquetación LaTeX incompleta en `Borrador1.2.tex` (tablas KPI cap. 6, figuras, BibTeX).
+  - **MEDIO:** caps. 4–5 sin repaso documentado; tutor sin feedback (16/06, 19/06).
+  - **BAJO:** labels de anexos placeholder (`anexo:protocolo_ejecucion`, `anexo:scripts_captura`).
+- ¿Es necesario activar algún fallback? **No** (fallbacks técnicos Wazuh→Falco no aplican). Valorar **Plan C** (convocatoria septiembre, ADR 2026-05-24 / ROADMAP §Plan C) si el depósito no se realizó y no hay margen administrativo.
 
 ## 3. Bloqueos
-- **Sin bloqueo técnico.** Caps. 1–7 en Overleaf; referencias internas cerradas en `Borrador1.2.tex`.
-- **Gestión:** respuesta del tutor pendiente (16/06 y 19/06). No bloquea depósito; feedback se incorporará como ajuste puntual si llega antes del 21/06.
-- Sin bloqueo de infraestructura ni laboratorio.
+- **Bloqueo activo:** ausencia de trazabilidad del depósito final y del trabajo post-20/06. Si el PDF se depositó el 21/06 fuera del repo, no consta en bitácora ni STATE — impide cerrar el sprint con confianza.
+- **Bloqueo potencial:** maquetación incompleta en `Borrador1.2.tex` (tablas KPI, figuras, BibTeX) pudo impedir o retrasar el depósito. Mitigación: placeholders mínimos viables + depósito inmediato si aún pendiente.
+- **Gestión:** respuesta del tutor pendiente; no bloquea depósito según directriz §6 del ROADMAP.
 
 ## 4. Tablero del Sprint Actual
 ### TODO
@@ -55,9 +48,10 @@ Capacidad efectiva restante:
 - [ ] **[HUMANO] `revision_final_entrega`** — PDF final + depósito en plataforma el **21/06**.
 
 ### DOING
-- [ ] **[HUMANO] `transferir_a_overleaf`** — Caps. 1–7 transferidos ✅; referencias internas en `Borrador1.2.tex` ✅. Pendiente: figuras, BibTeX, repaso 4–5.
+- *(vacío — sin actividad en curso evidenciada por commits desde 20/06)*
 
 ### DONE (Sprint Final — desde 24/05)
+- [x] **`transferir_a_overleaf`** — Caps. 1–7 en `Borrador1.2.tex`; referencias internas (`\label`/`\cref`) cerradas. Commit `fa452ff`. Figuras/BibTeX/repaso 4–5 quedan en tareas TODO separadas. (2026-06-20)
 - [x] **`envio_tutor_19_06`** — PDF compilado (`Borrador1.2.tex`) enviado al tutor el 19/06. Alcance declarado: caps. 1–3 y 6–7 pulidos; 4–5 y tablas/figuras pendientes. Timeline §20, bitácora 19/06. (2026-06-19)
 - [x] **`overleaf_referencias_internas`** — `\label` y `\cref{}` en `Borrador1.2.tex`: marcadores `[SUSTITUIR REFERENCIA LATEX]` y `[SUSTITUIR POR REFERENCIAS LATEX]` sustituidos; labels solo en secciones referenciadas. (2026-06-19)
 - [x] **`setup_overleaf`** — Caps. 1–7 en `Borrador1.2.tex` / Overleaf. (2026-06-19)
@@ -84,8 +78,5 @@ Capacidad efectiva restante:
 | 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                 | ⚠️ Parcial — texto ✅; email tutor **16/06** |
 | 16/06  | Caps. 1 y 7 redactados                                     | ✅ Completado — 17/06 |
 | 19/06  | PDF compilado en Overleaf + email final al tutor           | ✅ Completado — PDF `Borrador1.2.tex` enviado; caps. 4–5 y figuras/tablas pendientes |
-| 20/06  | Repaso redaccional caps. 4–5                               | 🔄 Previsto |
-| 21/06  | **ENTREGA** — PDF depositado en plataforma                 | Pendiente |
-
-## 6. Decisión editorial registrada (19/06)
-Priorizar repaso de caps. 4–5 **después** del envío al tutor: coherente con hito 19/06, directrices del tutor (presentar primero pregunta/evidencia/conclusiones) y calendario. Evaluación completa en `docs/02_reuniones_tutor/BITACORA_REUNIONES.md` (entrada 2026-06-19).
+| 20/06  | Repaso redaccional caps. 4–5                               | ⚠️ En riesgo — sin evidencia en commits; `Borrador1.2.tex` sin actualización posterior |
+| 21/06  | **ENTREGA** — PDF depositado en plataforma                 | ⚠️ En riesgo — deadline vencido hace 10 días; sin registro en bitácora ni commits post-20/06 |
