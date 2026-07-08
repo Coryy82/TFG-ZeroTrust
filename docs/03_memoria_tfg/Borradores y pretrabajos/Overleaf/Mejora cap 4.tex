@@ -1,0 +1,126 @@
+\chapter{Diseño de la solución}
+    \section{Arquitectura distribuida}
+    Para el desarrollo de nuestra red, debemos diseñar una aplicación formada por microservicios que la componga.
+
+        \subsection{Visión general del sistema}
+        Como el objetivo del trabajo está centrado en la comparación a nivel de red, entre modelos, y cómo cada uno produce resultados diferentes, vamos a simplificar los flujos y la implementación de dicha aplicación web.
+
+        Esta se encuentra compuesta por 3 microservicios (contenedores):
+        \begin{itemize}
+            \item \textbf{webapp:} Frontal del sistema, un portal web con panel de administración.
+            \item \textbf{backend:} con API interna de empleados que recibe peticiones del frontal.
+            \item \textbf{DB (DataBase):} Base de datos PostgreSQL para almacenar información.
+        \end{itemize}
+
+        [FIG: representación gráfica de los contenedores: webapp, backend y db con sus respectivas tecnologías, webapp corriendo dentro de nginx, flask corriendo dentro de webapp y backend. representar por cajas (ej: nginx{webapp{flask}})]
+
+        La aplicación es funcionalmente idéntica en ambos escenarios, lo que cambia es el modelo de red.
+
+        \subsubsection{Flujos detallados}
+        Los flujos de la aplicación son deliberadamente simples, por lo que hemos mencionado anteriormente que la lógica de negocio no entra dentro del objeto de estudio. 
+        
+        El usuario accede al portal que sirve `webapp`, cuando este necesita los datos de la sección de empleados, realiza una petición HTTP al `backend`, que expone una API interna. El `backend` es el único servicio que consulta la base de datos `db` para leer los registros solicitados y devolverlos a `webapp`.
+
+        De este modo se forma una cadena lineal `webapp $\rightarrow$ backend $\rightarrow$ db` en la que cada servicio se comunica únicamente con el inmediatamente contiguo: `webapp` nunca accede de forma directa a la base de datos, sino siempre a través del `backend`. Esta linealidad es relevante para el experimento, porque define con precisión qué saltos debe dar un atacante situado en `webapp` para alcanzar el activo final y, por tanto, qué comunicaciones este-oeste debe vigilar cada modelo de red.
+
+        [FIG: diagrama webapp->backend->db, con flechas (peticiones) y puertos expuestos]
+        
+        \subsection{Tecnología utilizada}
+        Docker es el pilar fundamental de la tecnología utilizada en este trabajo. Es el responsable del despliegue y la gestión de los contenedores, así como de la creación de las redes y de las reglas que las conectan. Al tratarse de la tecnología de contenedores más extendida y considerada un estándar de facto en infraestructuras contenerizadas, existe abundante documentación académica y técnica al respecto, y el autor del trabajo cuenta con experiencia previa en su uso, lo que reduce el coste de aprendizaje.
+
+        Nginx es un servidor web y proxy inverso ampliamente utilizado. En el trabajo desempeña dos funciones: en ambos escenarios publica el portal de `webapp` y actúa como punto de entrada desde el exterior, en el Escenario B asume además el papel de punto de aplicación de políticas, al terminar las conexiones mutuamente autenticadas y rechazar las que no acreditan una identidad válida.
+
+        Python es el lenguaje elegido para los servicios de aplicación. Su sintaxis legible y el amplio acceso a librería de código permiten implementar la lógica mínima imprescindible con poco esfuerzo, lo que acorta el tiempo de desarrollo y mantiene el foco en la comparación de redes. El autor parte de experiencia previa con el lenguaje, lo que disminuye el coste de aprendizaje.
+
+        Flask es un microframework web para Python. Frente a alternativas más completas como Django, prescinde de componentes que este trabajo no necesita y mantiene la reducción de complejidad que buscamos. Tanto `webapp` como `backend` exponen sus rutas HTTP mediante Flask.
+
+        PostgreSQL es el sistema gestor de bases de datos relacional que almacena los registros de empleados. Lo elegimos por ser un motor maduro, de código abierto y habitual en entornos productivos, lo que aporta realismo al activo que el atacante intenta alcanzar en la fase post-explotación.
+
+        
+    \section{Escenario A — Arquitectura Perimetral}
+    En esta sección diseñaremos la red "base" sobre la que implementaremos las mejores del \cref{sec:4.3.1}
+        
+        \subsection{Topología de red}
+        [FIG: diagrama red perimetral con contenedores dentro de sus respectivas redes]
+        
+        El Escenario A se organiza en dos redes docker: `net\_dmz` y `net\_interna`. Nginx es el único servicio con puerto expuesto al host (`:80`) y actúa como punto de entrada desde internet.
+        
+        La aplicación web vulnerable (`webapp`) está en `net\_dmz` y, además, en `net\_interna`: actúa como pivot porque puede comunicarse con ambos segmentos sin control adicional entre ellos. 
+        
+        En `net\_interna` residen el backend (API Flask) y PostgreSQL con los datos de prueba.
+        
+        \subsection{Decisiones de diseño}
+        Elegimos dos redes (`net\_dmz` y `net\_interna`) porque reproducen una práctica habitual: cortafuegos exterior, servidores web en una zona expuesta y datos en una red interna "protegida".
+        
+        La segmentación existe, pero se concentra en el perímetro: dentro de la red interna no hay verificación de identidad entre servicios ni monitorización del movimiento lateral.
+        
+        Este escenario no pretende ser seguro; es la referencia contra la que medimos la mejora. A propósito dejamos `DB\_PASSWORD` en el entorno de `webapp` y el tráfico hacia el backend en HTTP plano por el puerto 5000, de modo que los cuatro hitos post-explotación del protocolo de pruebas sean alcanzables. 
+        
+        Tampoco desplegamos mecanismos de detección o respuesta, ni sistema de gestión de eventos de seguridad (SIEM), ni cortafuegos de aplicación web (WAF), ni sistema de detección de intrusiones (IDS): la protección se limita al perímetro exterior.
+        
+        \subsection{Superficie inicial de comparación}
+        Una vez obtenida la reverse shell en `webapp`, el atacante ejecuta siempre la misma secuencia de cuatro hitos post-explotación, definida en \cref{sec:3.2.4}: exfiltración de credenciales del entorno del contenedor, escaneo de la red interna, acceso al endpoint `/empleados` del backend y volcado de la tabla de empleados en PostgreSQL.
+        
+        Esta secuencia es el denominador común entre ambas arquitecturas. En el Escenario A los cuatro hitos son alcanzables por diseño, porque ningún control interno los impide, sirven así de baseline frente al que se mide el Escenario B. La ejecución concreta de cada hito y los valores observados se documentan en el capítulo de pruebas (\cref{sec:6.2}).
+
+    \section{Escenario B — Arquitectura Zero Trust}
+        \subsection{Principios aplicados}
+        \label{sec:4.3.1}
+        El Escenario B parte del principio rector de Zero Trust: "nunca confíes, siempre verifica", y lo concreta en tres principios operativos, cada uno traducido a una medida con la que contrarrestar los hitos definidos en \cref{sec:3.2.4}:
+        \begin{itemize}
+            \item \textbf{Verificación explícita}. Exigimos que cada flujo este-oeste se autentique antes de permitirse: el canal crítico `webapp $\rightarrow$ backend` usa autenticación mutua con certificados (mTLS), de modo que pertenecer a una red ya no equivale a confianza automática.
+            \item \textbf{Mínimo privilegio.} Segmentamos la estructura en tres zonas y solo habilitamos los puertos estrictamente necesarios entre zonas contiguas. Las credenciales de la base de datos residen solo en `backend` y `webapp` no recibe `DB\_PASSWORD` en su entorno, lo que corrige el punto débil del escenario perimetral.
+            \item \textbf{Asumir brecha.} Diseñamos como si `webapp` ya estuviera comprometida: la segmentación impide el salto directo a la base de datos, el mTLS rechaza las peticiones sin certificado de cliente y Wazuh observa los comandos que el atacante lanza desde la shell post-RCE, aunque los controles de red ya hayan frustrado parte del ataque.
+        \end{itemize}
+        Estos tres principios son la respuesta de diseño al \textit{Requisito-F 3} (\cref{sec:3.3.1}): que el Escenario B bloquee o, como mínimo, detecte los cuatro hitos post-RCE alcanzables en el perimetral.
+        
+        \subsection{Topología de red}
+        [FIG: diagrama red zero trust con contenedores dentro de sus respectivas redes, mostrando segmentación]
+        
+        La topología Zero Trust divide los contenedores en `web\_zone` (nginx y webapp), `backend\_zone` (webapp como cliente y backend como servidor) y `db\_zone` (backend y db). 
+        
+        Los flujos permitidos entre zonas son los siguientes:
+        \begin{itemize}
+            \item entrada externa únicamente a nginx (8080→80 en el host)
+            \item nginx $\rightarrow$ webapp en el puerto 5000
+            \item webapp $\rightarrow$ backend por HTTPS en el 443, con terminación mTLS en Nginx del contenedor backend
+            \item backend $\rightarrow$ PostgreSQL en el 5432. 
+        \end{itemize}
+        No existe ruta webapp $\rightarrow$ db porque ningún servicio tiene interfaz en `web\_zone` y `db\_zone` a la vez.
+        
+        Cualquier comunicación no enumerada se considera denegada por defecto.
+        
+        \subsection{mTLS entre webapp y backend}
+        [FIG: demostración gráfica de funcionamiento de comunicación entre webapp y backend con certificados]
+        
+        En el Escenario A el tráfico de `webapp` a `backend` viaja en HTTP plano por el puerto 5000. En el Escenario B lo ciframos y autenticamos con mTLS, una variante de TLS en la que no solo el servidor presenta certificado, sino que también el cliente debe acreditar su identidad. Una autoridad de certificación (CA) local, generada con OpenSSL, firma un certificado de servidor para `backend` y un certificado de cliente para `webapp`.
+        
+        Nginx, desplegado en el contenedor `backend`, actúa como punto de aplicación de políticas (PEP): solo admite la conexión si el cliente presenta un certificado válido firmado por esa CA; en caso contrario, la rechaza. De este modo, el simple hecho de alcanzar la red del backend ya no basta para hablar con la API. Los detalles de configuración de Nginx y del montaje de certificados se documentan en \cref{sec:5.3.3}.
+        
+        \subsection{Observabilidad activa — Wazuh}
+        [FIG: diagrama de red que demuestre dónde y cómo se situa wazuh dentro del modelo zero trust]
+        
+        Como objetivo secundario se propuso añadir observabilidad al escenario Zero Trust.
+        
+        Para la detección activa desplegamos Wazuh en dos contenedores, manager y agente. El agente monta el socket de Docker y observa los procesos que se ejecutan dentro de webapp.
+
+        Definimos reglas locales alineadas con los cuatro hitos: escaneo nmap, curl hacia backend, tcpdump, psql y grep de patrones de credenciales. La microsegmentación y el mTLS bloquean el impacto. Luego Wazuh registra el intento y permite medir tiempos. 
+
+    \subsubsection{Decisión de tecnología}
+    La iteración inicial del TFG contemplaba Suricata como sonda de red. Lo descartamos porque nuestro modelo de amenazas fija la ejecución de código remota en webapp y los hitos comparativos ocurren como comandos dentro del contenedor (nmap, curl, psql, grep), no solo como patrones de tráfico observables en la red.
+
+    Wazuh aporta detección host-based sobre esos procesos mientras que Suricata es network-based y no sustituye la visibilidad del cmdline en el namespace del contenedor comprometido. Para este alcance del TFG la elección es más relevante que combinar ambas capas. 
+    
+    Dejamos Suricata como línea futura de detección a nivel de red, actuaría junto a Wazuh, complementándolo y no sustituyéndolo.
+    
+    \section{Limitaciones del diseño}
+    Reconocemos varias limitaciones de este diseño en el entorno de laboratorio, entre ellas:
+
+    \begin{enumerate}
+        \item El mTLS solo cubre el canal webapp $\rightarrow$ backend mientras que los flujos nginx $\rightarrow$ webapp y backend $\rightarrow$ db siguen sin cifrado mutuo.
+        \item Los certificados son autofirmados. Además, mTLS verifica la identidad del servicio, pero no define qué operaciones puede ejecutar cada certificado una vez autenticado.
+        \item Wazuh se despliega sin Indexer ni dashboard: las alertas se vuelcan a un json manualmente y no disparan respuesta automática (no hay SOAR) y el agente usa muestreo cada 2 s mediante `process-webapp`, no trazado syscall en tiempo real.
+        \item El entorno de trabajo es Docker local en Windows/WSL2, no un clúster Kubernetes productivo: los resultados son representativos del contraste perimetral vs Zero Trust en contenedores, pero no se extrapolan directamente a despliegues cloud-native a escala.
+    \end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,4 +1,3 @@
-
 services:
   nginx:
     image: nginx:alpine
@@ -7,18 +6,21 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
-      - net_dmz
+      - web_zone
     depends_on:
       - "webapp"
 
   webapp:
     build: ./webapp
     networks:
-      - net_dmz 
-      - net_interna 
+      - web_zone
+      - backend_zone
     environment:
-      - DB_HOST=db
-      - DB_PASSWORD=supersecret
+      - BACKEND_URL=https://backend:443/empleados
+    volumes:
+      - ./certs/client.crt:/certs/client.crt:ro
+      - ./certs/client.key:/certs/client.key:ro
+      - ./certs/ca.crt:/certs/ca.crt:ro
     depends_on:
       backend:
         condition: service_healthy
@@ -26,13 +28,18 @@ services:
         condition: service_started
 
   backend:
-    # NOTA: el healthcheck usa curl — asegurarse de que el Dockerfile instala curl, o cambiar el test
     build: ./backend
     networks:
-      - net_interna  # Solo accesible desde la red interna (sin firewall interno que bloquee a webapp)
+      - backend_zone
+      - db_zone
     environment:
       - DB_HOST=db
       - DB_PASSWORD=supersecret
+    volumes:
+      - ./backend/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs/server.crt:/certs/server.crt:ro
+      - ./certs/server.key:/certs/server.key:ro
+      - ./certs/ca.crt:/certs/ca.crt:ro
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 5s
@@ -43,7 +50,7 @@ services:
   db:
     image: postgres:15-alpine
     networks:
-      - net_interna  # Activo principal a proteger — accesible desde webapp sin control adicional
+      - db_zone
     environment:
       - POSTGRES_PASSWORD=supersecret
       - POSTGRES_DB=empresa_db
@@ -51,7 +58,9 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
-  net_dmz:
+  web_zone:
     driver: bridge
-  net_interna:
+  backend_zone:
+    driver: bridge
+  db_zone:
     driver: bridge

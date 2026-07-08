@@ -1,0 +1,66 @@
+<group name="zerotrust,">
+
+  <!-- Post-RCE: actividad dentro de webapp (reverse shell), fuente process-webapp -->
+
+  <rule id="100100" level="12">
+    <if_sid>530</if_sid>
+    <location>process-webapp</location>
+    <match>nmap</match>
+    <description>ZT (webapp): nmap post-RCE - reconocimiento interno (T1046)</description>
+  </rule>
+
+  <rule id="100101" level="10">
+    <if_sid>530</if_sid>
+    <location>process-webapp</location>
+    <match>curl</match>
+    <regex>backend</regex>
+    <description>ZT (webapp): curl hacia backend post-RCE - posible exfiltracion (T1041)</description>
+  </rule>
+
+  <rule id="100102" level="10">
+    <if_sid>530</if_sid>
+    <location>process-webapp</location>
+    <match>tcpdump</match>
+    <description>ZT (webapp): tcpdump post-RCE - captura trafico lateral (T1040)</description>
+  </rule>
+
+  <rule id="100103" level="12">
+    <if_sid>530</if_sid>
+    <location>process-webapp</location>
+    <match>psql</match>
+    <description>ZT (webapp): psql post-RCE - acceso directo a BD (T1021)</description>
+  </rule>
+
+  <rule id="100104" level="10">
+    <if_sid>530</if_sid>
+    <location>process-webapp</location>
+    <match>grep</match>
+    <regex type="pcre2">DB_|POSTGRES|SECRET</regex>
+    <description>ZT (webapp): lectura credenciales en env - T1552.001</description>
+  </rule>
+
+  <!-- Respaldo: mismos patrones visibles desde process-list (pid:host) -->
+
+  <rule id="100105" level="12">
+    <if_sid>530</if_sid>
+    <location>process-list</location>
+    <match>nmap</match>
+    <description>ZT (host): nmap detectado - reconocimiento interno (T1046)</description>
+  </rule>
+
+  <rule id="100106" level="10">
+    <if_sid>530</if_sid>
+    <location>process-list</location>
+    <match>curl</match>
+    <regex>backend</regex>
+    <description>ZT (host): curl hacia backend - posible exfiltracion (T1041)</description>
+  </rule>
+
+  <!-- FIM: cambio en certificados mTLS montados -->
+  <rule id="100120" level="14">
+    <if_sid>550</if_sid>
+    <match>/monitored/certs</match>
+    <description>ZT: modificacion en certificados mTLS - posible T1552.004</description>
+  </rule>
+
+</group>
