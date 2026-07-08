@@ -398,3 +398,45 @@
 - **Borrador índice anotado:** ENVIADO 2026-06-06. Validación general positiva; matizar redacción de objetivos (pregunta de investigación, no solo "comparar"). Próximo paso acordado: cita en despacho cuando haya contenido redactado.
 - **Borrador memoria caps. 2–6:** ENVIADO 2026-06-16 (§19). Incluye reorientación hacia la pregunta de investigación (Zero Trust vs. tradicional). Sin Introducción ni Conclusiones en el adjunto. Plantilla ETSINF/LaTeX sin figuras ni tablas definitivas. Duda editorial pendiente: ubicación de §5.4. Solicitud de cita presencial. **Respuesta del tutor:** pendiente a **2026-06-18**.
 - **PDF casi final (Borrador1.2.tex):** ENVIADO 2026-06-19 (§20). Caps. 1–3 y 6–7 con repaso de redacción; caps. 4–5 pendientes de pulir (previsto 20/06); tablas y figuras al final. **Respuesta del tutor:** pendiente.
+- **Depósito plataforma ETSINF:** COMPLETADO ~2026-06-21. Memoria final en `DocumentoFinalOverleaf.tex`.
+- **PDF versión final al tutor:** ENVIADO post-21/06. Memoria completa (caps. 1–7, figuras, tablas, anexos, glosario). Solicitud defensa julio.
+- **Feedback tutor (versión final):** RECIBIDO post-21/06 (§21). Luz verde julio. Ajustes: contextualizar figuras, corregir CWE, repasar formato. Incorporado.
+- **Fase actual (2026-07-08):** preparación defensa oral. Blueprint: `Esqueleto-Presentacion-TFG.md`.
+
+---
+
+## 21. Post-21/06 — Pau → Héctor (versión final + solicitud defensa julio)
+
+> Hola Héctor,
+>
+> Respecto al PDF que te mandé el viernes, he cerrado lo que faltaba: repaso de los capítulos 4 y 5 (diseño y desarrollo), tablas de resultados del capítulo 6, figuras, bibliografía, anexos (configuraciones, protocolo de pruebas, scripts de captura y código de la aplicación) y glosario.
+>
+> Adjunto la versión final del TFG.
+>
+> Por mi parte, si puede ser y en caso de que lo veas bien, prefiero solicitar la defensa ya para julio.
+>
+> Gracias y espero su respuesta,
+> Pau
+
+---
+
+## 22. Post-21/06 — Héctor → Pau (luz verde julio + feedback formato/CWE)
+
+> Buenos días Pau,
+>
+> Justo te he contestado hace poco a un correo anterior. Esta version está mucho mejor, creo que no hay problema en que vayas a Julio.
+>
+> Quizá el formato si lo repasaría un poco, algunas paginas están un poco cargadas de imágenes pero no de texto (ejemplo pag. 25), lo ideal es que comentes algo de la imagen y que hagas referencia a ella, a poder ser, en un texto explicativo (evita las frases cortas) explica qué es interesante.
+>
+> Por ejemplo en:
+>
+> "Filtrado de rutas internas en 'robots.txt' (CWE-200) (figura 5.3)"
+>
+> --> Aquí hay 2 problemas: 1) la frase no dice que tengo que ver de la imagen [...] 2) [...] no se muy bien que quires decir con eso, ¿Por qué lo has puesto? [...]
+>
+> He visto este fallo repetido por todo el trabajo, creo que debes repasar ambas cosas.
+>
+> Venga que ya casi lo tienes.
+>
+> Un saludo,
+> Hector.

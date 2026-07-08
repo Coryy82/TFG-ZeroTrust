@@ -10,7 +10,7 @@
 
 **Estado:** Aprobado por el tutor Héctor el **09/04/2026**.
 **Uso:** Copiar textualmente a `docs/03_memoria_tfg/00_resumen.md`. Ya está hecho (2026-05-24).
-Solo retoques cosméticos de redacción en la última pasada de Overleaf (19/06).
+Retoques finales aplicados en `DocumentoFinalOverleaf.tex` (post-21/06). Memoria cerrada.
 **No reescribir desde cero.**
 Ver: `docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md §11–§12` para la validación del tutor.
 

@@ -86,3 +86,42 @@
   2. Tablas y figuras (placeholders mínimos viables si hace falta para depósito).
   3. Depósito en plataforma (21/06).
 - **ESTADO:** 🟢 PDF enviado al tutor (hito 19/06). 🟡 Pendiente respuesta Héctor. Caps. 4–5 y maquetación visual en curso para depósito.
+
+## 2026-06-20 / 2026-06-21 — Cierre sprint: repaso caps. 4–5, maquetación y depósito
+
+- **Evento:** Última pasada de redacción y maquetación LaTeX antes del depósito en plataforma ETSINF.
+- **Acciones:**
+  1. Repaso redaccional caps. 4–5 (decisiones de seguridad, no manual Docker).
+  2. Integración de tablas KPI (caps. 3 y 6) y figuras en `DocumentoFinalOverleaf.tex`.
+  3. Anexos (protocolo, configs, scripts, código), glosario y bibliografía.
+  4. Depósito en plataforma (deadline 21/06).
+- **Artefacto final:** `docs/03_memoria_tfg/Borradores y pretrabajos/Overleaf/DocumentoFinalOverleaf.tex`.
+- **ESTADO:** 🟢 Memoria depositada. Sprint de entrega cerrado.
+
+## 2026-06/post-21 — Envío versión final al tutor + solicitud defensa julio
+
+- **Evento:** PDF final al tutor con memoria completa (caps. 1–7, figuras, tablas, anexos, glosario, bibliografía). Solicitud de defensa en convocatoria de julio.
+- **Alcance declarado:** caps. 4–5 repasados; figuras y tablas integradas; anexos y glosario completados.
+- **ESTADO:** 🟡 Pendiente respuesta del tutor.
+
+## 2026-06/post-21 — Feedback tutor: formato, figuras y CWE
+
+- **Evento:** Respuesta de Héctor sobre la versión casi final.
+- **Feedback principal:**
+  1. **Formato:** algunas páginas cargadas de imágenes y poco texto; comentar qué observar en cada figura.
+  2. **CWE:** uso ambiguo o incorrecto (ej. CWE-200 en `robots.txt` — no es mitigación, es exposición; CWE mal aplicado en cadena pre-RCE).
+  3. **Redacción:** evitar frases cortas sin análisis; integrar figuras en el argumento, no como decoración.
+  4. **Convocatoria:** *"creo que no hay problema en que vayas a Julio"*.
+- **Acciones derivadas:**
+  1. Corregir CWE (306→308, eliminar 798, reescribir 200).
+  2. Añadir párrafo introductorio de CWE en §5.2.3.
+  3. Enriquecer lectura de figuras (pre-RCE, compose, mTLS, segmentación, Wazuh).
+  4. Eliminar coloquialismos; ajustar `\FloatBarrier` y captions.
+- **ESTADO:** 🟢 Feedback incorporado. Memoria auditada y lista para defender.
+
+## 2026-07-08 — Fase defensa oral
+
+- **Evento:** Inicio preparación exposición oral (20 min).
+- **Artefacto de planificación:** `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Esqueleto-Presentacion-TFG.md` (16 slides + backup Q&A).
+- **Próximos pasos:** maquetar diapositivas, vídeo demo A vs B, ensayo cronometrado.
+- **ESTADO:** 🟢 Memoria cerrada. 🔄 Defensa en preparación.

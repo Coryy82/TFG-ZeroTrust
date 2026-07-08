@@ -1,115 +1,87 @@
-# HOY — 2026-06-20 (sábado) · Último buffer antes del depósito
+# HOY — 2026-07-08 (martes) · Preparación defensa oral
 
-> **Situación:** PDF `Borrador1.2.tex` enviado al tutor el 19/06 ✅. Referencias internas (`\label` / `\cref`) cerradas en borrador principal ✅. Caps. 1–3 y 6–7 pulidos; **caps. 4–5 pendientes de repaso** (prometido al tutor para hoy). Tablas, figuras y `[CITAR:]` siguen abiertos.
-> Plan IDs: `repaso_caps_4_5` · `overleaf_figuras` · `overleaf_bibliografia` · `revision_final_entrega`
-> Fase: 4 de 4 · **Próximo hito duro: depósito en plataforma el 21/06** (queda **1 día**).
+> **Situación:** Memoria cerrada y depositada ✅. `DocumentoFinalOverleaf.tex` es la fuente canónica. Feedback del tutor (CWE, figuras, formato) incorporado ✅. Luz verde para convocatoria julio ✅.
+> **Fase activa:** defensa oral (20 min).
+> Plan IDs: `presentacion_diapositivas` · `demo_video_ab` · `ensayo_cronometrado` · `slides_backup_qa`
+> Blueprint: `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Esqueleto-Presentacion-TFG.md`
 
 ---
 
 ## OBJETIVO DEL DÍA
 
-Cerrar repaso de caps. 4–5, insertar tablas KPI y placeholders de figuras/citas suficientes para un PDF depositable mañana.
+Avanzar en la maquetación de las diapositivas principales (slides 1–8: apertura → metodología) siguiendo el esqueleto de presentación.
 
 ---
 
 ## SI SOLO HACES UNA COSA
 
-Repasa y condensa caps. 4–5 (justificar decisiones, no ampliar Docker) y mete al menos las **tablas KPI del cap. 6** — sin ellas el núcleo cuantitativo queda hueco en el depósito.
+Maquetar **slides 1–3** (portada, índice, motivación) con el reparto temporal del esqueleto. Sin ellas no hay hilo narrativo para el resto.
 
 ---
 
 ## CONTEXTO RÁPIDO
 
-| Hecho (19/06) | Pendiente (20–21/06) |
+| Hecho (cerrado) | Pendiente (defensa) |
 |---|---|
-| PDF enviado a Héctor (`Borrador1.2.tex`) | Repaso redaccional caps. 4–5 |
-| `\label` / `\cref` en secciones referenciadas | Tablas (`FALTA TABLA`) — prioridad cap. 6 |
-| Caps. 1–3 y 6–7 más pulidos | Figuras (`[FIG:]`) — real o placeholder |
-| Bitácora y timeline §20 actualizados | Bibliografía (`[CITAR:]`) → `\cite{}` |
-| | Depósito plataforma **21/06** |
+| Memoria completa en Overleaf | Diapositivas 1–16 (+ backup Q&A) |
+| 32 figuras integradas | Vídeo demo A vs B (~2:30 min, slide 11) |
+| Anexos, glosario, bibliografía | Ensayo cronometrado ≤ 20 min |
+| KPI A↔B documentados (sesión `130120`) | Respuestas preparadas a Q1–Q4 (ver `STATE.md` §6) |
+| Feedback tutor incorporado | Slides backup (compose, mTLS, KPIs) |
+| Auditoría final: lista para defender | Palabras clave valencianas (P1, opcional) |
 
-**Tutor:** sin respuesta a emails del **16/06** y **19/06**. Avanzar sin bloquearse; si llega feedback hoy, incorporar solo lo crítico (≤3h según agenda).
-
-**Directriz caps. 4–5:** leer como *análisis de seguridad*, no manual de despliegue (`00_DIRECTRICES_TUTOR.md` §1–§2). Condensar montaje; destacar *por qué* de cada control.
+**Directriz del tutor (trasladada a slides):** leer diseño/desarrollo como *análisis de seguridad*, no manual Docker. Slides conceptuales (`cap04-*`, `cap06-*`); detalle implementación en backup.
 
 ---
 
 ## BLOQUES DE TRABAJO
 
-### Bloque 1 — 2.5h · Repaso caps. 4–5 (`repaso_caps_4_5`)
-Prometido al tutor en el correo del 19/06. Fuentes: `04_diseno.md`, `05_desarrollo_implantacion.md` → sincronizar con `Borrador1.2.tex`.
+### Bloque 1 — 2h · Slides 1–4 (Apertura + Problema)
+Fuente: `Esqueleto-Presentacion-TFG.md` slides 1–4.
 
-- [ ] Cap. 4 (Diseño): topología A/B, principios ZT, mTLS, Wazuh — narrativa de *decisiones* y enlace a requisitos/métricas (cap. 3)
-- [ ] Cap. 5 (Desarrollo): IaC, implementación, problemas de integración — eliminar detalle operativo redundante; mantener solo lo que explica la solución
-- [ ] Verificar coherencia de tono con caps. 1–3 y 6–7 ya pulidos
-- **Hecho cuando:** caps. 4–5 legibles de un tirón sin sensación de “manual Docker”
-
----
-
-### Bloque 2 — 2h · Tablas KPI (`overleaf_figuras` / maquetación)
-El cap. 6 depende de tablas comparativas; el tutor las mirará en el núcleo cuantitativo.
-
-- [ ] Tabla cronología Escenario A (§6.2.1)
-- [ ] Tabla métricas KPI Escenario A (§6.2.2)
-- [ ] Tabla métricas KPI Escenario B (§6.3.1)
-- [ ] Tabla comparativa final A↔B (§6.4.1)
-- [ ] Tablas RF/RNF cap. 3 si aún tienen `FALTA TABLA`
-- Fuente de datos: `tests/00_PLANTILLA_KPI_v2.md`, sesión `zerotrust_sesion_20260609_130120`
-- **Hecho cuando:** no quedan `FALTA TABLA` en caps. 3 y 6 (o solo en secciones secundarias documentadas)
+- [ ] Slide 1: portada (título, autor, tutor, ETSINF, fecha defensa)
+- [ ] Slide 2: índice / hoja de ruta (mini-índice lateral en slides siguientes)
+- [ ] Slide 3: motivación (microservicios, red plana, post-explotación)
+- [ ] Slide 4: modelo perimetral — el punto ciego (`cap04-topologia-perimetral.jpg`)
+- **Hecho cuando:** slides 1–4 maquetadas con notas del orador del esqueleto
 
 ---
 
-### Bloque 3 — 1.5h · Figuras (`overleaf_figuras`)
-Prioridad caps. 4 y 6. Screenshots en `tests/img/` como candidatos.
-
-**Placeholder mínimo viable:**
-```latex
-\begin{figure}[ht]
-  \centering
-  \fbox{\parbox{0.7\textwidth}{\centering\vspace{2cm}[FIG: descripción]\vspace{2cm}}}
-  \caption{...}
-  \label{fig:...}
-\end{figure}
-```
-
-- [ ] Topologías Escenario A y B (cap. 4)
-- [ ] nmap, peticiones, tcpdump, comparativa (cap. 6)
-- **Hecho cuando:** no hay `[FIG:]` sueltos en el texto
+### Bloque 2 — 2h · Slides 5–8 (Fundamentos + Tesis + Metodología)
+- [ ] Slide 5: Zero Trust — never trust, always verify
+- [ ] Slide 6: hueco + pregunta + hipótesis (tcolorbox de la memoria)
+- [ ] Slide 7: propuesta + diseño experimental (dos escenarios idénticos)
+- [ ] Slide 8: metodología KPI (tabla G1–G3, E1–E3 simplificada)
+- **Hecho cuando:** el tribunal entiende *qué* se mide y *por qué* antes de ver los escenarios
 
 ---
 
-### Bloque 4 — 1.5h · Bibliografía (`overleaf_bibliografia`)
-Priorizar citas del cap. 2 (EdA) y cap. 6. No buscar fuentes nuevas — usar `99_bibliografia.md`.
-
-- [ ] Sustituir `[CITAR:]` / `[CITAR FUENTE ...]` por `\cite{clave}`
-- [ ] Entradas BibTeX en Overleaf (o bloque `thebibliography`)
-- **Hecho cuando:** el PDF no muestra marcadores `[CITAR:` literales en caps. 2 y 6
+### Bloque 3 — 1.5h · Slides 9–10 (Escenarios A y B)
+- [ ] Slide 9: Escenario A — topología + cadena pre-RCE (conceptual)
+- [ ] Slide 10: Escenario B — 3 zonas + mTLS + Wazuh (`cap04-topologia-zerotrust.jpg`, `cap04-mtls-handshake.jpg`)
+- **Hecho cuando:** contraste visual claro entre A (2 redes, HTTP) y B (3 zonas, mTLS)
 
 ---
 
-### Bloque 5 — 1h · Feedback tutor + revisión pasada 2 (si da tiempo)
-Solo si llega respuesta de Héctor o tras cerrar bloques 1–4.
-
-- [ ] Incorporar correcciones del tutor (máx. 3h si son muchas — acotar a lo bloqueante)
-- [ ] Formato ETSINF: portada, márgenes, numeración, índice
-- [ ] Compilar PDF candidato final y guardar copia local
-- **Hecho cuando:** tienes un PDF listo para depósito mañana con revisión visual hecha
+### Bloque 4 — 1h · Ensayo parcial + cronómetro
+- [ ] Leer en voz alta slides 1–10 con notas del orador
+- [ ] Cronometrar: objetivo ≤ 10 min para este bloque
+- [ ] Anotar slides que se alargan → condensar texto visual
+- **Hecho cuando:** tienes tiempo medido y ajustes identificados
 
 ---
 
 ## NO HACER HOY
 
-- No reescribir caps. 1–3 ni 6–7 ya enviados al tutor — solo ajustes si feedback explícito
-- No ampliar detalle de Docker en caps. 4–5
-- No esperar respuesta del tutor para cerrar tablas y placeholders
-- No perfeccionar figuras que ya tienen placeholder funcional
-- No abrir anexos completos — labels `anexo:*` pueden quedar undefined hasta post-depósito si no bloquean compilación
+- No reabrir la memoria salvo P1 (keywords valencianas, 2 min)
+- No retocar infra/laboratorio — está congelado para defensa
+- No perfeccionar slides 11–16 hasta tener 1–10 estables
+- No grabar el vídeo demo hasta tener storyboard de slide 11
 
 ---
 
 ## CIERRE
 
 Al terminar:
-1. Actualizar `admin/STATE.md` (marcar `repaso_caps_4_5` y progreso figuras/BibTeX).
-2. Copia el bloque `### 2026-06-21` de `admin/AGENDA_SPRINT_DIARIA.md` aquí para mañana.
-3. **Mañana 21/06: depósito en plataforma** — hoy es el último día de margen real.
+1. Actualizar `admin/STATE.md` (marcar progreso en `presentacion_diapositivas`).
+2. Preparar bloque de mañana: slides 11–13 (demo + resultados KPI + atribución).

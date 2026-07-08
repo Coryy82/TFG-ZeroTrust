@@ -425,3 +425,17 @@
 4. **Regla anti-parálisis:** si llevas 20 min bloqueado en un párrafo, escríbelo en bullets y sigue. Vuelve al final.
 5. **Regla de no perfeccionismo:** un `[REVISAR]` inline es mejor que no avanzar. Las revisiones van en bloque.
 
+---
+
+## POST-SPRINT — Defensa oral (desde 2026-07)
+
+> Sprint de entrega cerrado el 21/06. Plan diario en `admin/HOY.md`. Estado en `admin/STATE.md`.
+
+| Entregable | Referencia | Estado |
+|------------|------------|--------|
+| Diapositivas (16 + backup) | `Esqueleto-Presentacion-TFG.md` | Pendiente |
+| Vídeo demo A vs B | Slide 11 (~2:30) | Pendiente |
+| Ensayo cronometrado | ≤ 20 min | Pendiente |
+
+**Directriz tutor → slides:** conceptual en exposición; detalle implementación en backup Q&A.
+

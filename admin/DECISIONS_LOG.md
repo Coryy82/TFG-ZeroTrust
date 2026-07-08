@@ -204,3 +204,9 @@
   - Regla operativa: los ficheros de `docs/03_memoria_tfg/` son esqueletos; solo pasa a la memoria final el contenido dentro de los bloques "Texto redactado". Las marcas de proceso (`[TODO]`, `[CITAR:]`, `[REVISAR]`, `[DONE]`, bloques `[IA]` duplicados) son anotaciones y no se eliminan en esta fase.
 - **Impacto:** Revisión de escritura aplicada el 2026-06-13: contraste sistemático de los bloques "Texto redactado" contra la guía, arreglos de formato y correcciones objetivas dentro del contenido final, y marcado `[REV-ESTILO]` (sin reescribir) de coloquialismos y frases largas para que el autor decida.
 - **Trazabilidad:** [`docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md`](../docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md); perfil del autor en la misma carpeta; ADR estructural 2026-06-12 de este mismo registro.
+
+**2026-06/post-21 | Feedback tutor: integración figuras + uso correcto de CWE**
+- **Decisión:** Tras el feedback del tutor sobre la versión final, corregir el uso de CWE (308 en lugar de 306 para autenticación single-factor; 522 para credenciales en backup; 200 como exposición en robots.txt, no mitigación) y enriquecer la lectura de figuras con párrafos explicativos que indiquen qué observar y por qué es relevante.
+- **Motivo:** El tutor identificó un patrón estructural: figuras sin argumentación y CWE mencionados sin justificar la relación con el hallazgo. Riesgo de evaluación negativa en tribunal.
+- **Impacto:** §5.2.3 (cadena pre-RCE), figuras caps. 4–6, `\FloatBarrier` para control de floats. Sin cambio en resultados KPI ni infraestructura.
+- **Trazabilidad:** [`docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md`](../docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md) §22; [`docs/02_reuniones_tutor/BITACORA_REUNIONES.md`](../docs/02_reuniones_tutor/BITACORA_REUNIONES.md) entrada post-21/06.

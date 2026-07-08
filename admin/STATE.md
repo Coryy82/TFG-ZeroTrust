@@ -1,91 +1,112 @@
 # STATE - Seguimiento TFG Ciberseguridad
-Fecha de actualización: 2026-06-19 (tarde)
+Fecha de actualización: 2026-07-08
 
-## 0. CAMBIO CRÍTICO DE OBJETIVO (2026-05-24)
+## 0. Fase actual del proyecto
 
-> **Nuevo deadline: 21/06/2026** (convocatoria de julio).
-> El plan original orientado a septiembre ha quedado archivado en `admin/ROADMAP_v1_archivado.md`.
-> El plan activo es `admin/ROADMAP_v2_sprint_final.md`.
-> ADR correspondiente registrado en `admin/DECISIONS_LOG.md` (entrada 2026-05-24).
+> **Convocatoria:** julio 2026.
+> **Memoria:** cerrada y depositada. Fuente canónica: `docs/03_memoria_tfg/Borradores y pretrabajos/Overleaf/DocumentoFinalOverleaf.tex`.
+> **Fase activa:** preparación de la **defensa oral** (20 min).
+> **Plan de sprint de entrega (21/06):** completado — ver `admin/ROADMAP_v2_sprint_final.md` (archivado como referencia histórica).
+> **Blueprint de presentación:** `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Esqueleto-Presentacion-TFG.md`.
 
-> **Referencia estructural de la memoria:** `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md` es la fuente principal para cualquier decisión sobre la estructura de la memoria (ADR 2026-06-12 en `admin/DECISIONS_LOG.md`).
+> **Referencia estructural de la memoria:** `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/EstucturayContenidodeunTFG.md`.
+> **Política editorial:** `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md` + `perfil_escritura_autor.md`.
 
-> **Política editorial de la memoria:** `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Recomendaciones-Escritura-TFG.md` tiene prioridad máxima en cualquier decisión de redacción; el perfil de estilo del autor está en `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/perfil_escritura_autor.md` (ADR 2026-06-13 en `admin/DECISIONS_LOG.md`).
+## 1. Resumen de estado
 
-Capacidad efectiva restante:
-- 24/05 → 01/06: ~9-12h (1-2h/día) — consumido
-- 02/06 → 04/06: ~36h (12h/día × 3 días) — consumido
-- **05/06 → 21/06: ~144h restantes** (12h/día × 0.75 fatiga × 16 días) — en uso; **2 días hasta depósito**
+| Área | Estado |
+|------|--------|
+| Laboratorio (Escenarios A y B) | ✅ Estable — sin cambios desde sesión oficial `zerotrust_sesion_20260609_130120` |
+| Comparativa KPI A↔B | ✅ Cerrada (09/06) |
+| Memoria LaTeX (`DocumentoFinalOverleaf.tex`) | ✅ Caps. 1–7 + anexos + glosario |
+| Figuras (`Overleaf/img/`) | ✅ Integradas (32 JPG; inventario en `img/README.md`) |
+| Tablas KPI / comparativa | ✅ En cap. 3 y cap. 6 |
+| Bibliografía | ✅ Citas en cuerpo + entradas BibTeX |
+| Anexos (protocolo, configs, scripts, código) | ✅ Completados |
+| Feedback tutor post-entrega (CWE, figuras, formato) | ✅ Incorporado |
+| Auditoría final de memoria | ✅ Realizada — lista para defender |
+| Defensa oral (diapositivas + ensayo) | 🔄 En curso |
+| Tutor | 🟢 Luz verde para convocatoria julio (feedback formato/CWE; sin bloqueos) |
 
-## 1. Resumen Semanal
-- Commits últimos 7 días: actividad centrada en redacción final, paso a Overleaf y maquetación LaTeX.
-- Avance técnico principal: **sin cambios.** Comparativa KPI A↔B cerrada (09/06). Stack ZT + Wazuh operativo; laboratorio estable.
-- Avance de redacción/Overleaf (19/06):
-  - **Caps. 1–7 en Overleaf** (`Borrador1.2.tex`). ✅
-  - **Referencias internas** (`\label` / `\cref`): sustituidos marcadores `[SUSTITUIR REFERENCIA LATEX]` y `[SUSTITUIR POR REFERENCIAS LATEX]` en `Borrador1.2.tex`; labels solo en secciones referenciadas. ✅
-  - **Estado redaccional por capítulo:**
-    - **Pulidos (enviados como “casi final”):** caps. 1–3 (Intro, EdA, Análisis) y 6–7 (Pruebas, Conclusiones).
-    - **Pendiente repaso redaccional (previsto 20/06):** caps. 4–5 (Diseño, Desarrollo e implantación).
-    - **Pendiente global:** tablas (`FALTA TABLA`), figuras (`[FIG:]`), bibliografía (`[CITAR:]`).
-- Comunicación con tutor:
-  - **19/06:** PDF compilado desde `Borrador1.2.tex` enviado a Héctor. Correo declara caps. 1–3 y 6–7 revisados; caps. 4–5 y tablas/figuras pendientes. Registrado en bitácora y timeline §20.
-  - **16/06:** email caps. 2–6 — **sin respuesta a 19/06.**
-- Días hasta próximo hito crítico: **2** — 21/06 depósito en plataforma.
+## 2. Hitos completados (Sprint Final → cierre memoria)
 
-## 2. Alineación con ROADMAP v2 y Riesgos
-- Fase actual del ROADMAP_v2: **FASE 4 — SEMANA 4** (15/06–21/06), día 19/06. Hito PDF al tutor **completado**.
-- Delta respecto al plan: texto caps. 1–7 en Overleaf ✅; referencias internas en borrador principal ✅; figuras y BibTeX pendientes; repaso caps. 4–5 planificado 20/06.
-- Riesgos activos con nivel (ALTO/MEDIO/BAJO):
-  - **ALTO:** depósito en plataforma el **21/06** con tablas KPI y figuras mínimas viables (placeholders aceptables).
-  - **MEDIO:** caps. 4–5 menos pulidos que el resto en el PDF enviado; repaso 20/06 debe condensar narrativa (seguridad, no manual Docker — directriz tutor §1–§2).
-  - **MEDIO:** sin feedback del tutor (emails 16/06 y 19/06 sin respuesta). Avanzar hacia depósito sin bloquearse.
-  - **BAJO:** labels de anexos (`anexo:protocolo_ejecucion`, `anexo:scripts_captura`) referenciados en texto pero anexos aún placeholder en LaTeX.
-- ¿Es necesario activar algún fallback? **No.** Laboratorio estable, Wazuh operativo.
+| Fecha | Hito | Estado |
+|-------|------|--------|
+| 06/06 | Índice anotado enviado al tutor | ✅ |
+| 09/06 | Escenario B + KPIs §2/§3 cerrados (sesión `130120`) | ✅ |
+| 16/06 | Borrador caps. 2–6 al tutor | ✅ |
+| 19/06 | PDF `Borrador1.2.tex` al tutor | ✅ |
+| 20–21/06 | Repaso caps. 4–5, tablas, figuras, depósito plataforma | ✅ |
+| Post-21/06 | `DocumentoFinalOverleaf.tex`: figuras, anexos, glosario, BibTeX | ✅ |
+| Post-21/06 | PDF versión final al tutor + solicitud defensa julio | ✅ |
+| Post-21/06 | Feedback tutor (CWE, contextualización figuras, formato) | ✅ Incorporado |
+| Post-21/06 | Auditoría final (coherencia, defensa, rigor académico) | ✅ |
 
-## 3. Bloqueos
-- **Sin bloqueo técnico.** Caps. 1–7 en Overleaf; referencias internas cerradas en `Borrador1.2.tex`.
-- **Gestión:** respuesta del tutor pendiente (16/06 y 19/06). No bloquea depósito; feedback se incorporará como ajuste puntual si llega antes del 21/06.
-- Sin bloqueo de infraestructura ni laboratorio.
+## 3. Pendientes menores (no bloquean defensa)
 
-## 4. Tablero del Sprint Actual
+| ID | Descripción | Prioridad |
+|----|-------------|-----------|
+| P1 | Palabras clave valencianas vacías en `\keywords{}` (L83) | Baja — portada |
+| P2 | Comentarios `%[REVISADO:...]` en `.tex` (L1256–1271) | Baja — solo si se entrega fuente |
+| P3 | `\label` antes de `\caption` en tablas no referenciadas (caps. 3, 6) | Baja — higiene LaTeX |
+| P4 | Referencia `\cref{sec:4.2.3}` en §3.2.4 (podría apuntar a §3.2.4) | Baja |
+
+## 4. Tablero actual — Fase Defensa
+
 ### TODO
-- [ ] **[HUMANO] `repaso_caps_4_5`** — Repaso redaccional caps. 4–5 (20/06): justificar decisiones, condensar detalle de montaje.
-- [ ] **[HUMANO] `overleaf_figuras`** — Insertar figuras en marcadores `[FIG:]` (o placeholders) en Caps. 4–6.
-- [ ] **[HUMANO] `overleaf_bibliografia`** — Convertir marcadores `[CITAR:]` a `\cite{}` y añadir entradas BibTeX.
-- [ ] **[HUMANO] `revision_final_entrega`** — PDF final + depósito en plataforma el **21/06**.
+- [ ] **[HUMANO] `presentacion_diapositivas`** — Maquetar slides según `Esqueleto-Presentacion-TFG.md` (16 slides + backup).
+- [ ] **[HUMANO] `demo_video_ab`** — Vídeo comparativo Escenario A vs B (slide 11, ~2:30 min).
+- [ ] **[HUMANO] `ensayo_cronometrado`** — Ensayo oral ≤ 20 min con cronómetro; preparar respuestas a Q1–Q4 (ver §6).
+- [ ] **[HUMANO] `slides_backup_qa`** — Slides de backup: compose, nginx.conf, OpenSSL, detalle KPIs.
+- [ ] **[HUMANO] `p1_keywords_val`** — Rellenar `\keywords{}` valenciano (2 min, opcional pre-defensa).
 
 ### DOING
-- [ ] **[HUMANO] `transferir_a_overleaf`** — Caps. 1–7 transferidos ✅; referencias internas en `Borrador1.2.tex` ✅. Pendiente: figuras, BibTeX, repaso 4–5.
+- [ ] **[HUMANO] `presentacion_diapositivas`** — Esqueleto de 16 slides + reparto temporal definido en `Esqueleto-Presentacion-TFG.md`.
 
-### DONE (Sprint Final — desde 24/05)
-- [x] **`envio_tutor_19_06`** — PDF compilado (`Borrador1.2.tex`) enviado al tutor el 19/06. Alcance declarado: caps. 1–3 y 6–7 pulidos; 4–5 y tablas/figuras pendientes. Timeline §20, bitácora 19/06. (2026-06-19)
-- [x] **`overleaf_referencias_internas`** — `\label` y `\cref{}` en `Borrador1.2.tex`: marcadores `[SUSTITUIR REFERENCIA LATEX]` y `[SUSTITUIR POR REFERENCIAS LATEX]` sustituidos; labels solo en secciones referenciadas. (2026-06-19)
-- [x] **`setup_overleaf`** — Caps. 1–7 en `Borrador1.2.tex` / Overleaf. (2026-06-19)
-- [x] **`envio_tutor_16_06`** — Email al tutor el 16/06 con caps. 2–6 en plantilla ETSINF (sin Intro/Conclusiones en adjunto). Reorientación pregunta de investigación; duda §5.4; solicitud cita presencial. Registrado en timeline §19 y bitácora 16/06. (2026-06-16)
-- [x] **`redactar_intro_conclusiones`** — Caps. 1 y 7 en borrador [HUMANO]: §1.1–§1.5 (pregunta de investigación, hipótesis, metodología, estructura) y §7.1–§7.4 (conclusiones, limitaciones, trabajo futuro, ODS). Commits `3d65bc0`, `684a809`. (2026-06-17)
-- [x] **`redactar_cap_4_completo`** — `04_diseno.md` §4.1–§4.5 redactados [HUMANO]. Commit `3ff326b`. (2026-06-14)
-- [x] **`redactar_cap_3`** — `03_analisis_problema.md` §3.1–§3.4 redactados [HUMANO]. Commit `381658a`. (2026-06-12)
-- [x] **`redactar_cap_5`** — `05_desarrollo_implantacion.md` §5.1–§5.5 redactados [HUMANO]. Commit `d7c30db`. (2026-06-12)
-- [x] **`redactar_cap_6`** — `06_pruebas.md` §6.1–§6.4 redactados [HUMANO] con sesión `130120`. (2026-06-12)
-- [x] **`redactar_eda_v0`** — Estado del Arte v0 cerrado. (2026-06-10)
-- [x] **`ejecutar_pruebas_ab`** — Comparativa A↔B cerrada. Sesión oficial B `zerotrust_sesion_20260609_130120`. (2026-06-09)
-- [x] **`email_tutor_31_05`** — Índice anotado enviado al tutor el 06/06/2026. (2026-06-06)
-- [x] **`wazuh_fase5_escenario_b`** — Fase 5 Wazuh completada. (2026-06-04)
-- [x] **`implementar_escenario_b`** — `infra/zero_trust/` completado. (2026-06-04)
+### DONE (post-sprint)
+- [x] **`memoria_final_overleaf`** — `DocumentoFinalOverleaf.tex` completo: caps. 1–7, figuras, tablas, anexos, glosario, bibliografía. (2026-06/post-21)
+- [x] **`figuras_integradas`** — Marcadores `[FIG:]` sustituidos; `\FloatBarrier`; captions sin "Fuente: elaboración propia". (2026-06)
+- [x] **`anexos_completos`** — Protocolo, configs, scripts captura, código app, reglas Wazuh. (2026-06)
+- [x] **`feedback_tutor_cwe_figuras`** — CWE corregidos (308, 522, 200); lectura de figuras; intro CWE §5.2.3. (2026-06/post-21)
+- [x] **`auditoria_final_memoria`** — Veredicto: lista para entregar y defender (confianza medio-alta). (2026-06/post-21)
+- [x] **`correcciones_auditoria`** — `\label` tabla Wazuh; "cinco patrones" §4.3.4; eliminada salvedad "parcial" observabilidad. (2026-07)
+- [x] **`envio_tutor_final`** — PDF final al tutor; luz verde convocatoria julio. (2026-06/post-21)
 
-*(Hitos anteriores del sprint: ver commits y `admin/ROADMAP_v2_sprint_final.md`.)*
+*(Hitos técnicos y de redacción del sprint: ver sección DONE histórica en commits y `ROADMAP_v2_sprint_final.md`.)*
 
-## 5. Hitos críticos del Sprint Final
-| Fecha  | Hito                                                       | Estado   |
-|--------|------------------------------------------------------------|----------|
-| 06/06  | Borrador índice anotado enviado al tutor (recuperación 31/05) | ✅ Completado — validación general positiva; matizar objetivos |
-| 04/06  | Checkpoint Wazuh (20:00)                                   | ✅ Completado — Wazuh operativo |
-| 09/06  | Escenario B funcional + KPIs §2/§3 cerrados                | ✅ Completado — sesión `130120` |
-| 14/06  | Caps. 3, 4, 5, 6 en borrador + email tutor                 | ⚠️ Parcial — texto ✅; email tutor **16/06** |
-| 16/06  | Caps. 1 y 7 redactados                                     | ✅ Completado — 17/06 |
-| 19/06  | PDF compilado en Overleaf + email final al tutor           | ✅ Completado — PDF `Borrador1.2.tex` enviado; caps. 4–5 y figuras/tablas pendientes |
-| 20/06  | Repaso redaccional caps. 4–5                               | 🔄 Previsto |
-| 21/06  | **ENTREGA** — PDF depositado en plataforma                 | Pendiente |
+## 5. Riesgos activos (fase defensa)
 
-## 6. Decisión editorial registrada (19/06)
-Priorizar repaso de caps. 4–5 **después** del envío al tutor: coherente con hito 19/06, directrices del tutor (presentar primero pregunta/evidencia/conclusiones) y calendario. Evaluación completa en `docs/02_reuniones_tutor/BITACORA_REUNIONES.md` (entrada 2026-06-19).
+| Nivel | Riesgo | Mitigación |
+|-------|--------|------------|
+| MEDIO | Ensayo oral no cronometrado → exceder 20 min | Ensayo con cronómetro; slides backup fuera del tiempo |
+| MEDIO | Pregunta tribunal sobre muestra n=1 | Respuesta preparada: §7.2 limitaciones; cifras ilustrativas |
+| MEDIO | Pregunta sobre valor de Wazuh vs contención | Separar contención (segmentación/mTLS) de detección (G1) |
+| BAJO | Demo en vivo falla | Vídeo pregrabado como plan B (slide 11) |
+| BAJO | Detalle implementación en exposición | Regla: conceptual en slides; detalle en backup Q&A |
+
+## 6. Preguntas probables del tribunal (preparar respuesta)
+
+1. **Muestra única:** ¿Por qué una sesión por escenario? → Limitación reconocida §7.2; reproducible con scripts de captura.
+2. **Valor de Wazuh:** ¿Qué aporta si la contención ya la dan segmentación y mTLS? → Detección activa (G1); visibilidad para respuesta; no sustituye controles de red.
+3. **CWE en cadena pre-RCE:** ¿Por qué esos CWE? → Clasificación de debilidades del baseline A; fuera de ventana de medición post-RCE.
+4. **Generalización:** ¿Extrapolable a Kubernetes/producción? → Laboratorio Docker; líneas futuro §7.3; resultados representativos del contraste, no estadísticos.
+
+## 7. Artefactos clave
+
+| Artefacto | Ruta |
+|-----------|------|
+| Memoria final | `docs/03_memoria_tfg/Borradores y pretrabajos/Overleaf/DocumentoFinalOverleaf.tex` |
+| Figuras | `docs/03_memoria_tfg/Borradores y pretrabajos/Overleaf/img/` |
+| Anexos LaTeX | `docs/03_memoria_tfg/Borradores y pretrabajos/Overleaf/anexos/` |
+| Esqueleto presentación | `docs/03_memoria_tfg/00_PAUTAS_IMPORTANTES_MEMORIA/Esqueleto-Presentacion-TFG.md` |
+| Evidencias sesión B | `tests/logs/zerotrust_sesion_20260609_130120/` |
+| KPI plantilla | `tests/00_PLANTILLA_KPI_v2.md` |
+| Infra Escenario A | `infra/perimetral/` |
+| Infra Escenario B | `infra/zero_trust/` |
+
+## 8. Comunicación con tutor
+
+- **Último feedback relevante:** formato (páginas cargadas de imágenes), contextualización de figuras, uso correcto de CWE. Luz verde para julio.
+- **Estado:** sin bloqueos pendientes para la defensa.
+- **Bitácora:** `docs/02_reuniones_tutor/BITACORA_REUNIONES.md` (entradas 2026-06-19 en adelante).
+- **Timeline:** `docs/02_reuniones_tutor/00_TIMELINE_CORREOS.md` (§20–§22).

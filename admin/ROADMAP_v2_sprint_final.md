@@ -1,5 +1,7 @@
 # ROADMAP v2 — Sprint Final 21/06/2026
 
+> **Estado 2026-07-08:** ✅ **SPRINT COMPLETADO.** Memoria depositada. Fase activa: defensa oral — ver `admin/STATE.md` y `Esqueleto-Presentacion-TFG.md`.
+
 > **Versión:** 2.0 — Sprint de entrega en convocatoria de julio
 > **Creado:** 2026-05-24
 > **Deadline fijo:** 21/06/2026
